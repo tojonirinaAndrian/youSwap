@@ -249,7 +249,7 @@ export default function ModifyProfile (props: {
                         <div className="w-[200px] h-[200px] bg-blue-200"></div>
                         <div className="w-[200px] h-[200px] bg-red-200"></div>
                         <div className="w-[200px] h-[200px] bg-yellow-200"></div>
-                        {(profileState.pictures.length < 5) && <div className='!block w-[200px] h-[200px] text-blueDianne/70 cursor-pointer bg-blueDianne/10 border-blueDianne/70 border'>
+                        {(profileState.pictures.length < 5) && <div className='hover:bg-blueDianne/25 hover:text-blueDianne !block w-[200px] h-[200px] text-blueDianne/70 cursor-pointer bg-blueDianne/10 border-blueDianne/70 border'>
                             <div className='flex w-full h-full'>
                                 <div className="m-auto">
                                     <Plus size={32} className='m-auto'/>
@@ -265,7 +265,7 @@ export default function ModifyProfile (props: {
                         <h3>Portfolio</h3>
                         <p className="text-black/70">You can add a video of you performing here. Also, you can add the links to your personnals.</p>
                     </div>
-                    {(profileState.portfolioVideoLink === "") && <div className='w-[400px] h-[200px] text-blueDianne/70 cursor-pointer rounded-md bg-blueDianne/10 border-blueDianne/70 border'>
+                    {(profileState.portfolioVideoLink === "") && <div className='hover:bg-blueDianne/25 hover:text-blueDianne w-[400px] h-[200px] text-blueDianne/70 cursor-pointer rounded-md bg-blueDianne/10 border-blueDianne/70 border'>
                         <div className='flex w-full h-full'>
                             <div className="m-auto">
                                 <Plus size={32} className='m-auto'/>
@@ -282,7 +282,7 @@ export default function ModifyProfile (props: {
                                 <input type='text' placeholder='Link address' defaultValue={link.link}
                                 className='not-focus:text-black/80 border-black/50 px-3 py-2 border-1 rounded-md w-full'
                                 />
-                                <button className='bg-red-100 flex gap-2 text-red-700 p-2 rounded-md items-center cursor-pointer'
+                                <button className='bg-red-100 flex gap-2 hover:bg-red-200 text-red-700 p-2 rounded-md items-center cursor-pointer'
                                 onClick={() => {
                                     const mock: {link: string,label: string, linkId: string}[] = [];
                                     profileState.portfolioLinks.map (mockLink => {
@@ -310,7 +310,7 @@ export default function ModifyProfile (props: {
                                     ...profileState, portfolioLinks: mock
                                 })
                             }}
-                            className='w-full p-2 flex bg-blueDianne/10 gap-2 border rounded-md border-blueDianne/70 text-blueDianne/70 justify-center'>
+                            className='cursor-pointer w-full p-2 flex bg-blueDianne/10 hover:bg-blueDianne/25 hover:text-blueDianne gap-2 border rounded-md border-blueDianne/70 text-blueDianne/70 justify-center'>
                             <Plus />
                             <p>Add a new link</p>
                         </div>
