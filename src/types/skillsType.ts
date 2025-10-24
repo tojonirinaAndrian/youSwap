@@ -4,3 +4,8 @@ export default interface skillInterface {
     name: string, 
     level: 'advanced' | "intermediate" | "beginner"
 };
+
+export interface rawSkillInterface {
+    skillId: string,
+    name: string
+}
