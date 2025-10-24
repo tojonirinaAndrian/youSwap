@@ -1,9 +1,7 @@
 'use client';
 import { useState } from 'react';
-import UserState from '../userState';
 import profileInterface from '@/src/types/userProfilesType';
-import { Plus, Search, Trash } from 'lucide-react';
-import { randomUUID } from 'crypto';
+import { Plus, Trash } from 'lucide-react';
 export default function ModifyProfile (props: {
     profile: profileInterface,
     setWhereIsProfile: (arg0: 'view' | 'modify') => void
@@ -111,7 +109,7 @@ export default function ModifyProfile (props: {
                                     </>}
                                 </div>
                                 <div className='space-y-2'>
-                                    <p>How much do you know <span className="font-medium">{profileState.skills.learnSkills[activeLearnSkillIndex].name}</span></p>
+                                    <p>How much do you know <span className="font-medium">{profileState.skills.learnSkills[activeLearnSkillIndex].name}</span> ?</p>
                                     <div className="flex *:p-2 *:border gap-2 *:inline-block *:rounded-md *:cursor-pointer">
                                         <div 
                                         onClick={() => {
@@ -322,7 +320,7 @@ export default function ModifyProfile (props: {
                     <button className="filledButton w-1/2" 
                     onClick={handleSave}
                     >
-                        Save
+                        Save changes
                     </button>
                     <button className='borderedButton w-1/2'
                     onClick={() => props.setWhereIsProfile('view')}
