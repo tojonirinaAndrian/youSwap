@@ -105,7 +105,7 @@ export default function ModifyProfile (props: {
                                         </button>
                                     }))}
                                     {(profileState.skills.learnSkills.length < 5) && <>
-                                        <button className='text-blueDianne/70 cursor-pointer bg-blueDianne/10 border-blueDianne/70'><Plus /></button>
+                                        <button className='hover:bg-blueDianne/25 hover:text-blueDianne text-blueDianne/70 cursor-pointer bg-blueDianne/10 border-blueDianne/70'><Plus /></button>
                                     </>}
                                 </div>
                                 <div className='space-y-2'>
@@ -183,7 +183,7 @@ export default function ModifyProfile (props: {
                                         </button>
                                     }))}
                                     {(profileState.skills.teachSkills.length < 5) && <>
-                                        <button className='text-blueDianne/70 cursor-pointer bg-blueDianne/10 border-blueDianne/70'><Plus /></button>
+                                        <button className='text-blueDianne/70 hover:bg-blueDianne/25 hover:text-blueDianne cursor-pointer bg-blueDianne/10 border-blueDianne/70'><Plus /></button>
                                     </>}
                                 </div>
                                 <div className='space-y-2'>

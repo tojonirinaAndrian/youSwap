@@ -1,4 +1,3 @@
-import { UUID } from "crypto";
 import skillInterface from "./skillsType";
 
 export default interface profileInterface {
