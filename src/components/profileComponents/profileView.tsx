@@ -44,7 +44,7 @@ export default function ProfileView (props: profileInterface) {
             <div className="flex justify-center w-full">
                 <div className="max-w-[55vw] flex flex-col gap-2 p-5 rounded-md">
                     <h2 className="text-center">
-                        "{props.description}"
+                        {`"${props.description}"`}
                     </h2>
                     <p className="ml-auto italic text-blueDianne">
                         ~ {props.pseudo} ~
