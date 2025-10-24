@@ -64,7 +64,7 @@ export default function ModifyProfile (props: {
                             ...profileState,
                             description: e.target.value
                         })}
-                        className="rounded-md not-focus:text-black/80 text-xl w-full p-3 border border-blueDianne/70" placeholder='Your description'/>
+                        className="rounded-md not-focus:text-black/80 text-xl w-full p-3 border " placeholder='Your description'/>
                         {/* <p className='ml-auto italic text-blueDianne'>~ {profileState.pseudo} ~</p> */}
                     </div>
                 </div>
@@ -108,7 +108,7 @@ export default function ModifyProfile (props: {
                                             onClick={() => {
                                                 setNewSkillModalOpen (true)
                                             }}
-                                            className='hover:bg-blueDianne/25 hover:text-blueDianne text-blueDianne/70 cursor-pointer bg-blueDianne/10 border-blueDianne/70'><Plus /></button>
+                                            className='hover:bg-blueDianne/25 hover:text-blueDianne text-blueDianne/70 cursor-pointer bg-blueDianne/10 '><Plus /></button>
                                     </>}
                                 </div>
                                 <div className='space-y-2'>
@@ -184,7 +184,7 @@ export default function ModifyProfile (props: {
                                     {(profileState.skills.teachSkills.length < 5) && <>
                                         <button 
                                             onClick={() => setNewSkillModalOpen (true)}
-                                            className='text-blueDianne/70 hover:bg-blueDianne/25 hover:text-blueDianne cursor-pointer bg-blueDianne/10 border-blueDianne/70'><Plus /></button>
+                                            className='text-blueDianne/70 hover:bg-blueDianne/25 hover:text-blueDianne cursor-pointer bg-blueDianne/10 '><Plus /></button>
                                     </>}
                                 </div>
                                 <div className='space-y-2'>
@@ -250,7 +250,7 @@ export default function ModifyProfile (props: {
                         <div className="w-[200px] h-[200px] bg-blue-200"></div>
                         <div className="w-[200px] h-[200px] bg-red-200"></div>
                         <div className="w-[200px] h-[200px] bg-yellow-200"></div>
-                        {(profileState.pictures.length < 5) && <div className='hover:bg-blueDianne/25 hover:text-blueDianne !block w-[200px] h-[200px] text-blueDianne/70 cursor-pointer bg-blueDianne/10 border-blueDianne/70 border'>
+                        {(profileState.pictures.length < 5) && <div className='hover:bg-blueDianne/25 hover:text-blueDianne !block w-[200px] h-[200px] text-blueDianne/70 cursor-pointer bg-blueDianne/10  border'>
                             <div className='flex w-full h-full'>
                                 <div className="m-auto">
                                     <Plus size={32} className='m-auto'/>
@@ -266,7 +266,7 @@ export default function ModifyProfile (props: {
                         <h3>Portfolio</h3>
                         <p className="text-black/70">You can add a video of you performing here. Also, you can add the links to your personnals.</p>
                     </div>
-                    {(profileState.portfolioVideoLink === "") && <div className='hover:bg-blueDianne/25 hover:text-blueDianne w-[400px] h-[200px] text-blueDianne/70 cursor-pointer rounded-md bg-blueDianne/10 border-blueDianne/70 border'>
+                    {(profileState.portfolioVideoLink === "") && <div className='hover:bg-blueDianne/25 hover:text-blueDianne w-[400px] h-[200px] text-blueDianne/70 cursor-pointer rounded-md bg-blueDianne/10  border'>
                         <div className='flex w-full h-full'>
                             <div className="m-auto">
                                 <Plus size={32} className='m-auto'/>
@@ -311,7 +311,7 @@ export default function ModifyProfile (props: {
                                     ...profileState, portfolioLinks: mock
                                 })
                             }}
-                            className='cursor-pointer w-full p-2 flex bg-blueDianne/10 hover:bg-blueDianne/25 hover:text-blueDianne gap-2 border rounded-md border-blueDianne/70 text-blueDianne/70 justify-center'>
+                            className='cursor-pointer w-full p-2 flex bg-blueDianne/10 hover:bg-blueDianne/25 hover:text-blueDianne gap-2 border rounded-md  text-blueDianne/70 justify-center'>
                             <Plus />
                             <p>Add a new link</p>
                         </div>
