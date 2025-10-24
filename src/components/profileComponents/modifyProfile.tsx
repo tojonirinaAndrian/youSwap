@@ -54,7 +54,7 @@ export default function ModifyProfile (props: {
                 </div>
                 <div className="space-y-2">
                     <div className='space-y-0.5'>
-                        <h3>Personal description</h3>
+                        <h3 className='text-blueDianne'>Personal description</h3>
                         <p className="text-black/70">Few sentences to describe yourself.</p>
                     </div>
                     <div className='space-y-1 flex flex-col'>
@@ -70,7 +70,7 @@ export default function ModifyProfile (props: {
                 </div>
                 <div className='space-y-2'>
                     <div className='space-y-0.5'>
-                        <h3>Skills</h3>
+                        <h3 className='text-blueDianne'>Skills</h3>
                         <p className="text-black/70">You can only choose 5 skills each at most for both teaching and learning.</p>
                     </div>
                     <div className="flex gap-2">
@@ -184,7 +184,7 @@ export default function ModifyProfile (props: {
                                     {(profileState.skills.teachSkills.length < 5) && <>
                                         <button 
                                             onClick={() => setNewSkillModalOpen (true)}
-                                            className='text-blueDianne/70 hover:bg-blueDianne/25 hover:text-blueDianne cursor-pointer bg-blueDianne/10 '><Plus /></button>
+                                            className='text-blueDianne/70 hover:bg-blueDianne/25 hover:text-blueDianne cursor-pointer bg-blueDianne/10'><Plus /></button>
                                     </>}
                                 </div>
                                 <div className='space-y-2'>
@@ -243,7 +243,7 @@ export default function ModifyProfile (props: {
                 </div>
                 <div className="space-y-2">
                     <div className='space-y-0.5'>
-                        <h3>Pictures</h3>
+                        <h3 className='text-blueDianne'>Pictures</h3>
                         <p className="text-black/70">You can only put 5 pictures at most.</p>
                     </div>
                     <div className="space-x-1 *:inline-block *:rounded-md">
@@ -260,10 +260,9 @@ export default function ModifyProfile (props: {
                         </div>}
                     </div>
                 </div>
-                
                 <div className='space-y-2'>
                     <div className='space-y-0.5'>
-                        <h3>Portfolio</h3>
+                        <h3 className='text-blueDianne'>Portfolio</h3>
                         <p className="text-black/70">You can add a video of you performing here. Also, you can add the links to your personnals.</p>
                     </div>
                     {(profileState.portfolioVideoLink === "") && <div className='hover:bg-blueDianne/25 hover:text-blueDianne w-[400px] h-[200px] text-blueDianne/70 cursor-pointer rounded-md bg-blueDianne/10  border'>
