@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import profileInterface from '@/src/types/userProfilesType';
 import { Plus, Trash } from 'lucide-react';
+import AddNewSkillModal from './addNewSkillModal';
+
 export default function ModifyProfile (props: {
     profile: profileInterface,
     setWhereIsProfile: (arg0: 'view' | 'modify') => void
@@ -9,7 +11,8 @@ export default function ModifyProfile (props: {
     const [activeLearnSkillIndex, setActiveLearnSkillIndex] = useState<number>(0)
     const [activeTeachSkillIndex, setActiveTeachSkillIndex] = useState<number>(0)
     const [whereIsSkills, setWhereIsSkills] = useState<'learn' | 'teach'> ('teach');
-    const [profileState, setProfileState] = useState<profileInterface>(props.profile);
+    const [profileState, setProfileState] = useState<profileInterface>(props.profile);''
+    const [newSkillModalOpen, setNewSkillModalOpen] = useState<boolean>(false);
     const handleSave = ():void => {
         // savingStuff...
         props.setWhereIsProfile('view');
@@ -82,11 +85,7 @@ export default function ModifyProfile (props: {
                     <div className="rounded-md border w-full border-blueDianne/50 p-5">
                         <div className="space-y-4">
                             {(whereIsSkills === 'learn') && <>
-                                {/* <div className='w-full border rounded-md p-3 flex gap-2'>
-                                    <input type="text" placeholder="Search a skill you may learn"
-                                    className="w-full text-sm"
-                                    /><Search />
-                                </div> */}
+                                {newSkillModalOpen && <AddNewSkillModal setProfileState={setProfileState} profileState={profileState} whereIsSkills='learn' setNewSkillOpen={setNewSkillModalOpen}/>}
                                 <div className='*:cursor-pointer *:border *:inline-block *:p-2 *:rounded-md flex gap-2'>
                                     {(profileState.skills.learnSkills.map ((learnSkill, i) => {
                                         let color: "yellow" | "green" | "red";
@@ -105,7 +104,11 @@ export default function ModifyProfile (props: {
                                         </button>
                                     }))}
                                     {(profileState.skills.learnSkills.length < 5) && <>
-                                        <button className='hover:bg-blueDianne/25 hover:text-blueDianne text-blueDianne/70 cursor-pointer bg-blueDianne/10 border-blueDianne/70'><Plus /></button>
+                                        <button
+                                            onClick={() => {
+                                                setNewSkillModalOpen (true)
+                                            }}
+                                            className='hover:bg-blueDianne/25 hover:text-blueDianne text-blueDianne/70 cursor-pointer bg-blueDianne/10 border-blueDianne/70'><Plus /></button>
                                     </>}
                                 </div>
                                 <div className='space-y-2'>
@@ -160,11 +163,7 @@ export default function ModifyProfile (props: {
                                 </div>
                             </>}
                             {(whereIsSkills === 'teach') && <>
-                                {/* <div className='w-full border rounded-md p-3 flex gap-2'>
-                                    <input type="text" placeholder="Search a skill you may learn"
-                                    className="w-full text-sm"
-                                    /><Search />
-                                </div> */}
+                                {newSkillModalOpen && <AddNewSkillModal setProfileState={setProfileState} profileState={profileState} whereIsSkills='teach' setNewSkillOpen={setNewSkillModalOpen}/>}
                                 <div className='*:cursor-pointer *:border *:inline-block *:p-2 *:rounded-md flex gap-2'>
                                     {(profileState.skills.teachSkills.map ((teachSkill, i) => {
                                         let color: "yellow" | "green" | "red";
@@ -183,7 +182,9 @@ export default function ModifyProfile (props: {
                                         </button>
                                     }))}
                                     {(profileState.skills.teachSkills.length < 5) && <>
-                                        <button className='text-blueDianne/70 hover:bg-blueDianne/25 hover:text-blueDianne cursor-pointer bg-blueDianne/10 border-blueDianne/70'><Plus /></button>
+                                        <button 
+                                            onClick={() => setNewSkillModalOpen (true)}
+                                            className='text-blueDianne/70 hover:bg-blueDianne/25 hover:text-blueDianne cursor-pointer bg-blueDianne/10 border-blueDianne/70'><Plus /></button>
                                     </>}
                                 </div>
                                 <div className='space-y-2'>
