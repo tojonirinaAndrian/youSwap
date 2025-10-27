@@ -16,6 +16,37 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
         props.whereIsSkills === "learn" ? props.profileState.skills.learnSkills
         : props.profileState.skills.teachSkills
     );
+    const handleDeleteSkill = (skillToDeleteId: string) => {
+        const mockSkills: skillInterface[] = [];
+        if (props.whereIsSkills === 'learn') {
+            props.profileState.skills.learnSkills.map((skill) => {
+                if (skill.skillId !== skillToDeleteId) {
+                    mockSkills.push(skill)
+                }
+            })
+            props.setProfileState({
+                ...props.profileState,
+                skills : {
+                    teachSkills : props.profileState.skills.teachSkills,
+                    learnSkills : mockSkills
+                }
+            })
+        } else {
+            props.profileState.skills.teachSkills.map((skill) => {
+                if (skill.skillId !== skillToDeleteId) {
+                    mockSkills.push(skill)
+                }
+            })
+            props.setProfileState({
+                ...props.profileState,
+                skills : {
+                    learnSkills : props.profileState.skills.learnSkills,
+                    teachSkills : mockSkills
+                }
+            })
+        }
+        setNewSkillsList(mockSkills);
+    }
     function handleDoneChoosing () {
         if (props.whereIsSkills === 'learn') {
             props.setProfileState({
@@ -40,12 +71,13 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
         }
         props.setNewSkillOpen(false);
     }
+
     function handleOnSkillClick (skill: rawSkillInterface) {
         setNewSkillsList ([
             ...newSkillsList, 
             {
                 ...skill,
-                level: 'intermediate'
+                level: 'unset'
             }
         ])
     }
@@ -61,17 +93,26 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
                     </div>
                 </div>
                 <h3 className="text-center">Skills you may {props.whereIsSkills === "learn" ? "learn" : "teach"}</h3>
-                <div className="space-y-1">
+                {newSkillsList.length > 0 ? <div className="space-y-1">
                     <p className="text-black/70">Currently choosed skills :</p>
                     <div className="flex gap-2">
                         {newSkillsList.map((skill) => {
-                            return <>
-                                <div className="filledStyle !inline-block !cursor-auto">{skill.name}</div>
-                            </>
+                            return <div className="relative" key={skill.skillId}>
+                                <div className="filledStyle !inline-block !cursor-auto">
+                                    {skill.name}
+                                </div>
+                                <div 
+                                onClick={() => handleDeleteSkill(skill.skillId)}
+                                className="absolute -top-1 -right-1 cursor-pointer bg-red-200 rounded-[5px] p-0.5 text-red-700 border-red-500 hover:bg-red-300"
+                                >
+                                    <X size={12}/>
+                                </div>
+                            </div>
                         })}
                     </div>
-                </div>
-                
+                </div> : <p className="text-black/70">
+                    Please, search and select skills.
+                </p>}
                 {(newSkillsList.length < 5) ? <>
                     <div className='w-full border rounded-md p-3 flex gap-2'>
                         <input type="text" placeholder="Seach for a skill"

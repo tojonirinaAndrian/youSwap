@@ -1,9 +1,10 @@
 'use client';
 import { useState } from "react";
 import UserState from "../userState";
-import profileInterface from "@/src/types/userProfilesType";
+import { useGlobalStore } from "@/store/use-global-store";
 
-export default function ProfileView (props: profileInterface) {
+export default function ProfileView () {
+    const { userProfile } = useGlobalStore ();
     const [whereIsSkills, setWhereIsSkills] = useState<'learn' | 'teach'> ('teach');
     return <>
         <div className="gap-2 flex flex-col h-full overflow-auto space-y-5">
@@ -11,13 +12,13 @@ export default function ProfileView (props: profileInterface) {
                 <div className="relative rounded-full bg-red-500 h-28 w-28 flex">
                 </div>
                 <div className="flex flex-col justify-center ">
-                    <UserState 
-                        pseudo={props.pseudo} 
-                        level={props.level} 
-                        title={props.title}
-                        fullName={props.fullName}
-                        titleColor={props.titleColor}
-                        points={props.currentPoints}
+                    <UserState
+                        pseudo={userProfile.pseudo}
+                        level={userProfile.level}
+                        title={userProfile.title}
+                        fullName={userProfile.fullName}
+                        titleColor={userProfile.titleColor}
+                        points={userProfile.currentPoints}
                     />
                 </div>
             </div>
@@ -26,28 +27,28 @@ export default function ProfileView (props: profileInterface) {
                     Helped people
                 </div>
                 <div className="p-5">
-                    {props.helpedPeople}
+                    {userProfile.helpedPeople}
                 </div>
                 <div className="border-r-1 border-t-1 border-blueDianne/50 p-5 text-right">
                     Accumulated points
                 </div>
                 <div className="p-5 border-t-1 border-blueDianne/50">
-                    {props.accumulatedPoints}
+                    {userProfile.accumulatedPoints}
                 </div>
                 <div className="border-r-1 border-t-1 border-blueDianne/50 p-5 text-right">
                     {`Next level`}
                 </div>
                 <div className="p-5 border-t-1 border-blueDianne/50">
-                    {props.leftPointsForNextLevel} points until lv.{props.level + 1}
+                    {userProfile.leftPointsForNextLevel} points until lv.{userProfile.level + 1}
                 </div>
             </div>
             <div className="flex justify-center w-full">
                 <div className="max-w-[55vw] flex flex-col gap-2 p-5 rounded-md">
                     <h2 className="text-center">
-                        {`"${props.description}"`}
+                        {`"${userProfile.description}"`}
                     </h2>
                     <p className="ml-auto italic text-blueDianne">
-                        ~ {props.pseudo} ~
+                        ~ {userProfile.pseudo} ~
                     </p>
                 </div>
             </div>
@@ -65,7 +66,7 @@ export default function ProfileView (props: profileInterface) {
                 <div className="flex gap-2 *:p-5">
                     <div className="rounded-md border w-[70%] border-blueDianne/50 space-x-2 space-y-2 *:p-2 *:border-1 *:h-fit *:inline-block *:rounded-md">
                         {(whereIsSkills === 'learn' && <>
-                            {(props.skills.learnSkills.map((skill, i) => {
+                            {(userProfile.skills.learnSkills.map((skill, i) => {
                                 let color: "yellow" | "green" | "red";
                                 if (skill.level === 'beginner') {
                                     color = "green"
@@ -80,7 +81,7 @@ export default function ProfileView (props: profileInterface) {
                             }))}
                         </>)}
                         {(whereIsSkills === 'teach' && <>
-                            {(props.skills.teachSkills.map((skill, i) => {
+                            {(userProfile.skills.teachSkills.map((skill, i) => {
                                 let color: "yellow" | "green" | "red";
                                 if (skill.level === 'beginner') {
                                     color = "green"
@@ -125,7 +126,7 @@ export default function ProfileView (props: profileInterface) {
                 <h3 className="text-blueDianne">Portfolio</h3>
                 <div className="w-[400px] h-[300px] bg-black rounded-md text-white p-3">This is a video</div>
                 <div className="space-y-0.5">
-                    {(props.portfolioLinks.map((portfolioLink) => {
+                    {(userProfile.portfolioLinks.map((portfolioLink) => {
                         return <p key={portfolioLink.label}>
                             <span className="font-medium capitalize">{portfolioLink.label} : </span>
                             <span className="underline text-blueDianne">{portfolioLink.link}</span>
