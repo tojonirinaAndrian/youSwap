@@ -1,11 +1,14 @@
 
-export default interface skillInterface {
+export default interface ChoosedSkillInterface {
+    id: string,
     skillId: string,
     name: string, 
-    level: 'advanced' | "intermediate" | "beginner" | "unset"
+    proficiency: 'Advanced' | "Intermediate" | "Beginner" | "Unset"
+    state: "UserIsTeaching" | "UserIsLearning"
 };
 
-export interface rawSkillInterface {
-    skillId: string,
-    name: string
+export interface SkillInterface {
+    id: string,
+    name: string,
+    categoryName: "Art" | "Coding" | "Sport" | "Self-Development"
 }

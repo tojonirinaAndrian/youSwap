@@ -1,25 +1,46 @@
-import skillInterface from "./skillsType";
+import ChoosedSkillInterface from "./skillsType";
 
-export default interface profileInterface {
-    fullName: string,
-    profilePictureLink: string,
-    helpedPeople: number,
+export default interface userInterface {
+    id: string,
+    email: string,
+
+    firstName: string,
+    secondName: string,
     pseudo: string,
-    level: number,
-    title: string, titleColor: 'red' | 'blue',
+    age: number,
+
     currentPoints: number,
     accumulatedPoints: number,
-    leftPointsForNextLevel: number,
-    description: string,
-    skills: {
-        learnSkills: skillInterface[], 
-        teachSkills: skillInterface[]
-    },
-    pictures: string[],
-    portfolioVideoLink: string,
+    level: number,
+    evolutionStatus: "Noob" | "Bloom" | "Seasoned" | "Expert"
+    profilePicture: string,
+    profileDescription : string,
+
+    availablility: "Online" | "InPerson" | "Both"
+    generalRate: number,
+    doneAppointmentsNumber: number,
+    
+    portfolioVideo: string,
     portfolioLinks: {
-        linkId: string,
-        label: string, 
+        id: string,
+        label: string,
         link: string
-    }[]
+    }[],
+    pictures: string[],
+
+    createdAt: Date,
+    updateAt: Date,
+
+    choosedTeachingSkills: ChoosedSkillInterface[],
+    choosedLearningSkills: ChoosedSkillInterface[],
+
+    asInvitorConversationIds: string[],
+    asInvitedConversationIds: string[],
+    blockedUsersIds: string[],
+    blockedByIds: string[],
+
+    asInvitorAppointmentsIds: string[],
+    asInvitedAppointmentsIds: string[],
+
+    notificationsIds: string[]
 }
