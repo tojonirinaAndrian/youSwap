@@ -1,48 +1,44 @@
 'use client';
-import skillInterface, { rawSkillInterface } from "@/src/types/skillsType";
-import profileInterface from "@/src/types/userProfilesType";
+import ChoosedSkillInterface from "@/src/types/skillsType";
+import { SkillInterface } from "@/src/types/skillsType";
+import userInterface from "@/src/types/userProfilesType";
 import { X, Search, FileWarning, MarsStroke, MailWarning } from "lucide-react";
 import { useState } from "react";
+import uuid from "react-uuid";
 
 interface addNewSkillModalProps {
     setNewSkillOpen: (arg0: boolean) => void,
     whereIsSkills: 'teach' | "learn",
-    setProfileState: (arg0: profileInterface) => void,
-    profileState: profileInterface,
+    setProfileState: (arg0: userInterface) => void,
+    profileState: userInterface,
 }
 
 export default function AddNewSkillModal (props: addNewSkillModalProps) {
-    const [newSkillsList, setNewSkillsList] = useState<skillInterface[]> (
-        props.whereIsSkills === "learn" ? props.profileState.skills.learnSkills
-        : props.profileState.skills.teachSkills
+    const [newSkillsList, setNewSkillsList] = useState<ChoosedSkillInterface[]> (
+        props.whereIsSkills === "learn" ? props.profileState.choosedLearningSkills
+        : props.profileState.choosedTeachingSkills
     );
     const handleDeleteSkill = (skillToDeleteId: string) => {
-        const mockSkills: skillInterface[] = [];
+        const mockSkills: ChoosedSkillInterface[] = [];
         if (props.whereIsSkills === 'learn') {
-            props.profileState.skills.learnSkills.map((skill) => {
-                if (skill.skillId !== skillToDeleteId) {
+            props.profileState.choosedLearningSkills.map((skill) => {
+                if (skill.id !== skillToDeleteId) {
                     mockSkills.push(skill)
                 }
             })
             props.setProfileState({
                 ...props.profileState,
-                skills : {
-                    teachSkills : props.profileState.skills.teachSkills,
-                    learnSkills : mockSkills
-                }
+                choosedLearningSkills: mockSkills
             })
         } else {
-            props.profileState.skills.teachSkills.map((skill) => {
-                if (skill.skillId !== skillToDeleteId) {
+            props.profileState.choosedTeachingSkills.map((skill) => {
+                if (skill.id !== skillToDeleteId) {
                     mockSkills.push(skill)
                 }
             })
             props.setProfileState({
                 ...props.profileState,
-                skills : {
-                    learnSkills : props.profileState.skills.learnSkills,
-                    teachSkills : mockSkills
-                }
+                choosedTeachingSkills: mockSkills
             })
         }
         setNewSkillsList(mockSkills);
@@ -51,33 +47,25 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
         if (props.whereIsSkills === 'learn') {
             props.setProfileState({
                 ...props.profileState,
-                skills : {
-                    ...props.profileState.skills,
-                    learnSkills : [
-                        ...newSkillsList
-                    ]
-                }
+                choosedLearningSkills: newSkillsList
             })
         } else {
             props.setProfileState({
                 ...props.profileState,
-                skills : {
-                    ...props.profileState.skills,
-                    teachSkills : [
-                        ...newSkillsList
-                    ]
-                }
+                choosedTeachingSkills: newSkillsList
             })
         }
         props.setNewSkillOpen(false);
     }
 
-    function handleOnSkillClick (skill: rawSkillInterface) {
+    function handleOnSkillClick (skill: SkillInterface) {
         setNewSkillsList ([
             ...newSkillsList, 
             {
-                ...skill,
-                level: 'unset'
+                id : uuid(),
+                skillItself: skill,
+                state: props.whereIsSkills==="learn" ? "UserIsLearning" : "UserIsTeaching",
+                proficiency: 'Unset'
             }
         ])
     }
@@ -97,12 +85,12 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
                     <p className="text-black/70">Currently choosed skills :</p>
                     <div className="flex gap-2">
                         {newSkillsList.map((skill) => {
-                            return <div className="relative" key={skill.skillId}>
+                            return <div className="relative" key={skill.id}>
                                 <div className="filledStyle !inline-block !cursor-auto">
-                                    {skill.name}
+                                    {skill.skillItself.name}
                                 </div>
                                 <div 
-                                onClick={() => handleDeleteSkill(skill.skillId)}
+                                onClick={() => handleDeleteSkill(skill.id)}
                                 className="absolute -top-1 -right-1 cursor-pointer bg-red-200 rounded-[5px] p-0.5 text-red-700 border-red-500 hover:bg-red-300"
                                 >
                                     <X size={12}/>

@@ -13,21 +13,17 @@ export default function ProfileView () {
                 </div>
                 <div className="flex flex-col justify-center ">
                     <UserState
-                        pseudo={userProfile.pseudo}
-                        level={userProfile.level}
-                        title={userProfile.title}
-                        fullName={userProfile.fullName}
-                        titleColor={userProfile.titleColor}
-                        points={userProfile.currentPoints}
+                        isInSidebar = {false}
+                        user={userProfile}
                     />
                 </div>
             </div>
             <div className="w-full border-1 border-blueDianne/50 grid grid-cols-2 rounded-md">
                 <div className="border-r-1 border-blueDianne/50 p-5 text-right">
-                    Helped people
+                    Appointments Done
                 </div>
                 <div className="p-5">
-                    {userProfile.helpedPeople}
+                    {userProfile.doneAppointmentsNumber}
                 </div>
                 <div className="border-r-1 border-t-1 border-blueDianne/50 p-5 text-right">
                     Accumulated points
@@ -38,14 +34,11 @@ export default function ProfileView () {
                 <div className="border-r-1 border-t-1 border-blueDianne/50 p-5 text-right">
                     {`Next level`}
                 </div>
-                <div className="p-5 border-t-1 border-blueDianne/50">
-                    {userProfile.leftPointsForNextLevel} points until lv.{userProfile.level + 1}
-                </div>
             </div>
             <div className="flex justify-center w-full">
                 <div className="max-w-[55vw] flex flex-col gap-2 p-5 rounded-md">
                     <h2 className="text-center">
-                        {`"${userProfile.description}"`}
+                        {`"${userProfile.profileDescription}"`}
                     </h2>
                     <p className="ml-auto italic text-blueDianne">
                         ~ {userProfile.pseudo} ~
@@ -66,32 +59,32 @@ export default function ProfileView () {
                 <div className="flex gap-2 *:p-5">
                     <div className="rounded-md border w-[70%] border-blueDianne/50 space-x-2 space-y-2 *:p-2 *:border-1 *:h-fit *:inline-block *:rounded-md">
                         {(whereIsSkills === 'learn' && <>
-                            {(userProfile.skills.learnSkills.map((skill, i) => {
+                            {(userProfile.choosedLearningSkills.map((skill, i) => {
                                 let color: "yellow" | "green" | "red";
-                                if (skill.level === 'beginner') {
+                                if (skill.proficiency === 'Beginner') {
                                     color = "green"
-                                } else if (skill.level === 'advanced') { 
+                                } else if (skill.proficiency === 'Advanced') { 
                                     color = "red" 
                                 } else { 
                                     color = "yellow"
                                 }
                                 return <div key={i} className={`bg-${color}-200 border-${color}-300 text-${color}-700`}>
-                                    {skill.name}
+                                    {skill.skillItself.name}
                                 </div>
                             }))}
                         </>)}
                         {(whereIsSkills === 'teach' && <>
-                            {(userProfile.skills.teachSkills.map((skill, i) => {
+                            {(userProfile.choosedTeachingSkills.map((skill, i) => {
                                 let color: "yellow" | "green" | "red";
-                                if (skill.level === 'beginner') {
+                                if (skill.proficiency === 'Beginner') {
                                     color = "green"
-                                } else if (skill.level === 'advanced') { 
+                                } else if (skill.proficiency === 'Advanced') { 
                                     color = "red" 
                                 } else { 
                                     color = "yellow" 
                                 }
                                 return <div key={i} className={`text-${color}-700 bg-${color}-200 border-${color}-300`}>
-                                    {skill.name}
+                                    {skill.skillItself.name}
                                 </div>
                             }))}
                         </>)}

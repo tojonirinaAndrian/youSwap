@@ -1,10 +1,9 @@
 
 export default interface ChoosedSkillInterface {
     id: string,
-    skillId: string,
-    name: string, 
+    skillItself: SkillInterface,
     proficiency: 'Advanced' | "Intermediate" | "Beginner" | "Unset"
-    state: "UserIsTeaching" | "UserIsLearning"
+    state: "UserIsTeaching" | "UserIsLearning",
 };
 
 export interface SkillInterface {

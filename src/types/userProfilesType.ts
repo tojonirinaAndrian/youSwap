@@ -4,15 +4,15 @@ export default interface userInterface {
     id: string,
     email: string,
 
-    firstName: string,
-    secondName: string,
+    fullName: string,
     pseudo: string,
     age: number,
 
     currentPoints: number,
     accumulatedPoints: number,
     level: number,
-    evolutionStatus: "Noob" | "Bloom" | "Seasoned" | "Expert"
+    evolutionStatus: "Noob" | "Bloom" | "Seasoned" | "Expert",
+    titleColor: "blue" | "yellow" | "orange" | "red",
     profilePicture: string,
     profileDescription : string,
 

@@ -7,6 +7,7 @@ import Link from "next/link";
 import SettingsModal from "./settingsModal";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { useGlobalStore } from "@/store/use-global-store";
 
 interface sidebarElementProps {
     label: string,
@@ -33,6 +34,7 @@ export default function Sidebar() {
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
     const router = useRouter();
+    const { userProfile } = useGlobalStore ();
 
     return (<>
         {isLoggingOut && <LogOutModal setIsLoggingOut={setIsLoggingOut}/>}
@@ -40,11 +42,8 @@ export default function Sidebar() {
         <div className="w-full space-y-2 h-full flex flex-col">
             <Link href={"/"} className="font-medium px-6 py-5 rounded-xl bg-lightCream">YouSwap</Link>
             <UserState 
-                pseudo="Pseudo"
-                level={0} 
-                points={0} 
-                title="Noob"
-                titleColor="blue"
+                isInSidebar={true}
+                user={userProfile}
             />
             <div className="p-2 rounded-xl bg-lightCream h-full">
                 <div className="*:py-3 *:cursor-pointer *:px-4 *:rounded-md *:hover:bg-blueDianne/10 *:hover:text-blueDianne space-y-1 *:flex *:gap-2 *:w-full *:font-medium">

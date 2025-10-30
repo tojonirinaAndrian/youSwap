@@ -11,7 +11,7 @@ export default interface ConversationInterface {
 export interface MessageInterface {
     id: string,
     sentById: string,
-    TargetId: string,
+    targetId: string,
     createdAt: Date,
     content: string,
     reactions: ReactionInterface[],
