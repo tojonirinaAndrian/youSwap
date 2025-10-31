@@ -15,12 +15,17 @@ export default function ModifyProfile (props: {
     const { userProfile, setUserProfile } = useGlobalStore();
     const [activeLearnSkillIndex, setActiveLearnSkillIndex] = useState<number>(0)
     const [activeTeachSkillIndex, setActiveTeachSkillIndex] = useState<number>(0)
+    const initialState = userProfile;
     const [whereIsSkills, setWhereIsSkills] = useState<'learn' | 'teach'> ('teach');
-    const [profileState, setProfileState] = useState<userInterface>(userProfile);
+    const [profileState, setProfileState] = useState<userInterface>({...userProfile});
     const [newSkillModalOpen, setNewSkillModalOpen] = useState<boolean>(false);
-    const handleSave = ():void => {
+    const handleSave = (): void => {
         // savingStuff: saving the profileState to the actual database then the View would call its specific id...
         setUserProfile(profileState);
+        props.setWhereIsProfile('view');
+    }
+    const handleCancel = () => {
+        setProfileState(initialState);
         props.setWhereIsProfile('view');
     }
     const handleDeleteSkill = (skillToDeleteId: string) => {
@@ -47,12 +52,26 @@ export default function ModifyProfile (props: {
             })
         }
     }
+
+    const handleChangeSkillProficiency = (
+        proficiency: "Advanced" | "Beginner" | "Intermediate", 
+    ) => {
+        const mockSkills = whereIsSkills === "learn" ? profileState.choosedLearningSkills : profileState.choosedTeachingSkills
+        const activeSkill = whereIsSkills === "learn" ? activeLearnSkillIndex : activeTeachSkillIndex
+        mockSkills[activeSkill].proficiency = proficiency
+        if (whereIsSkills === "learn") setProfileState({...profileState, choosedLearningSkills : mockSkills})
+        else setProfileState({...profileState, choosedTeachingSkills : mockSkills })
+        console.log("learning")
+        console.log(userProfile.choosedLearningSkills)
+        console.log("teaching")
+        console.log(userProfile.choosedTeachingSkills)
+    }
     return <>
         <div className="gap-2 flex flex-col h-full overflow-auto">
             <div className='space-y-10'>
-                <div className='space-y-2'>
-                    <div className='flex gap-5'>
-                        <div className="w-40 h-40 bg-slate-500 rounded-full flex">
+                <div className='flex flex-col gap-2'>
+                    <div className='flex gap-5 mx-auto'>
+                        <div className="w-40 h-40 bg-slate-500 rounded-full flex cursor-pointer">
                             <div className='m-auto flex flex-col text-white max-w-2/3 text-center'>
                                 <Plus size={32} className='mx-auto'/>
                                 <p>Add a profile picture</p>
@@ -161,39 +180,30 @@ export default function ModifyProfile (props: {
                                             <div 
                                             onClick={() => {
                                                 if (profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency !== "Advanced") {
-                                                    const mock = profileState.choosedLearningSkills;
-                                                    mock[activeLearnSkillIndex].proficiency = 'Advanced';
-                                                    setProfileState({
-                                                        ...profileState,
-                                                        choosedLearningSkills : mock
-                                                    })
+                                                    console.log("HELLOWOW!")
+                                                    handleChangeSkillProficiency("Advanced");
+                                                    console.log("HELLOWOW!")
                                                 }
                                             }}
                                             className={(profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency === "Advanced" ? " outline-red-500 " : " outline-transparent ") + ' outline-3 border-red-300 bg-red-200 text-red-700'}>Advanced</div>
                                             <div 
                                             onClick={() => {
                                                 if (profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency !== "Intermediate") {
-                                                    const mock = profileState.choosedLearningSkills;
-                                                    mock[activeLearnSkillIndex].proficiency = 'Intermediate';
-                                                    setProfileState({
-                                                        ...profileState,
-                                                        choosedLearningSkills: mock
-                                                    })
+                                                    handleChangeSkillProficiency("Intermediate");
                                                 }
                                             }}
-                                            className={(profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency === "Intermediate" ? "outline-yellow-500 " : " outline-transparent ") + ' outline-3 border-yellow-300 bg-yellow-200 text-yellow-700'}>Intermediate</div>
+                                            className={(profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency === "Intermediate" ? "outline-yellow-500 " : " outline-transparent ") + ' outline-3 border-yellow-300 bg-yellow-200 text-yellow-700'}>
+                                                Hello
+                                                Intermediate</div>
                                             <div 
                                             onClick={() => {
                                                 if (profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency !== "Beginner") {
-                                                    const mock = profileState.choosedLearningSkills;
-                                                    mock[activeLearnSkillIndex].proficiency = 'Beginner';
-                                                    setProfileState({
-                                                        ...profileState,
-                                                        choosedLearningSkills: mock
-                                                    })
+                                                    handleChangeSkillProficiency("Beginner");
                                                 }
                                             }}
-                                            className={(profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency === "Beginner" ? "outline-green-500 " : " outline-transparent ") + ' outline-3 border-green-300 bg-green-200 text-green-700'}>Beginner</div>
+                                            className={(profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency === "Beginner" ? "outline-green-500 " : " outline-transparent ") + ' outline-3 border-green-300 bg-green-200 text-green-700'}>
+                                                I am Beginner
+                                            </div>
                                         </div>
                                     </> : <>
                                         <p className='rounded-md w-full px-5 py-3 border-red-300 text-center text-red-700 bg-red-100'>Please, add at least one skill.</p>
@@ -274,7 +284,6 @@ export default function ModifyProfile (props: {
                                                     setProfileState({
                                                         ...profileState,
                                                         choosedTeachingSkills: mock
-                                                        
                                                     })
                                                 }
                                             }}
@@ -353,7 +362,8 @@ export default function ModifyProfile (props: {
                                     label: "", link: "", id: newUuid
                                 })
                                 setProfileState({
-                                    ...profileState, portfolioLinks: mock
+                                    ...profileState, 
+                                    portfolioLinks: mock
                                 })
                             }}
                             className='cursor-pointer w-full px-5 py-3 flex bg-blueDianne/10 hover:bg-blueDianne/25 hover:text-blueDianne gap-2 border rounded-md  text-blueDianne/70 justify-center'>

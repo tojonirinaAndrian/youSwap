@@ -2,7 +2,7 @@
 import ChoosedSkillInterface from "@/src/types/skillsType";
 import { SkillInterface } from "@/src/types/skillsType";
 import userInterface from "@/src/types/userProfilesType";
-import { X, Search, FileWarning, MarsStroke, MailWarning } from "lucide-react";
+import { X, Search} from "lucide-react";
 import { useState } from "react";
 import uuid from "react-uuid";
 
@@ -18,6 +18,7 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
         props.whereIsSkills === "learn" ? props.profileState.choosedLearningSkills
         : props.profileState.choosedTeachingSkills
     );
+    const [skillsPropositions, setSkillsPropositions] = useState<SkillInterface[]> ([])
     const handleDeleteSkill = (skillToDeleteId: string) => {
         const mockSkills: ChoosedSkillInterface[] = [];
         if (props.whereIsSkills === 'learn') {
@@ -26,19 +27,11 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
                     mockSkills.push(skill)
                 }
             })
-            props.setProfileState({
-                ...props.profileState,
-                choosedLearningSkills: mockSkills
-            })
         } else {
             props.profileState.choosedTeachingSkills.map((skill) => {
                 if (skill.id !== skillToDeleteId) {
                     mockSkills.push(skill)
                 }
-            })
-            props.setProfileState({
-                ...props.profileState,
-                choosedTeachingSkills: mockSkills
             })
         }
         setNewSkillsList(mockSkills);
@@ -58,13 +51,29 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
         props.setNewSkillOpen(false);
     }
 
+    function handleCancel () {
+        props.setNewSkillOpen(false);
+    }
+
+    function handleOnCategoryClick (categoryName: string) {
+        //looking for skills with the specific category
+        // const result = skillInterface[].where{categoryName ~= categoryName}
+        // setSkillsPropositions(result)
+    }
+
+    function handleOnSearchInput (query: string) {
+        //looking for skills with that category name or name
+        // const result = skillInterface[].where{categoryName has query || name has query}
+    }
+
     function handleOnSkillClick (skill: SkillInterface) {
         setNewSkillsList ([
             ...newSkillsList, 
             {
                 id : uuid(),
+                userId: props.profileState.id,
                 skillItself: skill,
-                state: props.whereIsSkills==="learn" ? "UserIsLearning" : "UserIsTeaching",
+                state: props.whereIsSkills === "learn" ? "UserIsLearning" : "UserIsTeaching",
                 proficiency: 'Unset'
             }
         ])
@@ -75,7 +84,7 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
             <div className="m-auto bg-white p-5 rounded-xl space-y-5 w-full md:w-[80dvw] z-2 max-h-full overflow-auto">
                 <div className="w-full flex justify-end">
                     <div className="cursor-pointer"
-                    onClick={() => props.setNewSkillOpen(false)}
+                    onClick={() => handleCancel()}
                     >
                         <X size={20}/>
                     </div>
@@ -120,16 +129,16 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
                 <div className="flex *:w-full *:rounded-md *:px-5 *:py-3 gap-2 *:cursor-pointer">
                     <button 
                         className="hover:bg-green-200 bg-green-100 text-green-700"
-                        onClick={() => {handleDoneChoosing()}}
+                        onClick={() => handleDoneChoosing()}
                     >Done choosing</button>
                     <button 
                         className="hover:bg-blueDianne/20 bg-blueDianne/5 text-blueDianne"
-                        onClick={() => {props.setNewSkillOpen(false)}}
+                        onClick={() => handleCancel()}
                     >Cancel</button>
                 </div>
             </div>
             <div className="w-full h-screen fixed top-0 left-0 bg-black/50"
-                onClick={() => props.setNewSkillOpen(false)}
+                onClick={() => handleCancel()}
             ></div>
         </div>
     </>

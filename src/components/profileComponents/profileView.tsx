@@ -20,7 +20,7 @@ export default function ProfileView () {
             </div>
             <div className="w-full border-1 border-blueDianne/50 grid grid-cols-2 rounded-md">
                 <div className="border-r-1 border-blueDianne/50 p-5 text-right">
-                    Appointments Done
+                    Done Appointments
                 </div>
                 <div className="p-5">
                     {userProfile.doneAppointmentsNumber}
@@ -30,9 +30,6 @@ export default function ProfileView () {
                 </div>
                 <div className="p-5 border-t-1 border-blueDianne/50">
                     {userProfile.accumulatedPoints}
-                </div>
-                <div className="border-r-1 border-t-1 border-blueDianne/50 p-5 text-right">
-                    {`Next level`}
                 </div>
             </div>
             <div className="flex justify-center w-full">

@@ -27,7 +27,9 @@ export default function ProfilePage () {
                 ) : (
                     <>
                     <button className="borderedButton"
-                    onClick={() => setWhereIsProfile('view')}
+                    onClick={() => {
+                        setWhereIsProfile('view')
+                    }}
                     >
                         Cancel
                     </button>

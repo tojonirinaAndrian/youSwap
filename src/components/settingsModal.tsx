@@ -4,6 +4,7 @@ import ColorSchemeModalChoice from "./colorSchemeModalChoice";
 interface settingsModalProps {
     setIsSettingsModalOpen: (arg0: boolean) => void
 }
+
 export default function SettingsModal (props: settingsModalProps) {
     const [isColorSchemeModalOpen, setIsColorSchemeModalOpen] = useState<boolean>(false);
     return (<>

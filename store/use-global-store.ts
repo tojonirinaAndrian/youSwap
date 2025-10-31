@@ -61,6 +61,7 @@ export const useGlobalStore = create<useStoreProps>() (
 					{ 	
 						id: "1", 
 						proficiency: "Beginner",
+						userId: "1",
 						state: "UserIsLearning",
 						skillItself: {
 							id: "1",
@@ -69,6 +70,7 @@ export const useGlobalStore = create<useStoreProps>() (
 						}
 					},
 					{ 	
+						userId: "1",
 						id: "2", 
 						proficiency: "Beginner",
 						state: "UserIsLearning",
@@ -81,7 +83,8 @@ export const useGlobalStore = create<useStoreProps>() (
 				],
 				choosedTeachingSkills: [
 					{ 	
-						id: "3", 
+						id: "3",
+						userId: "1",
 						proficiency: "Advanced",
 						state: "UserIsTeaching",
 						skillItself: {
@@ -92,6 +95,7 @@ export const useGlobalStore = create<useStoreProps>() (
 					},
 					{ 	
 						id: "4", 
+						userId: "1",
 						proficiency: "Advanced",
 						state: "UserIsTeaching",
 						skillItself: {
@@ -102,6 +106,7 @@ export const useGlobalStore = create<useStoreProps>() (
 					},
 					{ 	
 						id: "5", 
+						userId: "1",
 						proficiency: "Intermediate",
 						state: "UserIsTeaching",
 						skillItself: {
