@@ -15,7 +15,6 @@ export default function ModifyProfile (props: {
     const { userProfile, setUserProfile } = useGlobalStore();
     const [activeLearnSkillIndex, setActiveLearnSkillIndex] = useState<number>(0)
     const [activeTeachSkillIndex, setActiveTeachSkillIndex] = useState<number>(0)
-    const initialState = userProfile;
     const [whereIsSkills, setWhereIsSkills] = useState<'learn' | 'teach'> ('teach');
     const [profileState, setProfileState] = useState<userInterface>({...userProfile});
     const [newSkillModalOpen, setNewSkillModalOpen] = useState<boolean>(false);
@@ -24,9 +23,31 @@ export default function ModifyProfile (props: {
         setUserProfile(profileState);
         props.setWhereIsProfile('view');
     }
-    const handleCancel = () => {
-        setProfileState(initialState);
-        props.setWhereIsProfile('view');
+    const handleDeletePortfolioLink = (linkId: string) => {
+        const mock: {link: string,label: string, id: string}[] = [];
+        profileState.portfolioLinks.map (mockLink => {
+            if (mockLink.id !== linkId) {
+                mock.push(mockLink)
+            }
+        });
+        setProfileState ({
+            ...profileState,
+            portfolioLinks: mock
+        })
+    }
+    const handleAddPortfolioLink = () => {
+        const mockLinks: {
+            id: string,
+            label: string, link: string
+        }[] = [ ...profileState.portfolioLinks ];
+        const newUuid: string = uuid();
+        mockLinks.push({
+            label: "", link: "", id: newUuid
+        })
+        setProfileState({
+            ...profileState,
+            portfolioLinks: mockLinks
+        })
     }
     const handleDeleteSkill = (skillToDeleteId: string) => {
         const mockSkills: ChoosedSkillInterface[] = [];
@@ -52,19 +73,29 @@ export default function ModifyProfile (props: {
             })
         }
     }
-
     const handleChangeSkillProficiency = (
-        proficiency: "Advanced" | "Beginner" | "Intermediate", 
+        newProficiency: "Advanced" | "Beginner" | "Intermediate", 
     ) => {
-        const mockSkills = whereIsSkills === "learn" ? profileState.choosedLearningSkills : profileState.choosedTeachingSkills
-        const activeSkill = whereIsSkills === "learn" ? activeLearnSkillIndex : activeTeachSkillIndex
-        mockSkills[activeSkill].proficiency = proficiency
-        if (whereIsSkills === "learn") setProfileState({...profileState, choosedLearningSkills : mockSkills})
-        else setProfileState({...profileState, choosedTeachingSkills : mockSkills })
-        console.log("learning")
-        console.log(userProfile.choosedLearningSkills)
-        console.log("teaching")
-        console.log(userProfile.choosedTeachingSkills)
+        let mockSkills: ChoosedSkillInterface[]
+        let activeSkillIndex: number
+        if (whereIsSkills === "learn") {
+            mockSkills = [...profileState.choosedLearningSkills];
+            activeSkillIndex = activeLearnSkillIndex;            
+            mockSkills[activeSkillIndex] = {
+                ...mockSkills[activeSkillIndex],
+                proficiency: newProficiency
+            };
+            setProfileState({...profileState, choosedLearningSkills : mockSkills})
+        }
+        else {
+            mockSkills = [...profileState.choosedTeachingSkills];
+            activeSkillIndex = activeTeachSkillIndex;
+            mockSkills[activeSkillIndex] = {
+                ...mockSkills[activeSkillIndex],
+                proficiency: newProficiency
+            };
+            setProfileState({...profileState, choosedTeachingSkills : mockSkills})
+        }
     }
     return <>
         <div className="gap-2 flex flex-col h-full overflow-auto">
@@ -180,9 +211,7 @@ export default function ModifyProfile (props: {
                                             <div 
                                             onClick={() => {
                                                 if (profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency !== "Advanced") {
-                                                    console.log("HELLOWOW!")
                                                     handleChangeSkillProficiency("Advanced");
-                                                    console.log("HELLOWOW!")
                                                 }
                                             }}
                                             className={(profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency === "Advanced" ? " outline-red-500 " : " outline-transparent ") + ' outline-3 border-red-300 bg-red-200 text-red-700'}>Advanced</div>
@@ -193,7 +222,6 @@ export default function ModifyProfile (props: {
                                                 }
                                             }}
                                             className={(profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency === "Intermediate" ? "outline-yellow-500 " : " outline-transparent ") + ' outline-3 border-yellow-300 bg-yellow-200 text-yellow-700'}>
-                                                Hello
                                                 Intermediate</div>
                                             <div 
                                             onClick={() => {
@@ -202,7 +230,7 @@ export default function ModifyProfile (props: {
                                                 }
                                             }}
                                             className={(profileState.choosedLearningSkills[activeLearnSkillIndex].proficiency === "Beginner" ? "outline-green-500 " : " outline-transparent ") + ' outline-3 border-green-300 bg-green-200 text-green-700'}>
-                                                I am Beginner
+                                                Beginner
                                             </div>
                                         </div>
                                     </> : <>
@@ -255,36 +283,21 @@ export default function ModifyProfile (props: {
                                             <div 
                                             onClick={() => {
                                                 if (profileState.choosedTeachingSkills[activeTeachSkillIndex].proficiency !== "Advanced") {
-                                                    const mock = profileState.choosedTeachingSkills;
-                                                    mock[activeTeachSkillIndex].proficiency = 'Advanced';
-                                                    setProfileState({
-                                                        ...profileState,
-                                                        choosedTeachingSkills: mock
-                                                    })
+                                                    handleChangeSkillProficiency("Advanced")                                
                                                 }
                                             }}
                                             className={(profileState.choosedTeachingSkills[activeTeachSkillIndex].proficiency === "Advanced" ? " outline-red-500 " : " outline-transparent ") + ' outline-3 border-red-300 bg-red-200 text-red-700'}>Advanced</div>
                                             <div 
                                             onClick={() => {
                                                 if (profileState.choosedTeachingSkills[activeTeachSkillIndex].proficiency !== "Intermediate") {
-                                                    const mock = profileState.choosedTeachingSkills;
-                                                    mock[activeTeachSkillIndex].proficiency = 'Intermediate';
-                                                    setProfileState({
-                                                        ...profileState,
-                                                        choosedTeachingSkills: mock
-                                                    })
+                                                    handleChangeSkillProficiency("Intermediate")                                
                                                 }
                                             }}
                                             className={(profileState.choosedTeachingSkills[activeTeachSkillIndex].proficiency === "Intermediate" ? " outline-yellow-500 " : " outline-transparent ") + ' outline-3 border-yellow-300 bg-yellow-200 text-yellow-700'}>Intermediate</div>
                                             <div 
                                             onClick={() => {
                                                 if (profileState.choosedTeachingSkills[activeTeachSkillIndex].proficiency !== "Beginner") {
-                                                    const mock = profileState.choosedTeachingSkills;
-                                                    mock[activeTeachSkillIndex].proficiency = 'Beginner';
-                                                    setProfileState({
-                                                        ...profileState,
-                                                        choosedTeachingSkills: mock
-                                                    })
+                                                    handleChangeSkillProficiency("Beginner")                                
                                                 }
                                             }}
                                             className={(profileState.choosedTeachingSkills[activeTeachSkillIndex].proficiency === "Beginner" ? " outline-green-500 " : " outline-transparent ") + ' outline-3 border-green-300 bg-green-200 text-green-700'}>Beginner</div>
@@ -339,16 +352,7 @@ export default function ModifyProfile (props: {
                             />
                             <button className='bg-red-100 flex gap-2 hover:bg-red-200 text-red-700 p-2 rounded-md items-center cursor-pointer'
                             onClick={() => {
-                                const mock: {link: string,label: string, id: string}[] = [];
-                                profileState.portfolioLinks.map (mockLink => {
-                                    if (mockLink.id !== link.id) {
-                                        mock.push(mockLink)
-                                    }
-                                });
-                                setProfileState ({
-                                    ...profileState,
-                                    portfolioLinks: mock
-                                })
+                                handleDeletePortfolioLink(link.id)
                             }}
                             ><Trash size={18}/>Delete</button>
                         </div>
@@ -356,15 +360,7 @@ export default function ModifyProfile (props: {
                     {(profileState.portfolioLinks.length < 5) && <>
                         <div 
                             onClick={() => {
-                                const mock = profileState.portfolioLinks;
-                                const newUuid = uuid();
-                                mock.push({
-                                    label: "", link: "", id: newUuid
-                                })
-                                setProfileState({
-                                    ...profileState, 
-                                    portfolioLinks: mock
-                                })
+                                handleAddPortfolioLink()
                             }}
                             className='cursor-pointer w-full px-5 py-3 flex bg-blueDianne/10 hover:bg-blueDianne/25 hover:text-blueDianne gap-2 border rounded-md  text-blueDianne/70 justify-center'>
                             <Plus />
