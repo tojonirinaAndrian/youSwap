@@ -2,11 +2,27 @@
 import { useState } from "react";
 import UserState from "../userState";
 import { useGlobalStore } from "@/store/use-global-store";
+import { PencilLine, User } from "lucide-react";
 
-export default function ProfileView () {
+export default function ProfileView (props: {setWhereIsProfile: (arg0: "view" | "modify") => void}) {
     const { userProfile } = useGlobalStore ();
     const [whereIsSkills, setWhereIsSkills] = useState<'learn' | 'teach'> ('teach');
     return <>
+        <div className="flex justify-between">
+            <div className="flex gap-2 my-auto">
+                <User /><h3>Profile</h3>
+            </div>
+            <div>
+                <button className="borderedButton flex gap-2"
+                onClick={() => {
+                    props.setWhereIsProfile ('modify')
+                }}
+                >
+                    <PencilLine size={18} className="my-auto"/>
+                    Modify
+                </button>
+            </div>
+        </div>
         <div className="gap-2 flex flex-col h-full overflow-auto space-y-5">
             <div className="flex gap-3 bg-blueDianne/10 p-3 w-fit rounded-2xl mx-auto">
                 <div className="relative rounded-full bg-red-500 h-28 w-28 flex">

@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import profileInterface from '@/src/types/userProfilesType';
-import { X, Plus, Trash } from 'lucide-react';
+import { X, Plus, Trash, User } from 'lucide-react';
 import AddNewSkillModal from './addNewSkillModal';
 import { useGlobalStore } from '@/store/use-global-store';
 import skillInterface from '@/src/types/skillsType';
@@ -98,6 +98,29 @@ export default function ModifyProfile (props: {
         }
     }
     return <>
+        <div className="flex justify-between">
+            <div className="flex gap-2 my-auto">
+                <User /><h3>Profile</h3>
+            </div>
+            <div>
+                <div className="flex gap-2">
+                    <button className="filledButton"
+                    onClick={() => {
+                        handleSave();
+                    }}
+                    >
+                        Save changes
+                    </button>
+                    <button className="borderedButton"
+                    onClick={() => {
+                        props.setWhereIsProfile('view')
+                    }}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
         <div className="gap-2 flex flex-col h-full overflow-auto">
             <div className='space-y-10'>
                 <div className='flex flex-col gap-2'>
