@@ -60,12 +60,12 @@ export default function ProfileView (props: {setWhereIsProfile: (arg0: "view" | 
             </div>
             <div className="w-full space-y-2">
                 <div className="flex gap-2">
-                    <button className={(whereIsSkills==='teach' ? "filledStyle" : "borderedStyle")}
+                    <button className={(whereIsSkills==='teach' ? "filledStyle" : "unfilledStyle")}
                     onClick={() => setWhereIsSkills('teach')}                    
                     >{`I can teach`}</button>
                     <div className="w-[5px] out h-[5px] bg-blueDianne/50 my-auto rounded-full"></div>
 
-                    <button className={(whereIsSkills==='learn' ? "filledStyle" : "borderedStyle")}
+                    <button className={(whereIsSkills==='learn' ? "filledStyle" : "unfilledStyle")}
                     onClick={() => setWhereIsSkills('learn')}
                     >I want to learn</button>
                 </div>

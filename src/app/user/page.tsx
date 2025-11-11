@@ -31,27 +31,27 @@ export default function HomePage() {
         </div>
         <div className="h-full overflow-hidden flex flex-col gap-2">
             <div className="flex gap-2">
-                <button className={(whereAreMatches==='matches' ? "filledStyle" : "borderedStyle")}
+                <button className={(whereAreMatches==='matches' ? "filledStyle" : "unfilledStyle")}
                 onClick={() => setWhereAreMatches('matches')}
                 >{`Match(es)`}</button>
                 <div className="w-[5px] h-[5px] bg-blueDianne/50 my-auto rounded-full"></div>
 
-                <button className={(whereAreMatches==='teach' ? "filledStyle" : "borderedStyle")}
+                <button className={(whereAreMatches==='teach' ? "filledStyle" : "unfilledStyle")}
                 onClick={() => setWhereAreMatches('teach')}
                 >Teach</button>
                 <div className="w-[5px] h-[5px] bg-blueDianne/50 my-auto rounded-full"></div>
                 
-                <button className={(whereAreMatches==='learn' ? "filledStyle" : "borderedStyle")}
+                <button className={(whereAreMatches==='learn' ? "filledStyle" : "unfilledStyle")}
                 onClick={() => setWhereAreMatches('learn')}
                 >Learn from</button>
                 <div className="w-[5px] h-[5px] bg-blueDianne/50 my-auto rounded-full"></div>
                 
-                <button className={(whereAreMatches==='searchSomeone' ? "filledStyle" : "borderedStyle")}
+                <button className={(whereAreMatches==='searchSomeone' ? "filledStyle" : "unfilledStyle")}
                 onClick={() => setWhereAreMatches('searchSomeone')}
                 >Search someone</button>
                 <div className="w-[5px] h-[5px] bg-blueDianne/50 my-auto rounded-full"></div>
 
-                <button className={(whereAreMatches==='talkedTo' ? "filledStyle" : "borderedStyle")}
+                <button className={(whereAreMatches==='talkedTo' ? "filledStyle" : "unfilledStyle")}
                 onClick={() => setWhereAreMatches('talkedTo')}
                 >Talked to</button>
             </div>

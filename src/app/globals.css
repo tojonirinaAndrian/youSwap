@@ -42,15 +42,18 @@
 .container {
   @apply px-5 md:px-10
 }
-.filledButton {
-  @apply p-2 bg-blueDianne text-lightCream rounded-md px-3 cursor-pointer border-2 font-medium border-blueDianne hover:bg-transparent hover:text-blueDianne
-}
+
 .filledStyle {
   @apply p-2 bg-blueDianne text-lightCream px-4 cursor-pointer rounded-md
 }
-.borderedStyle {
-  @apply p-2 bg-transparent text-blueDianne rounded-md px-4 cursor-pointer
+.unfilledStyle {
+  @apply bg-transparent p-2 hover:bg-blueDianne/10 text px-4 cursor-pointer rounded-md
 }
+
+.filledButton {
+  @apply p-2 bg-blueDianne text-lightCream rounded-md px-3 cursor-pointer border-2 font-medium border-blueDianne hover:bg-transparent hover:text-blueDianne
+}
+
 .borderedButton {
   @apply p-2 bg-transparent text-blueDianne rounded-md px-3 cursor-pointer border-2 font-medium border-blueDianne hover:bg-blueDianne hover:text-lightCream
 }

@@ -176,11 +176,11 @@ export default function ModifyProfile (props: {
                         <p className='text-black/70'><span className='text-blue-500 font-medium'>Blue color</span> skills'level are still unset. Please, <span className='font-medium'>Change</span> them before saving.</p>
                     </div>
                     <div className="flex gap-2">
-                        <button className={(whereIsSkills==='teach' ? "filledStyle" : "borderedStyle")}
+                        <button className={(whereIsSkills==='teach' ? "filledStyle" : "unfilledStyle")}
                         onClick={() => setWhereIsSkills('teach')}                    
                         >{`I can teach`}</button>
                         <div className="w-[5px] h-[5px] bg-blueDianne/50 my-auto rounded-full"></div>
-                        <button className={(whereIsSkills==='learn' ? "filledStyle" : "borderedStyle")}
+                        <button className={(whereIsSkills==='learn' ? "filledStyle" : "unfilledStyle")}
                         onClick={() => setWhereIsSkills('learn')}
                         >I want to learn</button>
                     </div>
