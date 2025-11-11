@@ -1,12 +1,24 @@
 'use client';
+import { loginFunction } from "@/src/requests/authentification";
 import { useGlobalStore } from "@/store/use-global-store";
 import { useState } from "react";
 
 export default function LoginPage() {
     const { setWhereIsLoginRegisterPage } = useGlobalStore()
     const [seenPassword, setSeenPassword] = useState<boolean>(false);
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     const onSignupClick = () => {
         setWhereIsLoginRegisterPage('signUp');
+    }
+    const onLoggingIn = () => {
+        if (email.trim().length > 0 && password.trim().length > 0) {
+            //checking for it in the db
+            const returnedAnswer = loginFunction (email.trim(), password.trim());
+            console.log(returnedAnswer)
+        } else {
+            console.log("It won't work now. We should display an error lol!")
+        }
     }
     return (
         <>
@@ -29,7 +41,11 @@ export default function LoginPage() {
                         <label htmlFor="email" className="block">Email: *</label>
                         <input type="email" name="email" id="email" 
                         placeholder="Email" required
-                        className="border focus:border-black w-full rounded-md p-3"/>
+                        className="border focus:border-black w-full rounded-md p-3"
+                        onChange={(e) => {
+                            setEmail(e.target.value)
+                        }}
+                        />
                     </div>
                     <div className="space-y-1">
                         <label htmlFor="password" className="block">Password: *</label>
@@ -37,7 +53,11 @@ export default function LoginPage() {
                             <input  name="password" id="password"
                             type={seenPassword ? "text" : "password"}
                             placeholder="Password" required
-                            className="border focus:border-black w-full rounded-md p-3"/>
+                            className="border focus:border-black w-full rounded-md p-3"
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}
+                            />
                             <p className="text-sm my-auto cursor-pointer"
                             onClick={() => setSeenPassword(!seenPassword)}
                             >
@@ -55,11 +75,13 @@ export default function LoginPage() {
                 </div>
                 <p>You don't have an account yet ? Click <span
                 className="underline text-blueDianne cursor-pointer"
-                onClick={onSignupClick}
+                onClick={() => onSignupClick()}
                 >
                     Here
                 </span></p>
-                <button type="button" className="filledButton !w-full">Log in</button>                
+                <button type="button" className="filledButton !w-full"
+                onClick={() => onLoggingIn()}
+                >Log in</button>                
             </div>
         </>
     )
