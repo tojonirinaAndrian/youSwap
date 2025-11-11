@@ -8,18 +8,21 @@ export default function LoginPage() {
     const [seenPassword, setSeenPassword] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const onSignupClick = () => {
+
+    const onSignupClick = (): void => {
         setWhereIsLoginRegisterPage('signUp');
     }
-    const onLoggingIn = () => {
+    
+    const onLoggingIn = (): void => {
         if (email.trim().length > 0 && password.trim().length > 0) {
             //checking for it in the db
             const returnedAnswer = loginFunction (email.trim(), password.trim());
-            console.log(returnedAnswer)
+            // console.log(returnedAnswer)
         } else {
             console.log("It won't work now. We should display an error lol!")
         }
     }
+
     return (
         <>
             <div className="space-y-8 w-full">
