@@ -1,6 +1,6 @@
 
-export const loginFunction = async (email: string, password: string) => {
-    
+export const loginFunction = (email: string, password: string) => {
+
     return {
         email, password
     }
