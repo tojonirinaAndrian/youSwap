@@ -1,10 +1,8 @@
 'use client';
 import { useState } from 'react';
-import profileInterface from '@/src/types/userProfilesType';
 import { X, Plus, Trash, User } from 'lucide-react';
 import AddNewSkillModal from './addNewSkillModal';
 import { useGlobalStore } from '@/store/use-global-store';
-import skillInterface from '@/src/types/skillsType';
 import uuid from 'react-uuid';
 import userInterface from '@/src/types/userProfilesType';
 import ChoosedSkillInterface from '@/src/types/skillsType';
