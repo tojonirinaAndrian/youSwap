@@ -173,7 +173,7 @@ export default function ModifyProfile (props: {
                     <div className='space-y-0.5'>
                         <h3 className='text-blueDianne'>Skills</h3>
                         <p className="text-black/70">Choose from <span className='font-medium'>1 to 5</span> skills each for both teaching and learning.</p>
-                        <p className='text-black/70'><span className='text-blue-500 font-medium'>Blue color</span> skills'level are still unset. Please, <span className='font-medium'>Change</span> them before saving.</p>
+                        <p className="text-black/70"><span className='text-blue-500 font-medium'>Blue color</span> {`skills'level are still unset. Please,`} <span className='font-medium'>Change</span> them before saving.</p>
                     </div>
                     <div className="flex gap-2">
                         <button className={(whereIsSkills==='teach' ? "filledStyle" : "unfilledStyle")}

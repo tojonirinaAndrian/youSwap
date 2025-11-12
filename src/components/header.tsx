@@ -2,9 +2,9 @@
 import { useGlobalStore } from "@/store/use-global-store";
 import Link from "next/link"
 import { useRouter } from "next/navigation";
-const router = useRouter();
 
 export default function Header () {
+    const router = useRouter();
     const { setWhereIsLoginRegisterPage } = useGlobalStore();
     return <div className="fixed top-0 w-full p-5">
     <header className='flex justify-between'>

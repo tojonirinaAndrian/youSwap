@@ -76,7 +76,7 @@ export default function LoginPage() {
                         <p className="my-auto hover:underline cursor-pointer text-sm text-black/70">Forgot the password ?</p>
                     </div>
                 </div>
-                <p>You don't have an account yet ? Click <span
+                <p>You {`don't`} have an account yet ? Click <span
                 className="underline text-blueDianne cursor-pointer"
                 onClick={() => onSignupClick()}
                 >

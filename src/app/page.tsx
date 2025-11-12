@@ -12,7 +12,7 @@ export default function Page() {
 		<div className="w-full h-[100dvh] p-10 flex">
 			<div className="max-w-[70dvw] m-auto space-y-5 text-center">
 				<h1 className="!text-8xl">Learn, teach, improve.</h1>
-				<p>Teach someone a skill you know and learn a skill you don't in exchange.<br></br>We believe that everyone has something to share.</p>
+				<p>Teach someone a skill you know and learn a skill you {`don't`} in exchange.<br></br>We believe that everyone has something to share.</p>
 				<div className="flex gap-2 items-center justify-center">
 					<button className="filledButton" onClick={()=>{
 						setWhereIsLoginRegisterPage('signup');
