@@ -1,11 +1,10 @@
 'use client'
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useGlobalStore } from "@/store/use-global-store";
 import Header from "../components/header";
 export default function Page() {
 	const router = useRouter();
-    const { setWhereIsLoginRegisterPage, whereIsLoginRegisterPage } = useGlobalStore()
+    const { setWhereIsLoginRegisterPage } = useGlobalStore()
 
 	return(
 		<>
@@ -16,7 +15,7 @@ export default function Page() {
 				<p>Teach someone a skill you know and learn a skill you don't in exchange.<br></br>We believe that everyone has something to share.</p>
 				<div className="flex gap-2 items-center justify-center">
 					<button className="filledButton" onClick={()=>{
-						setWhereIsLoginRegisterPage('signUp');
+						setWhereIsLoginRegisterPage('signup');
 						router.push('/registerLogin');
 					}}>Sign up now</button>
 					<button className="borderedButton" onClick={()=>{

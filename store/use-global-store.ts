@@ -16,7 +16,7 @@ interface useStoreProps {
 export const useGlobalStore = create<useStoreProps>() (
 	persist (
 		(set, get) => ({
-			whereIsLoginRegisterPage : 'signUp',
+			whereIsLoginRegisterPage : 'signup',
 			isLoggedIn: false,
 			setWhereIsLoginRegisterPage : (text: string) => {
 				set(() => {

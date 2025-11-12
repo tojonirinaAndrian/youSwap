@@ -10,13 +10,13 @@ export default function LoginPage() {
     const [password, setPassword] = useState<string>("");
 
     const onSignupClick = (): void => {
-        setWhereIsLoginRegisterPage('signUp');
+        setWhereIsLoginRegisterPage('signup');
     }
     
     const onLoggingIn = (): void => {
         if (email.trim().length > 0 && password.trim().length > 0) {
             //checking for it in the db
-            const returnedAnswer = loginFunction (email.trim(), password.trim());
+            const answer = loginFunction (email.trim(), password.trim());
             // console.log(returnedAnswer)
         } else {
             console.log("It won't work now. We should display an error lol!")

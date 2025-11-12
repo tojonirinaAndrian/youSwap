@@ -2,7 +2,7 @@
 import { useGlobalStore } from "@/store/use-global-store";
 import { useState } from "react";
 
-export default function SignUpPage() {
+export default function SignupPage() {
     const { setWhereIsLoginRegisterPage } = useGlobalStore();
     const [seenPassword, setSeenPassword] = useState<boolean>(false);
     const [seenConfirmedPassword, setSeenConfirmedPassword] = useState<boolean>(false);

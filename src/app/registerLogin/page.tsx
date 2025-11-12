@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import LoginPage from "./login";
-import SignUpPage from "./signup";
+import SignupPage from "./signup";
 import { useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/use-global-store";
 import Link from 'next/link';
@@ -15,8 +15,8 @@ export default function Page() {
     function whereIsUser () {
         if (whereIsLoginRegisterPage === 'login') {
             return <LoginPage />
-        } else if (whereIsLoginRegisterPage === 'signUp') {
-            return <SignUpPage />
+        } else if (whereIsLoginRegisterPage === 'signup') {
+            return <SignupPage />
         } else if (whereIsLoginRegisterPage === 'infos') {
             return <InfosPage />
         } else if (whereIsLoginRegisterPage === 'skills') {

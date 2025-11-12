@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { env } from 'process';
 import userInterface from '../types/userProfilesType';
 
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 export const loginFunction = async (email: string, password: string) => {
     try {
-        const loggedInUser: userInterface = await axios.post(`${env.BACKEND_URL}/login`, {
+        const loggedInUser: userInterface = await axios.post(`${backendUrl}/login`, {
             email, password
         })
         return {
@@ -17,7 +17,7 @@ export const loginFunction = async (email: string, password: string) => {
 
 export const signupFunction = async (userInfos: userInterface) => {
     try {
-        const loggedInUser: userInterface = await axios.post(`${env.BACKEND_URL}/signup`, {
+        const loggedInUser: userInterface = await axios.post(`${backendUrl}/signup`, {
             ...userInfos
         })
         return {

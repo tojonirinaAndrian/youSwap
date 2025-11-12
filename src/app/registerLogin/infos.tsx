@@ -32,7 +32,7 @@ export default function InfosPage() {
     return (<>
         <div className="space-y-8 w-full">
             <button className="filledButton" 
-                onClick={() => setWhereIsLoginRegisterPage("signUp")}
+                onClick={() => setWhereIsLoginRegisterPage("signup")}
             >Back</button>
             <div className='space-y-2 md:max-w-[70%] text-center mx-auto'>
                <h2>Who are you ?</h2>
