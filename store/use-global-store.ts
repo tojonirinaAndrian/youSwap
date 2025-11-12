@@ -59,7 +59,7 @@ export const useGlobalStore = create<useStoreProps>() (
 							openToasts: newOpenToasts
 						}
 					})
-				}, 5000)
+				}, 10000)
 			},
 			closeToast: (toastId: string) => {
 				const currentOpenToasts = [...get().openToasts];
