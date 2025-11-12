@@ -13,7 +13,7 @@ export default function MatchCard () {
                 </div>
                 <div className="flex gap-2">
                     <button className="borderedButton">See profile</button>
-                    <button className="borderedButton">Say Hello</button>
+                    <button className="filledButton">Say Hello</button>
                 </div>
             </div>
         </div>

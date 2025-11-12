@@ -21,7 +21,7 @@ export interface MessageInterface {
 export interface ReactionInterface {
     id: string,
     reactorId: string,
-    TargetMessageId: string,
+    targetMessageId: string,
     createdAt: Date,
     nature: "Haha" | "Like" | "Heart" | "Angry"
 }

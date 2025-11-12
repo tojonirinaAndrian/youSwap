@@ -2,9 +2,10 @@
 import { useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/use-global-store";
 import Header from "../components/header";
+import ToastNotification from "../components/toastNotification";
 export default function Page() {
 	const router = useRouter();
-    const { setWhereIsLoginRegisterPage } = useGlobalStore()
+    const { setWhereIsLoginRegisterPage, setNewToast } = useGlobalStore()
 
 	return(
 		<>
@@ -17,6 +18,7 @@ export default function Page() {
 					<button className="filledButton" onClick={()=>{
 						setWhereIsLoginRegisterPage('signup');
 						router.push('/registerLogin');
+						// setNewToast("simple", "Experience Content");
 					}}>Sign up now</button>
 					<button className="borderedButton" onClick={()=>{
 						setWhereIsLoginRegisterPage('login');

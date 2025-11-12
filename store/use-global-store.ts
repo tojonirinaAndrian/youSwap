@@ -3,24 +3,86 @@
 import userInterface from '@/src/types/userProfilesType';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import uuid from 'react-uuid';
 
 interface useStoreProps {
-	whereIsLoginRegisterPage: string;
-	isLoggedIn: boolean;
-	setWhereIsLoginRegisterPage : (arg0: string) => void;
-	toogleLoggedIn: () => void;
-	userProfile: userInterface;
-	setUserProfile: (arg0: userInterface) => void;
+	whereIsLoginRegisterPage: string,
+	isLoggedIn: boolean,
+	setWhereIsLoginRegisterPage : (arg0: string) => void,
+	toogleLoggedIn: () => void,
+	userProfile: userInterface,
+	setUserProfile: (arg0: userInterface) => void,
+	setNewToast: (type: "simple" | "error", content: string) => void,
+	closeToast: (toastId: string) => void,
+	openToasts: {
+		id: string,
+		toastOpen: boolean,
+		toastCurrentType: "simple" | "error",
+		toastContent: string
+	}[]
 }
 
 export const useGlobalStore = create<useStoreProps>() (
 	persist (
 		(set, get) => ({
+			openToasts: [],
 			whereIsLoginRegisterPage : 'signup',
 			isLoggedIn: false,
+			setNewToast: (type: "simple" | "error", content: string) => {
+				const newId = uuid();
+				const pushedOpenToasts = [...get().openToasts, {
+					id: newId,
+					toastOpen: true,
+					toastContent: content,
+					toastCurrentType: type
+				}];
+				set(() => {
+					return {
+						openToasts: pushedOpenToasts
+					}
+				})
+				setTimeout (() => {
+					const currentOpenToasts = [...get().openToasts];
+					const newOpenToasts: {
+						id: string,
+						toastOpen: boolean,
+						toastCurrentType: "simple" | "error",
+						toastContent: string
+					}[] = [];
+					currentOpenToasts.map((toast) => {
+						if (toast.id !== newId) {
+							newOpenToasts.push(toast)
+						}
+					});
+					set(() => {
+						return {
+							openToasts: newOpenToasts
+						}
+					})
+				}, 5000)
+			},
+			closeToast: (toastId: string) => {
+				const currentOpenToasts = [...get().openToasts];
+				const newOpenToasts: {
+					id: string,
+					toastOpen: boolean,
+					toastCurrentType: "simple" | "error",
+					toastContent: string
+				}[] = [];
+				currentOpenToasts.map((toast) => {
+					if (toast.id !== toastId) {
+						newOpenToasts.push(toast)
+					}
+				});
+				set(() => {
+					return {
+						openToasts: newOpenToasts
+					}
+				})
+			},
 			setWhereIsLoginRegisterPage : (text: string) => {
 				set(() => {
-					return { whereIsLoginRegisterPage : text };
+					return { whereIsLoginRegisterPage: text };
 				})
 			},
 			toogleLoggedIn: () => {
