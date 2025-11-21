@@ -13,11 +13,12 @@ export default function LoginPage() {
         setWhereIsLoginRegisterPage('signup');
     }
     
-    const onLoggingIn = (): void => {
+    const onLoggingIn = async () => {
         if (email.trim().length > 0 && password.trim().length > 0) {
             //checking for it in the db
-            const answer = loginFunction (email.trim(), password.trim());
-            // console.log(returnedAnswer)
+            console.log("beforeLoginIn");
+            const answer = await loginFunction (email.trim(), password.trim());
+            console.log(answer);
         } else {
             console.log("It won't work now. We should display an error lol!")
         }
