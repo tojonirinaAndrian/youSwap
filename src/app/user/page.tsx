@@ -24,7 +24,7 @@ export default function HomePage() {
                 {(whereAreMatches === 'learn' && "Learn a skill from someone")}
                 {(whereAreMatches === 'teach' && "Teach a skill to someone")}
                 {(whereAreMatches === 'matches' && "Your matches")}
-                {(whereAreMatches === 'talkedTo' && "People you already talked to here")}
+                {(whereAreMatches === 'talkedTo' && "People you already talked to are here")}
                 {(whereAreMatches === 'searchSomeone' && "Search for someone you may know")}
             </>}</span>
             </h3>

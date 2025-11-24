@@ -1,8 +1,11 @@
+"use client";
 import { Info, MessageCircle, Search, Send } from "lucide-react";
 import Conversation from "@/src/components/conversation";
 import { UserMessage, OtherUserMessage } from "@/src/components/conversation";
+import { useState } from "react";
 
 export default function MessagesPage () {
+    const [teachOrLearn, setTeachOrLearn] = useState<"teach" | "learn">("teach");
     return <>
     <div className="h-full flex flex-col gap-5">
         <div className="flex gap-2"><MessageCircle /><h3>Messages</h3></div>
@@ -13,6 +16,18 @@ export default function MessagesPage () {
                         <input type="text" placeholder="Search for a message, conversation"
                         className="w-full text-sm"
                         /><Search />
+                    </div>
+                    <div className="w-full flex gap-2 justify-between">
+                        <button className={teachOrLearn === "teach" ? "filledStyle w-full" : "unfilledStyle w-full"}
+                        onClick={() => {
+                            if (teachOrLearn !== "teach") setTeachOrLearn("teach");
+                        }}
+                        >You teach to</button>
+                        <button className={teachOrLearn === "learn" ? "filledStyle w-full" : "unfilledStyle w-full"}
+                        onClick={() => {
+                            if (teachOrLearn !== "learn") setTeachOrLearn("learn");
+                        }}
+                        >You learn from</button>
                     </div>
                     <div className="w-full h-full overflow-auto space-y-2 rounded-md">
                         <Conversation imageThumbnail="" pseudo="Pseudo" messagePreview = {{

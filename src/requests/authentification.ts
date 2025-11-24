@@ -10,12 +10,23 @@ interface signupProps {
 }
 export const loginFunction = async (email: string, password: string) => {
     try {
-        const loggedInUser = await axios.post(`${backendUrl}/login`, {
+        const loggedInUserState = await axios.post(`${backendUrl}/login`, {
             email, password
         }, {
             withCredentials: true
         })
-        return loggedInUser.data
+        return loggedInUserState.data
+    } catch (e) {
+        console.error("error : ", e)
+    }
+}
+
+export const getCurrentlyLoggedInUser = async () => {
+    try {
+        const loggedInUser = await axios.get(`${backendUrl}/getCurrentlyLoggedInUser`, {
+            withCredentials: true
+        })
+        return { ...loggedInUser.data }
     } catch (e) {
         console.error("error : ", e)
     }
@@ -23,10 +34,10 @@ export const loginFunction = async (email: string, password: string) => {
 
 export const signupFunction = async (props: signupProps) => {
     try {
-        const loggedInUser = await axios.post(`${backendUrl}/signup`, {
+        const loggedInUserState = await axios.post(`${backendUrl}/signup`, {
             ...props.userInfos
         })
-        return loggedInUser.data
+        return loggedInUserState.data
     } catch (e) {
         console.error("error : ", e)
     }

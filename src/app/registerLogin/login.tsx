@@ -1,11 +1,14 @@
 'use client';
-import { loginFunction } from "@/src/requests/authentification";
+import { getCurrentlyLoggedInUser, loginFunction } from "@/src/requests/authentification";
 import { useGlobalStore } from "@/store/use-global-store";
 import { useState } from "react";
 import Link from "next/link";
+import { userType } from "@/src/types/userProfilesType";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-    const { setWhereIsLoginRegisterPage, setNewToast } = useGlobalStore()
+    const router = useRouter()
+    const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile } = useGlobalStore()
     const [seenPassword, setSeenPassword] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -16,20 +19,22 @@ export default function LoginPage() {
     
     const onLoggingIn = async () => {
         if (email.trim().length > 0 && password.trim().length > 0) {
-            const answer: 
-            "loggedIn" | "alreadyLoggedIn" |
-            "incorrectPassword" | 
-            "emailDoesNotExist" = await loginFunction (email.trim(), password.trim());
-            console.log(answer);
+            const answer: "loggedIn" | "alreadyLoggedIn" |"incorrectPassword" | "emailDoesNotExist" = await loginFunction (email.trim(), password.trim());
+            console.log("answer : " + answer);
             if (answer === "emailDoesNotExist") {
                 setNewToast("error", "Check your email, maybe it's wrong or create an account with it.")
             } else if (answer === "incorrectPassword") {
-                setNewToast("error", "Incorrect password.")
-            } else {
-                console.log("loggedIn")
+                setNewToast("error", "Incorrect password.");
+            } else if (answer === "loggedIn" || answer === "alreadyLoggedIn") {
+                console.log("loggedIn");
+                // const user: userType = await getCurrentlyLoggedInUser();
+                // if (user) {
+                //     setUserProfile (user);
+                //     router.push("/user");
+                // }
             }
         } else {
-            setNewToast("error", "Please, fill the fields.")
+            setNewToast("error", "Please, fill the fields.");
         }
     }
 

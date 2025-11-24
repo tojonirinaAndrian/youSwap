@@ -1,5 +1,5 @@
 import { X } from "lucide-react"
-Type logOutModalProps {
+interface logOutModalProps {
     setIsLoggingOut: (arg0: boolean) => void
 }
 

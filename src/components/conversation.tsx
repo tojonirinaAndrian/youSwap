@@ -1,5 +1,5 @@
 import Image from "next/image"
-Type conversationProps {
+interface conversationProps {
     imageThumbnail: string,
     pseudo: string,
     messagePreview: {
