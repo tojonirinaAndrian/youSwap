@@ -1,4 +1,4 @@
-export default interface NotificationInterface {
+export type NotificationType = {
     id: string,
     content: string,
     userId: string,

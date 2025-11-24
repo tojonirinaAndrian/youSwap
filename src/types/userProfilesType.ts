@@ -1,6 +1,6 @@
-import ChoosedSkillInterface from "./skillsType";
+import { ChoosedSkillType } from "./skillsType";
 
-export default interface userInterface {
+export type userType = {
     id: string,
     email: string,
 
@@ -32,8 +32,8 @@ export default interface userInterface {
     createdAt: Date,
     updateAt: Date,
 
-    choosedTeachingSkills: ChoosedSkillInterface[],
-    choosedLearningSkills: ChoosedSkillInterface[],
+    choosedTeachingSkills: ChoosedSkillType[],
+    choosedLearningSkills: ChoosedSkillType[],
 
     asInvitorConversationIds: string[],
     asInvitedConversationIds: string[],

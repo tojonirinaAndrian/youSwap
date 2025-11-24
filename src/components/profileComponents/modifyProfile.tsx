@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
 import { X, Plus, Trash, User } from 'lucide-react';
-import AddNewSkillModal from './addNewSkillModal';
+import AddNewSkillModal from '../skillChoosingComponents/addNewSkillModal';
 import { useGlobalStore } from '@/store/use-global-store';
 import uuid from 'react-uuid';
-import userInterface from '@/src/types/userProfilesType';
-import ChoosedSkillInterface from '@/src/types/skillsType';
+import {userType} from '@/src/types/userProfilesType';
+import {ChoosedSkillType} from '@/src/types/skillsType';
 
 export default function ModifyProfile (props: {
     setWhereIsProfile: (arg0: 'view' | 'modify') => void,
@@ -14,7 +14,7 @@ export default function ModifyProfile (props: {
     const [activeLearnSkillIndex, setActiveLearnSkillIndex] = useState<number>(0)
     const [activeTeachSkillIndex, setActiveTeachSkillIndex] = useState<number>(0)
     const [whereIsSkills, setWhereIsSkills] = useState<'learn' | 'teach'> ('teach');
-    const [profileState, setProfileState] = useState<userInterface>({...userProfile});
+    const [profileState, setProfileState] = useState<userType>({...userProfile});
     const [newSkillModalOpen, setNewSkillModalOpen] = useState<boolean>(false);
     const handleSave = (): void => {
         // savingStuff: saving the profileState to the actual database then the View would call its specific id...
@@ -48,7 +48,7 @@ export default function ModifyProfile (props: {
         })
     }
     const handleDeleteSkill = (skillToDeleteId: string) => {
-        const mockSkills: ChoosedSkillInterface[] = [];
+        const mockSkills: ChoosedSkillType[] = [];
         if (whereIsSkills === 'learn') {
             profileState.choosedLearningSkills.map((skill) => {
                 if (skill.id !== skillToDeleteId) {
@@ -74,7 +74,7 @@ export default function ModifyProfile (props: {
     const handleChangeSkillProficiency = (
         newProficiency: "Advanced" | "Beginner" | "Intermediate", 
     ) => {
-        let mockSkills: ChoosedSkillInterface[]
+        let mockSkills: ChoosedSkillType[]
         let activeSkillIndex: number
         if (whereIsSkills === "learn") {
             mockSkills = [...profileState.choosedLearningSkills];

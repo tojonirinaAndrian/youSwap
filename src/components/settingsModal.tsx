@@ -1,7 +1,7 @@
 import { Settings, X } from "lucide-react"
 import { useState } from "react";
 import ColorSchemeModalChoice from "./colorSchemeModalChoice";
-interface settingsModalProps {
+Type settingsModalProps {
     setIsSettingsModalOpen: (arg0: boolean) => void
 }
 

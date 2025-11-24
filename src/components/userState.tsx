@@ -1,11 +1,11 @@
 // 'use client';
 // import { useState } from "react"
 
-import userInterface from "../types/userProfilesType";
+import {userType} from "../types/userProfilesType";
 
 interface userStateProps {
     isInSidebar: boolean,
-    user: userInterface
+    user: userType
 }
 
 export default function UserState (props: userStateProps) {

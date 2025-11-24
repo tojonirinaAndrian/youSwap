@@ -1,5 +1,5 @@
 import { Palette, X } from "lucide-react";
-interface colorSchemeChoiceProps {
+Type colorSchemeChoiceProps {
     setIsColorSchemeModalOpen: (arg0: boolean) => void
 }
 

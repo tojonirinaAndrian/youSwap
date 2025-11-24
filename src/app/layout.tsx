@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ToastNotificationsWrapper from "../components/toastNotificationWrapper";
+import ToastNotificationsWrapper from "../components/toastComponents/toastNotificationWrapper";
 
 export const metadata: Metadata = {
   title: "YouSwap",

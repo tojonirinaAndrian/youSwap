@@ -1,6 +1,6 @@
 'use client';
 
-import userInterface from '@/src/types/userProfilesType';
+import {userType} from '@/src/types/userProfilesType';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import uuid from 'react-uuid';
@@ -10,8 +10,8 @@ interface useStoreProps {
 	isLoggedIn: boolean,
 	setWhereIsLoginRegisterPage : (arg0: string) => void,
 	toogleLoggedIn: () => void,
-	userProfile: userInterface,
-	setUserProfile: (arg0: userInterface) => void,
+	userProfile: userType,
+	setUserProfile: (arg0: userType) => void,
 	setNewToast: (type: "simple" | "error", content: string) => void,
 	closeToast: (toastId: string) => void,
 	openToasts: {
@@ -20,10 +20,10 @@ interface useStoreProps {
 		toastCurrentType: "simple" | "error",
 		toastContent: string
 	}[],
-	signupContentState: userInterface,
+	signupContentState: userType,
 	confirmedPasswordOnSignup: string,
 	setConfirmedPasswordOnSignup: (arg0: string) => void,
-	setSignupContentState: (arg0: userInterface) => void
+	setSignupContentState: (arg0: userType) => void
 }
 
 export const useGlobalStore = create<useStoreProps>() (
@@ -202,7 +202,7 @@ export const useGlobalStore = create<useStoreProps>() (
 					{ label: "Portfolio Website", link: "www.thisisthelink.com", id: "2" }
 				]
 			},
-			setUserProfile : (arg0: userInterface) => {
+			setUserProfile : (arg0: userType) => {
 				set(() => {
 					return { userProfile : arg0 };
 				})
@@ -246,7 +246,7 @@ export const useGlobalStore = create<useStoreProps>() (
 				portfolioVideo: "",
 				portfolioLinks : []
 			},
-			setSignupContentState : (arg0: userInterface) => {
+			setSignupContentState : (arg0: userType) => {
 				set(() => {
 					return { signupContentState : arg0 };
 				})

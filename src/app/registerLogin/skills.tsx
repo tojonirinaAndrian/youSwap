@@ -1,39 +1,51 @@
 'use client'
 import { useGlobalStore } from "@/store/use-global-store";
+import SkillChoosingMainContent from "@/src/components/skillChoosingComponents/skillChoosingMainContent";
 import { useState } from "react";
-import { Search } from "lucide-react";
-import { SkillInterface } from "@/src/types/skillsType";
 
 export default function SkillsPage() {
-    const { whereIsLoginRegisterPage, setWhereIsLoginRegisterPage } = useGlobalStore()
-    const skills: string[] = [
-        'guitar', 'coding', 'drawing', 'photographing', 'piano'
-    ]
-    const [ learnSkills, setLearnSkills ] = useState<SkillInterface[] | undefined>([]);
-    const [ teachSkills, setTeachSkills ] = useState<SkillInterface[] | undefined>([]);
-    
+    const { whereIsLoginRegisterPage, setWhereIsLoginRegisterPage, setNewToast, signupContentState, setSignupContentState } = useGlobalStore()
+    const [whereIsSkills, setWhereIsSkills] = useState<"learn" | "teach"> ("learn");
     return (<>
         <div className="space-y-8 w-full">
             <button className="filledButton" 
-                onClick={() => setWhereIsLoginRegisterPage("infos")}
+                onClick={() => (whereIsSkills === "learn") ? 
+                    setWhereIsLoginRegisterPage("infos") : 
+                    setWhereIsSkills("learn")}
             >Back</button>
             <div className='space-y-2 md:max-w-[70%] text-center mx-auto'>
-               <h2>What are the skills you want to learn ?</h2>               
+               <h2>3 - What are the skills you want to {(whereIsSkills === "learn") ? "learn" : "teach"} ?</h2>               
             </div>
             <div className="space-y-5">
-                <div className="border focus:border-black w-full rounded-md p-3 flex">
-                    <input type="text"
-                    className="w-full" placeholder="Search for a skill"/>
-                    <Search />
-                </div>
-                <div className="flex gap-2">
-                    {skills.map((skill, index) => {
-                        return(<button key={index} className="borderedButton">{skill}</button>
-                        )
-                    })}
-                </div>
-                
+                <SkillChoosingMainContent 
+                    whereIsSkills={(whereIsSkills === "learn") ? "learn" : "teach"}
+                    setProfileState={setSignupContentState}
+                    profileState={signupContentState}
+                />
             </div>
+            {(whereIsSkills === "learn") ? <>
+                <button 
+                    className={`filledButton w-full ${signupContentState.choosedLearningSkills.length <= 0 ? "opacity-50" : ""}`}
+                    onClick = {() => {
+                        if (signupContentState.choosedLearningSkills.length >= 1) {
+                            setWhereIsSkills("teach")
+                        } else {
+                            setNewToast("error", "At least add One skill.")
+                        }
+                    }}
+                >Done Choosing</button>
+            </> : <>
+                <button 
+                    className={`filledButton w-full ${signupContentState.choosedTeachingSkills.length <= 0 ? "opacity-50" : ""}`}
+                    onClick = {() => {
+                        if (signupContentState.choosedTeachingSkills.length >= 1) {
+                            setWhereIsLoginRegisterPage("")
+                        } else {
+                            setNewToast("error", "At least add One skill.")
+                        }
+                    }}
+                >Done Choosing</button>
+            </>}
             
         </div>
     </>)

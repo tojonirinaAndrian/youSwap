@@ -1,4 +1,4 @@
-export default interface AppointmentInterface {
+export type AppointmentType = {
     id: string,
     title: string,
     description: string,

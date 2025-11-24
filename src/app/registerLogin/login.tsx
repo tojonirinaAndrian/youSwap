@@ -2,9 +2,10 @@
 import { loginFunction } from "@/src/requests/authentification";
 import { useGlobalStore } from "@/store/use-global-store";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function LoginPage() {
-    const { setWhereIsLoginRegisterPage } = useGlobalStore()
+    const { setWhereIsLoginRegisterPage, setNewToast } = useGlobalStore()
     const [seenPassword, setSeenPassword] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -15,18 +16,32 @@ export default function LoginPage() {
     
     const onLoggingIn = async () => {
         if (email.trim().length > 0 && password.trim().length > 0) {
-            //checking for it in the db
-            // console.log("beforeLoginIn");
-            const answer = await loginFunction (email.trim(), password.trim());
+            const answer: 
+            "loggedIn" | "alreadyLoggedIn" |
+            "incorrectPassword" | 
+            "emailDoesNotExist" = await loginFunction (email.trim(), password.trim());
             console.log(answer);
+            if (answer === "emailDoesNotExist") {
+                setNewToast("error", "Check your email, maybe it's wrong or create an account with it.")
+            } else if (answer === "incorrectPassword") {
+                setNewToast("error", "Incorrect password.")
+            } else {
+                console.log("loggedIn")
+            }
         } else {
-            console.log("It won't work now. We should display an error lol!")
+            setNewToast("error", "Please, fill the fields.")
         }
     }
 
     return (
         <>
             <div className="space-y-8 w-full">
+                <Link 
+                    className="filledButton inline-block"
+                    href='/'
+                >
+                    Back to home
+                </Link>
                 <div className='space-y-2 md:max-w-[70%] text-center mx-auto'>
                     <h2>Happy to see you again.</h2>
                     <p className="text-black/70">Please enter your credentials.</p>

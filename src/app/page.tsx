@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/use-global-store";
 import Header from "../components/header";
-import ToastNotification from "../components/toastNotification";
+import ToastNotification from "../components/toastComponents/toastNotification";
 export default function Page() {
 	const router = useRouter();
     const { setWhereIsLoginRegisterPage, setNewToast } = useGlobalStore()

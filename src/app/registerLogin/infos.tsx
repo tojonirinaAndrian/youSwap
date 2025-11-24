@@ -40,7 +40,7 @@ export default function InfosPage() {
                 }}
             >Back</button>
             <div className='space-y-2 md:max-w-[70%] text-center mx-auto'>
-               <h2>Who are you ?</h2>
+               <h2>2 - Who are you ?</h2>
                <p className="text-black/70">Tell us more about you.</p>
             </div>       
             <div className="space-y-8 w-full">
@@ -108,7 +108,6 @@ export default function InfosPage() {
             onClick={() => {
                 if (age > 10) {
                     if (description.trim().length > 0) {
-                        setNewToast("simple", "Alright. We continue.");
                         setWhereIsLoginRegisterPage('skills');
                     } else {
                         setNewToast("error", "Fill the description field.");

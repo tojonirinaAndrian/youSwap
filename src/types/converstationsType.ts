@@ -1,24 +1,24 @@
-export default interface ConversationInterface {
+export type ConversationType = {
     id: string,
     commonSkillId: string,
     invitorUserId: string,
     invitedUserId: string,
     status: "Pending" | "Accepted" | "Refused",
     createdAt: Date,
-    messages: MessageInterface[]
+    messages: MessageType[]
 }
 
-export interface MessageInterface {
+export type MessageType = {
     id: string,
     sentById: string,
     targetId: string,
     createdAt: Date,
     content: string,
-    reactions: ReactionInterface[],
+    reactions: ReactionType[],
     readByIds: string[]
 }
 
-export interface ReactionInterface {
+export type ReactionType = {
     id: string,
     reactorId: string,
     targetMessageId: string,
@@ -26,17 +26,17 @@ export interface ReactionInterface {
     nature: "Haha" | "Like" | "Heart" | "Angry"
 }
 
-export interface GroupWorkshopInterface {
+export type GroupWorkshopType = {
     id: string,
     commonSkillId: string,
     invitorUserId: string,
     invitedUserIds: string[],
-    invitations: GroupWorkshopInvitationInterface[],
+    invitations: GroupWorkshopInvitationType[],
     createdAt: Date,
-    messages: MessageInterface[]
+    messages: MessageType[]
 }
 
-export interface GroupWorkshopInvitationInterface {
+export type GroupWorkshopInvitationType = {
     id: string,
     sentById: string,
     sentToId: string,

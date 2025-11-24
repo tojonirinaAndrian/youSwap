@@ -31,7 +31,7 @@ function isValidDate(date: Date | undefined) {
   }
   return !isNaN(date.getTime())
 }
-interface datePickerProps {
+Type datePickerProps {
     open: boolean, setOpen: (arg0: boolean) => void,
     date: Date | undefined, setDate: (arg0: Date | undefined) => void,
     month: Date | undefined, setMonth: (arg0: Date | undefined) => void,

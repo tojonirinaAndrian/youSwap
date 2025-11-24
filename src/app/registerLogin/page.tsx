@@ -24,16 +24,8 @@ export default function Page() {
         }
     }
     return (<>
-    <div className="w-full grid grid-cols-2">
-        <div className="h-[100dvh] w-full bg-blue-500 sticky top-0">
-            <Link 
-            className="filledButton absolute top-5 left-5 hover:!bg-lightCream"
-            href='/'
-            >
-                Back to home
-            </Link> 
-        </div>
-        <div className="p-10 w-full">
+    <div className="bg-blueDianne flex p-4 xl:px-100 md:px-40 h-screen">
+        <div className="w-full h-full bg-white rounded-md p-10 overflow-auto">
             {whereIsUser()}
         </div>
     </div>

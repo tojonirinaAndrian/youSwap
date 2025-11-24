@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useGlobalStore } from "@/store/use-global-store";
 
-interface sidebarElementProps {
+Type sidebarElementProps {
     label: string,
     icon: ReactElement,
     linkingTo: string

@@ -1,7 +1,7 @@
 'use client';
-// import userInterface from "@/src/types/userProfilesType";
 import { useGlobalStore } from "@/store/use-global-store";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function SignupPage() {
     const { setWhereIsLoginRegisterPage, setNewToast, signupContentState, setSignupContentState, setConfirmedPasswordOnSignup } = useGlobalStore();
@@ -24,7 +24,6 @@ export default function SignupPage() {
             pseudo.trim().length > 0
         ) {
             if (firstPassword === confirmedPassword) {
-                setNewToast("simple", "Alright, let's continue.");
                 setConfirmedPasswordOnSignup(confirmedPassword);
                 setWhereIsLoginRegisterPage('infos');
             } else {
@@ -37,8 +36,14 @@ export default function SignupPage() {
     return (
         <>
         <div className="space-y-8 w-full">
+            <Link 
+                className="filledButton inline-block"
+                href='/'
+            >
+                Back to home
+            </Link>
             <div className='space-y-2 md:max-w-[70%] text-center mx-auto'>
-               <h2>Share with others and learn from them.</h2>
+               <h2>1 - Share with others and learn from them.</h2>
                <p className="text-black/70">We can find your perfect match to fit with what you are especially looking for.</p>
             </div>
             <div className="w-full flex flex-col gap-3 items-center">

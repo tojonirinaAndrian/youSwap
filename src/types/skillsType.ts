@@ -1,13 +1,13 @@
 
-export default interface ChoosedSkillInterface {
+export type ChoosedSkillType = {
     id: string,
-    skillItself: SkillInterface,
+    skillItself: SkillType,
     proficiency: 'Advanced' | "Intermediate" | "Beginner" | "Unset"
     state: "UserIsTeaching" | "UserIsLearning",
     userId: string
 };
 
-export interface SkillInterface {
+export type SkillType = {
     id: string,
     name: string,
     categoryName: "Art" | "Coding" | "Sport" | "Self-Development"

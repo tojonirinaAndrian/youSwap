@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PencilLine, User } from "lucide-react";
 import ModifyProfile from "@/src/components/profileComponents/modifyProfile";
 import { useGlobalStore } from "@/store/use-global-store";
-import userInterface from "@/src/types/userProfilesType";
+import {userType} from "@/src/types/userProfilesType";
 
 export default function ProfilePage () {
     const [whereIsProfile, setWhereIsProfile] = useState<'view' | 'modify'>('view');
