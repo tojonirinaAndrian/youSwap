@@ -18,6 +18,10 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
         props.whereIsSkills === "learn" ? props.profileState.choosedLearningSkills
         : props.profileState.choosedTeachingSkills
     );
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const categoriesToChooseFrom: string[] = [
+        "sport", "art", "education", "code"
+    ];
     const [skillsPropositions, setSkillsPropositions] = useState<SkillInterface[]> ([])
     const handleDeleteSkill = (skillToDeleteId: string) => {
         const mockSkills: ChoosedSkillInterface[] = [];
@@ -83,7 +87,7 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
         <div className="w-full h-screen z-1 fixed flex top-0 left-0 py-10 px-5">
             <div className="m-auto bg-white p-5 rounded-xl space-y-5 w-full md:w-[80dvw] z-2 max-h-full overflow-auto">
                 <div className="w-full flex justify-end">
-                    <div className="cursor-pointer"
+                    <div className="cursor-pointer hover:bg-red-200 hover:text-red-500 p-1 rounded-md"
                     onClick={() => handleCancel()}
                     >
                         <X size={20}/>
@@ -111,6 +115,44 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
                     Please, search and select skills.
                 </p>}
                 {(newSkillsList.length < 5) ? <>
+                    <div className="space-y-1">
+                        <div>Select categories you wish to look from : </div>
+                        <div className="flex gap-2">
+                            {categoriesToChooseFrom.map((category: string, i: number) => {
+                                let isCategorySelected: boolean = false;
+                                for (let i = 0; i <= selectedCategories.length; i++) {
+                                    if (selectedCategories[i] === category) {
+                                        isCategorySelected = true
+                                    } else {
+                                        continue
+                                    }
+                                }
+                                return <div key={i}>
+                                    <button className={`flex capitalize gap-1 ${isCategorySelected ? `filledButton hover:!bg-blueDianne hover:!text-lightCream` : `borderedButton hover:!bg-lightCream hover:!text-blueDianne`}`}
+                                    onClick={()=>{
+                                        let referencedTable: string[] = [...selectedCategories];
+                                        if (!isCategorySelected) {
+                                            referencedTable.push(category)
+                                        } else {
+                                            const newTable: string[] = [];
+                                            for (let i = 0; i <= referencedTable.length; i++) {
+                                                if (referencedTable[i] === category) {
+                                                    continue
+                                                } else {
+                                                    newTable.push(referencedTable[i]);
+                                                }
+                                            }
+                                            referencedTable = [ ...newTable ];
+                                        }
+                                        setSelectedCategories([ ...referencedTable ]);
+                                    }}
+                                    >{category}</button>
+                                </div>
+                            })}
+                            
+                        </div>
+                    </div>
+
                     <div className='w-full border rounded-md p-3 flex gap-2'>
                         <input type="text" placeholder="Seach for a skill"
                         className="w-full text-sm"

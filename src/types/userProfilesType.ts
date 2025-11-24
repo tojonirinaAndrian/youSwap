@@ -7,6 +7,7 @@ export default interface userInterface {
     fullName: string,
     pseudo: string,
     age: number,
+    gender: "male" | "female" | "other"
 
     currentPoints: number,
     accumulatedPoints: number,

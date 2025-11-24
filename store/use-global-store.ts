@@ -19,7 +19,11 @@ interface useStoreProps {
 		toastOpen: boolean,
 		toastCurrentType: "simple" | "error",
 		toastContent: string
-	}[]
+	}[],
+	signupContentState: userInterface,
+	confirmedPasswordOnSignup: string,
+	setConfirmedPasswordOnSignup: (arg0: string) => void,
+	setSignupContentState: (arg0: userInterface) => void
 }
 
 export const useGlobalStore = create<useStoreProps>() (
@@ -105,6 +109,7 @@ export const useGlobalStore = create<useStoreProps>() (
 				
 				fullName: "Tojonirina Andrianjafiniaina",
 				pseudo: "Tj-san",
+				gender: "male",
 				age: 20,
 
 				currentPoints: 0,
@@ -200,6 +205,56 @@ export const useGlobalStore = create<useStoreProps>() (
 			setUserProfile : (arg0: userInterface) => {
 				set(() => {
 					return { userProfile : arg0 };
+				})
+			},
+			signupContentState: {
+				id: '',
+				email: "",
+				
+				fullName: "",
+				pseudo: "",
+				age: 10,
+				gender: "male",
+
+				currentPoints: 0,
+				accumulatedPoints: 0,
+				level: 0,
+				evolutionStatus: "Noob",
+				titleColor: "blue",
+				profilePicture: "",
+				profileDescription: "",
+
+				availablility: "Both",
+				generalRate: 0,
+				doneAppointmentsNumber: 0,
+				
+				choosedLearningSkills :[],
+				choosedTeachingSkills: [],
+				createdAt: new Date(),
+				updateAt: new Date(),
+
+				asInvitedAppointmentsIds: [],
+				asInvitorAppointmentsIds: [],
+
+				asInvitedConversationIds: [],
+				asInvitorConversationIds: [],
+				blockedUsersIds: [],
+				blockedByIds: [],
+
+				notificationsIds: [],
+				pictures: [""],
+				portfolioVideo: "",
+				portfolioLinks : []
+			},
+			setSignupContentState : (arg0: userInterface) => {
+				set(() => {
+					return { signupContentState : arg0 };
+				})
+			},
+			confirmedPasswordOnSignup: "",
+			setConfirmedPasswordOnSignup(arg0: string) {
+				set(() => {
+					return { confirmedPasswordOnSignup : arg0 }
 				})
 			},
 		}), {

@@ -4,11 +4,11 @@ import ToastNotification from "./toastNotification";
 
 export default function ToastNotificationsWrapper () {
     const { openToasts } = useGlobalStore();
-    return <div className="fixed bottom-5 px-5 space-y-1">
+    return <div className="fixed bottom-5 px-5 space-y-1 z-10">
         {(openToasts.map((toast) => {
-            return <>
-                <ToastNotification toastType={toast.toastCurrentType} content={toast.toastContent + toast.id} toastId={toast.id} />
-            </>
+            return <div key={toast.id}>
+                <ToastNotification toastType={toast.toastCurrentType} content={toast.toastContent} toastId={toast.id} />
+            </div>
         }))}
     </div>
 }

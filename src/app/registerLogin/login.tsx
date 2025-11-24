@@ -16,7 +16,7 @@ export default function LoginPage() {
     const onLoggingIn = async () => {
         if (email.trim().length > 0 && password.trim().length > 0) {
             //checking for it in the db
-            console.log("beforeLoginIn");
+            // console.log("beforeLoginIn");
             const answer = await loginFunction (email.trim(), password.trim());
             console.log(answer);
         } else {

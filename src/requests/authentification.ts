@@ -3,31 +3,31 @@ import userInterface from '../types/userProfilesType';
 
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+// const possibleSituations: "email does not exist" | "correct password, loggedIn" | "incorrect password"
+
+interface signupProps {
+    userInfos : userInterface
+}
 export const loginFunction = async (email: string, password: string) => {
     try {
-        // const loggedInUser: userInterface = await axios.post(`${backendUrl}/login`, {
-        //     email, password
-        // })
-        // return {
-        //     ...loggedInUser
-        // }
-        // const response = await axios.post(`${backendUrl}/login`, {
-        //     email, password
-        // })
-        const response2 = await axios.get(`${backendUrl}`);
-        return response2;
+        const loggedInUser = await axios.post(`${backendUrl}/login`, {
+            email, password
+        }, {
+            withCredentials: true
+        })
+        return loggedInUser.data
     } catch (e) {
         console.error("error : ", e)
     }
 }
 
-export const signupFunction = async (userInfos: userInterface) => {
+export const signupFunction = async (props: signupProps) => {
     try {
-        const loggedInUser: userInterface = await axios.post(`${backendUrl}/signup`, {
-            ...userInfos
+        const loggedInUser = await axios.post(`${backendUrl}/signup`, {
+            ...props.userInfos
         })
         return {
-            ...loggedInUser
+            ...loggedInUser.data
         }
     } catch (e) {
         console.error("error : ", e)

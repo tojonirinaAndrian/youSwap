@@ -2,14 +2,15 @@
 import { useGlobalStore } from "@/store/use-global-store";
 import { useState } from "react";
 import { Search } from "lucide-react";
+import { SkillInterface } from "@/src/types/skillsType";
 
 export default function SkillsPage() {
     const { whereIsLoginRegisterPage, setWhereIsLoginRegisterPage } = useGlobalStore()
     const skills: string[] = [
         'guitar', 'coding', 'drawing', 'photographing', 'piano'
     ]
-    const [ learnSkills, setLearnSkills ] = useState<string[] | undefined>(['']);
-    const [ teachSkills, setTeachSkills ] = useState<string[] | undefined>(['']);
+    const [ learnSkills, setLearnSkills ] = useState<SkillInterface[] | undefined>([]);
+    const [ teachSkills, setTeachSkills ] = useState<SkillInterface[] | undefined>([]);
     
     return (<>
         <div className="space-y-8 w-full">

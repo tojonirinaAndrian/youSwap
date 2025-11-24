@@ -1,16 +1,38 @@
 'use client';
+// import userInterface from "@/src/types/userProfilesType";
 import { useGlobalStore } from "@/store/use-global-store";
 import { useState } from "react";
 
 export default function SignupPage() {
-    const { setWhereIsLoginRegisterPage } = useGlobalStore();
+    const { setWhereIsLoginRegisterPage, setNewToast, signupContentState, setSignupContentState, setConfirmedPasswordOnSignup } = useGlobalStore();
     const [seenPassword, setSeenPassword] = useState<boolean>(false);
+    const [firstPassword, setFirstPassword] = useState<string>("");
+    const [confirmedPassword, setConfirmedPassword] = useState<string>("");
+    const [emailState, setEmailState] = useState<string>(signupContentState.email);
+    const [fullnameState, setFullnameState] = useState<string>(signupContentState.fullName);
+    const [pseudo, setPseudo] = useState<string>(signupContentState.pseudo);
     const [seenConfirmedPassword, setSeenConfirmedPassword] = useState<boolean>(false);
     const onLoginClick = () => {
         setWhereIsLoginRegisterPage('login');
     }
     const onSignupClick = () => {
-        setWhereIsLoginRegisterPage('infos');
+        if (
+            emailState.trim().length > 0 && 
+            fullnameState.trim().length > 0 && 
+            confirmedPassword.trim().length > 0 && 
+            firstPassword.trim().length > 0 &&
+            pseudo.trim().length > 0
+        ) {
+            if (firstPassword === confirmedPassword) {
+                setNewToast("simple", "Alright, let's continue.");
+                setConfirmedPasswordOnSignup(confirmedPassword);
+                setWhereIsLoginRegisterPage('infos');
+            } else {
+                setNewToast ('error', "Verify the password you entered.")
+            }
+        } else {
+            setNewToast ("error", "Fill all the fields.");
+        }
     }
     return (
         <>
@@ -30,20 +52,35 @@ export default function SignupPage() {
                 </div>
             <div className="space-y-8 w-full">
                 <div className="space-y-1">
-                    <label htmlFor="firstName" className="block">First name: *</label>
-                    <input type="text" name="firstName" id="firstName" 
+                    <label htmlFor="fullname" className="block">Full name: *</label>
+                    <input type="text" name="fullname" id="fullname" 
+                    defaultValue={fullnameState}
+                    onChange={(e) => {
+                        setFullnameState(e.target.value);
+                        setSignupContentState({ ...signupContentState, fullName: e.target.value })
+                    }}
                     placeholder="First name" required
                     className="border focus:border-black w-full rounded-md p-3"/>
                 </div>
                 <div className="space-y-1">
-                    <label htmlFor="secondName" className="block">Second name: *</label>
-                    <input type="text" name="secondName" id="secondName" 
-                    placeholder="Second name" required
+                    <label htmlFor="pseudo" className="block">Pseudo: *</label>
+                    <input type="text" name="pseudo" id="pseudo" 
+                    defaultValue={pseudo}
+                    onChange={(e) => {
+                        setPseudo(e.target.value);
+                        setSignupContentState({ ...signupContentState, pseudo: e.target.value })
+                    }}
+                    placeholder="First name" required
                     className="border focus:border-black w-full rounded-md p-3"/>
                 </div>
                 <div className="space-y-1">
                     <label htmlFor="email" className="block">Email: *</label>
                     <input type="email" name="email" id="email" 
+                    defaultValue={emailState}
+                    onChange={(e) => {
+                        setEmailState(e.target.value);
+                        setSignupContentState({ ...signupContentState, email: e.target.value });
+                    }}
                     placeholder="Email" required
                     className="border focus:border-black w-full rounded-md p-3"/>
                 </div>
@@ -52,6 +89,7 @@ export default function SignupPage() {
                     <div className="flex gap-3">
                         <input name="password" id="password" 
                         type={seenPassword ? "text" : "password"}
+                        onChange={(e) => setFirstPassword(e.target.value)}
                         placeholder="Password" required
                         className="border focus:border-black w-full rounded-md p-3"/>
                         <p className="text-sm my-auto cursor-pointer"
@@ -64,6 +102,7 @@ export default function SignupPage() {
                     <div className="flex gap-3">
                         <input name="confirmPassword" id="confirmPassword"
                         type={seenConfirmedPassword ? "text" : "password"}
+                        onChange={(e) => setConfirmedPassword(e.target.value)}
                         placeholder="Repeat your password" required
                         className="border focus:border-black w-full rounded-md p-3"/>
                         <p className="text-sm my-auto cursor-pointer"
