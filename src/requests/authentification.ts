@@ -44,3 +44,17 @@ export const signupFunction = async (props: signupProps) => {
         console.error("error : ", e)
     }
 }
+
+export const logoutFunction = async () => {
+    try {
+        const answer = await axios.get(`${backendUrl}/logout`);
+        if (answer.status === 401) {
+            return "error";
+        } else if (answer.status === 200) {
+            return answer.data;
+        }
+    } catch (e) {
+        console.log(e);
+        return "error";
+    }
+}
