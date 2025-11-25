@@ -6,8 +6,10 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 // const possibleSituations: "email does not exist" | "correct password, loggedIn" | "incorrect password"
 
 interface signupProps {
-    userInfos : userType
+    userInfos : userType,
+    password: string
 }
+
 export const loginFunction = async (email: string, password: string) => {
     try {
         const loggedInUserState = await axios.post(`${backendUrl}/login`, {
@@ -34,7 +36,7 @@ export const getCurrentlyLoggedInUser = async () => {
 
 export const signupFunction = async (props: signupProps) => {
     try {
-        const loggedInUserState = await axios.post(`${backendUrl}/signup`, {
+        const loggedInUserState = await axios.post(`${backendUrl}/register`, {
             ...props.userInfos
         })
         return loggedInUserState.data

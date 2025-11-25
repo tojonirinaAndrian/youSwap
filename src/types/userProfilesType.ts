@@ -45,3 +45,32 @@ export type userType = {
 
     notificationsIds: string[]
 }
+
+export type postSignupUser = {
+    email: string,
+    passwordHash: string,
+
+    fullName: string,
+    pseudo: string,
+    age: number,
+    gender: "male" | "female" | "other",
+
+    profilePicture: string,
+    profileDescription: string,
+
+    availability: "Online" | "InPerson" | "Both",
+
+    portfolioVideo: string,
+    portfolioLinks: {
+        id: string,
+        label: string,
+        link: string
+    }[],
+
+    pictures: string[],
+
+    updatedAt: Date,
+
+    choosedLearningSkillsIds: string[],
+    choosedTeachingSkillsIds: string[],
+}
