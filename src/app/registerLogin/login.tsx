@@ -27,11 +27,11 @@ export default function LoginPage() {
                 setNewToast("error", "Incorrect password.");
             } else if (answer === "loggedIn" || answer === "alreadyLoggedIn") {
                 console.log("loggedIn");
-                // const user: userType = await getCurrentlyLoggedInUser();
-                // if (user) {
-                //     setUserProfile (user);
-                //     router.push("/user");
-                // }
+                const user: userType = await getCurrentlyLoggedInUser();
+                if (user) {
+                    setUserProfile (user);
+                    router.push("/user");
+                }
             }
         } else {
             setNewToast("error", "Please, fill the fields.");

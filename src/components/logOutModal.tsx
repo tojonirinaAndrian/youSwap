@@ -2,18 +2,20 @@
 import { X } from "lucide-react"
 import { logoutFunction } from "../requests/authentification"
 import { useRouter } from "next/navigation";
+
 interface logOutModalProps {
     setIsLoggingOut: (arg0: boolean) => void
-}
-
+};
 
 export default function LogOutModal (props: logOutModalProps) {
     const router = useRouter();
+
     const onLogoutClick = async () => {
         const answer = await logoutFunction ();
         console.log(answer);
         router.push("/");
     }
+    
     return (
         <>
         <div className="w-full h-screen z-1 fixed flex top-0 left-0 py-10 px-5">

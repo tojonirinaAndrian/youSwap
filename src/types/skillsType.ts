@@ -10,5 +10,5 @@ export type ChoosedSkillType = {
 export type SkillType = {
     id: string,
     name: string,
-    categoryName: "Art" | "Coding" | "Sport" | "Self-Development"
+    categoryName: "Art" | "Coding" | "Sport" | "SelfDevelopment"
 }
