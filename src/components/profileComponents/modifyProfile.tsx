@@ -10,16 +10,33 @@ import {ChoosedSkillType} from '@/src/types/skillsType';
 export default function ModifyProfile (props: {
     setWhereIsProfile: (arg0: 'view' | 'modify') => void,
 }) {
-    const { userProfile, setUserProfile } = useGlobalStore();
+    const { userProfile, setUserProfile, setNewToast } = useGlobalStore();
     const [activeLearnSkillIndex, setActiveLearnSkillIndex] = useState<number>(0)
     const [activeTeachSkillIndex, setActiveTeachSkillIndex] = useState<number>(0)
     const [whereIsSkills, setWhereIsSkills] = useState<'learn' | 'teach'> ('teach');
     const [profileState, setProfileState] = useState<userType>({...userProfile});
     const [newSkillModalOpen, setNewSkillModalOpen] = useState<boolean>(false);
     const handleSave = (): void => {
-        // savingStuff: saving the profileState to the actual database then the View would call its specific id...
-        setUserProfile(profileState);
-        props.setWhereIsProfile('view');
+        let error: boolean = false;
+        profileState.choosedLearningSkills.map((skill) => {
+            if (skill.proficiency === "Unset") {
+                error = true;
+                setNewToast("error", `You have to set "${skill.skillItself.name}" skill proficiency.`);
+            }
+        })
+        profileState.choosedTeachingSkills.map((skill) => {
+            if (skill.proficiency === "Unset") {
+                error = true;
+                setNewToast("error", `You have to set "${skill.skillItself.name}" skill proficiency.`);
+            }
+        })
+        if (!error) {
+            setUserProfile(profileState);
+            props.setWhereIsProfile('view');
+            // savingStuff: saving the profileState 
+            // to the actual database then the 
+            // View would call its specific id...
+        }  
     }
     const handleDeletePortfolioLink = (linkId: string) => {
         const mock: {link: string,label: string, id: string}[] = [];
@@ -47,12 +64,16 @@ export default function ModifyProfile (props: {
             portfolioLinks: mockLinks
         })
     }
-    const handleDeleteSkill = (skillToDeleteId: string) => {
+    const handleDeleteSkill = (choosedSkillToDelete: ChoosedSkillType) => {
         const mockSkills: ChoosedSkillType[] = [];
         if (whereIsSkills === 'learn') {
-            profileState.choosedLearningSkills.map((skill) => {
-                if (skill.id !== skillToDeleteId) {
+            profileState.choosedLearningSkills.map((skill, i) => {
+                if (skill.id !== choosedSkillToDelete.id) {
                     mockSkills.push(skill)
+                } else {
+                    if (activeLearnSkillIndex === i) {
+                        setActiveLearnSkillIndex(0)
+                    }
                 }
             })
             setProfileState({
@@ -60,9 +81,13 @@ export default function ModifyProfile (props: {
                 choosedLearningSkills: mockSkills
             })
         } else {
-            profileState.choosedTeachingSkills.map((skill) => {
-                if (skill.id !== skillToDeleteId) {
+            profileState.choosedTeachingSkills.map((skill, i) => {
+                if (skill.id !== choosedSkillToDelete.id) {
                     mockSkills.push(skill)
+                } else {
+                    if (activeTeachSkillIndex === i) {
+                        setActiveLearnSkillIndex(0)
+                    }
                 }
             })
             setProfileState({
@@ -198,7 +223,9 @@ export default function ModifyProfile (props: {
                                                 color = "red" 
                                             } else if (learnSkill.proficiency === "Intermediate") { 
                                                 color = "yellow"
-                                            } else { color = "blue" }
+                                            } else { 
+                                                color = "blue" 
+                                            }
                                             return <div key={learnSkill.id}
                                                 className={((activeLearnSkillIndex === i) ? ` outline-${color}-500 ` : " outline-transparent ") + ` relative outline-3 bg-${color}-200 border-${color}-300 text-${color}-700`}
                                             >
@@ -209,7 +236,7 @@ export default function ModifyProfile (props: {
                                                     {learnSkill.skillItself.name}
                                                 </button>
                                                 <div 
-                                                onClick={() => handleDeleteSkill(learnSkill.id)}
+                                                onClick={() => handleDeleteSkill(learnSkill)}
                                                 className="absolute border border-amber-300 -top-2 -right-1 cursor-pointer bg-amber-100 rounded-[5px] p-0.5 text-amber-700 hover:bg-amber-200"
                                                 >
                                                     <X size={12}/>
@@ -282,7 +309,7 @@ export default function ModifyProfile (props: {
                                                     {teachSkill.skillItself.name}
                                                 </button>
                                                 <div 
-                                                onClick={() => handleDeleteSkill(teachSkill.id)}
+                                                onClick={() => handleDeleteSkill(teachSkill)}
                                                 className="absolute border border-amber-300 -top-2 -right-1 cursor-pointer bg-amber-100 rounded-[5px] p-0.5 text-amber-700 hover:bg-amber-200"
                                                 >
                                                     <X size={12}/>

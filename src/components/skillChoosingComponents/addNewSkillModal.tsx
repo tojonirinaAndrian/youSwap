@@ -19,24 +19,6 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
         props.whereIsSkills === "learn" ? props.profileState.choosedLearningSkills
         : props.profileState.choosedTeachingSkills
     );
-    
-    const handleDeleteSkill = (skillToDeleteId: string) => {
-        const mockSkills: ChoosedSkillType[] = [];
-        if (props.whereIsSkills === 'learn') {
-            props.profileState.choosedLearningSkills.map((skill) => {
-                if (skill.id !== skillToDeleteId) {
-                    mockSkills.push(skill)
-                }
-            })
-        } else {
-            props.profileState.choosedTeachingSkills.map((skill) => {
-                if (skill.id !== skillToDeleteId) {
-                    mockSkills.push(skill)
-                }
-            })
-        }
-        setNewSkillsList(mockSkills);
-    }
     function handleDoneChoosing () {
         if (props.whereIsSkills === 'learn') {
             props.setProfileState({
@@ -56,30 +38,6 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
         props.setNewSkillOpen(false);
     }
 
-    function handleOnCategoryClick (categoryName: string) {
-        //looking for skills with the specific category
-        // const result = skillType[].where{categoryName ~= categoryName}
-        // setSkillsPropositions(result)
-    }
-
-    function handleOnSearchInput (query: string) {
-        //looking for skills with that category name or name
-        // const result = skillType[].where{categoryName has query || name has query}
-    }
-
-    function handleOnSkillClick (skill: SkillType) {
-        setNewSkillsList ([
-            ...newSkillsList, 
-            {
-                id : uuid(),
-                userId: props.profileState.id,
-                skillItself: skill,
-                state: props.whereIsSkills === "learn" ? "UserIsLearning" : "UserIsTeaching",
-                proficiency: 'Unset'
-            }
-        ])
-    }
-
     return <>
         <div className="w-full h-screen z-1 fixed flex top-0 left-0 py-10 px-5">
             <div className="m-auto bg-white p-5 rounded-xl space-y-5 w-full md:w-[80dvw] z-2 max-h-full overflow-auto">
@@ -93,8 +51,9 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
                 <h3 className="text-center">Skills you may {props.whereIsSkills === "learn" ? "learn" : "teach"}</h3>
                 <SkillChoosingMainContent 
                     whereIsSkills={props.whereIsSkills} 
-                    setProfileState={props.setProfileState}
+                    setSkillsListState={setNewSkillsList}
                     profileState={props.profileState}
+                    currentSkillsListState={newSkillsList}
                 />
                 <div className="flex *:w-full *:rounded-md *:px-5 *:py-3 gap-2 *:cursor-pointer">
                     <button 

@@ -155,8 +155,8 @@ export const useGlobalStore = create<useStoreProps>() (
 						proficiency: "Advanced",
 						state: "UserIsTeaching",
 						skillItself: {
-							id: "3",
-							name: "React Dev",
+							id: "655a5589-25b2-45ff-b626-31d3c7e5463c",
+							name: "React Framework",
 							categoryName: "Coding"
 						}
 					},
@@ -166,7 +166,7 @@ export const useGlobalStore = create<useStoreProps>() (
 						proficiency: "Advanced",
 						state: "UserIsTeaching",
 						skillItself: {
-							id: "4",
+							id: "22330bc9-13a5-4516-8a7f-58c1d7f94728",
 							name: "Basketball",
 							categoryName: "Sport"
 						}
@@ -177,7 +177,7 @@ export const useGlobalStore = create<useStoreProps>() (
 						proficiency: "Intermediate",
 						state: "UserIsTeaching",
 						skillItself: {
-							id: "5",
+							id: "7da2b317-3788-4aad-bc83-42df8ab5da89",
 							name: "Drawing",
 							categoryName: "Art"
 						}
