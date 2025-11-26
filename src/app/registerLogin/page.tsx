@@ -1,15 +1,13 @@
 'use client';
-import { useEffect, useState } from "react";
 import LoginPage from "./login";
 import SignupPage from "./signup";
-import { useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/use-global-store";
-import Link from 'next/link';
 import InfosPage from "./infos";
 import SkillsPage from "./skills";
+import SkillsProficiency from "./skillsProficiency";
+import Pictures from "./pictures";
 
 export default function Page() {
-    const router = useRouter();
     const {whereIsLoginRegisterPage } = useGlobalStore()
 
     function whereIsUser () {
@@ -21,6 +19,10 @@ export default function Page() {
             return <InfosPage />
         } else if (whereIsLoginRegisterPage === 'skills') {
             return <SkillsPage />
+        } else if (whereIsLoginRegisterPage === 'skillsProficiency') {
+            return <SkillsProficiency />
+        } else if (whereIsLoginRegisterPage === "pictures") {
+            return <Pictures />
         }
     }
     return (<>

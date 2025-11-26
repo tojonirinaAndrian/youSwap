@@ -72,7 +72,7 @@ export default function SkillChoosingMainContent (props: addNewSkillModalProps) 
 
     return <>
         {props.currentSkillsListState.length > 0 ? <div className="space-y-1">
-            <p className="text-black/70">Currently choosed skills :</p>
+            <p className="text-black/70">Currently choosed skills {`(maximum of 5 skills ~ ${props.currentSkillsListState.length}/5 )`} :</p>
             <div className="flex gap-2">
                 {props.currentSkillsListState.map((skill) => {
                     return <div className="relative" key={skill.id}>
