@@ -93,7 +93,7 @@ export default function SkillsProficiency () {
         if (!error) {
             // redirection
             setSignupContentState({ ...profileState });
-            setWhereIsLoginRegisterPage("pictures");
+            setWhereIsLoginRegisterPage("profilePicture");
         }
     }
 

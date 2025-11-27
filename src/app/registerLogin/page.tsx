@@ -5,7 +5,7 @@ import { useGlobalStore } from "@/store/use-global-store";
 import InfosPage from "./infos";
 import SkillsPage from "./skills";
 import SkillsProficiency from "./skillsProficiency";
-import Pictures from "./pictures";
+import ProfilePicture from "./profilePicture";
 
 export default function Page() {
     const {whereIsLoginRegisterPage } = useGlobalStore()
@@ -21,8 +21,8 @@ export default function Page() {
             return <SkillsPage />
         } else if (whereIsLoginRegisterPage === 'skillsProficiency') {
             return <SkillsProficiency />
-        } else if (whereIsLoginRegisterPage === "pictures") {
-            return <Pictures />
+        } else if (whereIsLoginRegisterPage === "profilePicture") {
+            return <ProfilePicture />
         }
     }
     return (<>
