@@ -6,6 +6,7 @@ import InfosPage from "./infos";
 import SkillsPage from "./skills";
 import SkillsProficiency from "./skillsProficiency";
 import ProfilePicture from "./profilePicture";
+import ShowOffPictures from "./showOffPictures";
 
 export default function Page() {
     const {whereIsLoginRegisterPage } = useGlobalStore()
@@ -23,6 +24,8 @@ export default function Page() {
             return <SkillsProficiency />
         } else if (whereIsLoginRegisterPage === "profilePicture") {
             return <ProfilePicture />
+        } else if (whereIsLoginRegisterPage === "showOffPictures") {
+            return <ShowOffPictures />
         }
     }
     return (<>

@@ -31,15 +31,15 @@ export default function ProfilePicture () {
     }
     const handleSave = () => {
         setSignupContentState({ ...signupContentState, profilePicture: preview });
-        setWhereIsLoginRegisterPage("pictures");
+        setWhereIsLoginRegisterPage("showOffPictures");
     }
     return <>
         {isDraging ? <>
-            <div className="w-screen h-screen fixed top-0 right-0 bg-black/80 flex backdrop-blur-[5px] z-10">
+            <div className="w-screen h-screen fixed top-0 right-0 bg-black/80 flex backdrop-blur-[5px] z-10 p-5">
                 <h3 className="m-auto text-white">Drop it anywhere here.</h3>
             </div>
         </> : <></>}
-        <div className="space-y-8 w-full relative h-full">   
+        <div className="space-y-8 w-full relative">
             <button className="filledButton" 
                 onClick={() => setWhereIsLoginRegisterPage("skillsProficiency")}
             >Back</button>

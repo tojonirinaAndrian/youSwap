@@ -242,7 +242,7 @@ export const useGlobalStore = create<useStoreProps>() (
 				blockedByIds: [],
 
 				notificationsIds: [],
-				pictures: [""],
+				pictures: [],
 				portfolioVideo: "",
 				portfolioLinks : []
 			},
