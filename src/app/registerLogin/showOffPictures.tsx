@@ -2,11 +2,14 @@ import { useGlobalStore } from "@/store/use-global-store"
 import { useState } from "react";
 import Image from "next/image";
 import { Trash } from "lucide-react";
+import { getCurrentlyLoggedInUser, signupFunction } from "@/src/requests/authentification";
+import { useRouter } from "next/navigation";
 
 export default function ShowOffPictures () {
-    const { setWhereIsLoginRegisterPage, setNewToast, setSignupContentState, signupContentState } = useGlobalStore();
+    const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile, setSignupContentState, setSignupToZero, signupContentState, confirmedPasswordOnSignup } = useGlobalStore();
     const [previews, setPreviews] = useState<string[]>(signupContentState.pictures);
     const [isDraging, setIsDraging] = useState<boolean>(false);
+    const router = useRouter();
     const maximum = 6;
     window.ondragover = (e) => {
         e.preventDefault();
@@ -28,20 +31,39 @@ export default function ShowOffPictures () {
                 setNewToast("error", "You hit the maximum number. Some pictures aren't uploaded.")
             }
             for (let i = 0; i < left; i++) {
-                if (files[i].type === "image/png" || files[i].type === "image/jpeg" || files[i].type === "image/webp" || files[i].type === "image/jpg") {
-                    const url: string = URL.createObjectURL(files[i]);
-                    mockPreviews.push(url);
+                if (files[i]) {
+                    if (files[i].type === "image/png" || files[i].type === "image/jpeg" || files[i].type === "image/webp" || files[i].type === "image/jpg") {
+                        const url: string = URL.createObjectURL(files[i]);
+                        mockPreviews.push(url);
+                    } else {
+                        setNewToast("error", "Please chose a .png, .jpeg or .webp image file.");
+                        continue;
+                    }
                 } else {
-                    setNewToast("error", "Please chose a .png, .jpeg or .webp image file.");
-                    continue;
+                    break
                 }
             }
             setPreviews(mockPreviews);
         }
     }
-    const handleSave = () => {
+    const handleSave = async () => {
         setSignupContentState({ ...signupContentState, pictures: previews });
-        setNewToast("simple", "DONE, PORTFOLIO sisa!")
+        setUserProfile({ ...signupContentState, pictures: previews });
+
+        const response = await signupFunction({
+            password: confirmedPasswordOnSignup, 
+            userInfos: { ...signupContentState, pictures: previews },
+            returnToDefault: () => {
+                setSignupToZero();
+                setWhereIsLoginRegisterPage("signup");
+            }
+        })        
+        // router
+        const currentUser = await getCurrentlyLoggedInUser();
+        
+        // console.log();
+        // setUserProfile()
+        // if (currentUser )
     }
 
     return <>
@@ -70,6 +92,7 @@ export default function ShowOffPictures () {
                 type="file"
                 onChange={(e) => {
                     const fileList = e.target.files as FileList;
+                    // console.log(fileList)
                     if (fileList.length > 0) {
                         handleSelectedFile(fileList);
                     }

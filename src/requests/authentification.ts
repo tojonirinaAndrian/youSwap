@@ -1,13 +1,13 @@
+import { userType } from '../types/userProfilesType';
 import axios from 'axios';
-import {userType} from '../types/userProfilesType';
-
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 // const possibleSituations: "email does not exist" | "correct password, loggedIn" | "incorrect password"
 
 interface signupProps {
     userInfos : userType,
-    password: string
+    password: string,
+    returnToDefault: () => void
 }
 
 export const loginFunction = async (email: string, password: string) => {
@@ -28,7 +28,8 @@ export const getCurrentlyLoggedInUser = async () => {
         const loggedInUser = await axios.get(`${backendUrl}/getCurrentlyLoggedInUser`, {
             withCredentials: true
         })
-        return { ...loggedInUser.data }
+        // return { ...loggedInUser.data }
+        console.log (loggedInUser.data);
     } catch (e) {
         console.error("error : ", e)
     }
@@ -43,28 +44,31 @@ export const signupFunction = async (props: signupProps) => {
         // -> Make the stored images accessible through URL
         // -> store the changed user state to the db
         // send success to the front if done correctly
+        const formData = new FormData();
         let profilePicFile: File;
-        let showOffPicturesFiles: File[] = [];
         const profilePic: string = props.userInfos.profilePicture;
         const pictures: string[] = props.userInfos.pictures;
         const profilePicRes = await fetch (profilePic);
         const profilePicBlob = await profilePicRes.blob();
         profilePicFile = new File([profilePicBlob], "profilePic.dat", {type: profilePicBlob.type});
         URL.revokeObjectURL(profilePic);
-        pictures.map (async (pic, i) => {
-            const picRes = await fetch(pic);
-            const blob = await picRes.blob();
-            const file = new File([blob], `${i}.dat`, {type: blob.type});
-            showOffPicturesFiles.push(file);
-            URL.revokeObjectURL(pic);
-        })
-        const formData = new FormData();
         formData.append("profilePictureFile", profilePicFile);
-        showOffPicturesFiles.map((picFile, i) => {
-            formData.append(`showOffPic_${i}`, picFile);
-        })
-        formData.append("userData", JSON.stringify({...props.userInfos}));
-        const loggedInUserState = await axios.post(`${backendUrl}/register`, formData);
+        for (let i = 0; i < pictures.length; i++) {
+            console.log(pictures[i]);
+            const picRes = await fetch(pictures[i]);
+            const blob = await picRes.blob();
+            const file: File = new File([blob], `${i}.dat`, {type: blob.type});
+            console.log(file);
+            URL.revokeObjectURL(pictures[i]);
+            formData.append(`showOffPic_${i}`, file);
+        }
+        formData.append("password", props.password);
+        formData.append("userInfos", JSON.stringify({...props.userInfos}));
+        props.returnToDefault();
+        const loggedInUserState = await axios.post(`${backendUrl}/register`, formData, { 
+            withCredentials: true
+        });
+        // console.log(formData);
         return loggedInUserState.data
     } catch (e) {
         console.error("error : ", e)
@@ -73,14 +77,12 @@ export const signupFunction = async (props: signupProps) => {
 
 export const logoutFunction = async () => {
     try {
-        const answer = await axios.get(`${backendUrl}/logout`);
-        if (answer.status === 401) {
-            return "error";
-        } else if (answer.status === 200) {
-            return answer.data;
-        }
+        const answer = await axios.get(`${backendUrl}/logout`, {
+            withCredentials: true
+        });
+        return (answer.data);
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         return "error";
     }
 }

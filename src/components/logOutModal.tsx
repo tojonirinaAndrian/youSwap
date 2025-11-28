@@ -2,6 +2,7 @@
 import { X } from "lucide-react"
 import { logoutFunction } from "../requests/authentification"
 import { useRouter } from "next/navigation";
+import { useGlobalStore } from "@/store/use-global-store";
 
 interface logOutModalProps {
     setIsLoggingOut: (arg0: boolean) => void
@@ -9,11 +10,14 @@ interface logOutModalProps {
 
 export default function LogOutModal (props: logOutModalProps) {
     const router = useRouter();
-
+    const {setNewToast} = useGlobalStore()
     const onLogoutClick = async () => {
         const answer = await logoutFunction ();
-        console.log(answer);
-        router.push("/");
+        if (answer === "logoutSuccessful") {
+            router.push("/");
+        } else {
+            setNewToast("error", "An error occured when logging out.");
+        }
     }
     
     return (

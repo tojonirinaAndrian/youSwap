@@ -2,8 +2,9 @@
 
 import DatePicker from "@/src/components/datePicker";
 import { useEffect, useRef, useState } from "react";
-import { Mars, Venus } from "lucide-react";
+import { Mars, Venus, Trash, Plus } from "lucide-react";
 import { useGlobalStore } from "@/store/use-global-store";
+import uuid from "react-uuid";
 
 function formatDate(date: Date | undefined) {
     if (!date) {
@@ -31,6 +32,32 @@ export default function InfosPage() {
     const [description, setDescription] = useState<string>(signupContentState.profileDescription)
     const [age, setAge] = useState<number>(signupContentState.age);
 
+    const handleDeletePortfolioLink = (linkId: string) => {
+        const mock: {link: string,label: string, id: string}[] = [];
+        signupContentState.portfolioLinks.map (mockLink => {
+            if (mockLink.id !== linkId) {
+                mock.push(mockLink)
+            }
+        });
+        setSignupContentState ({
+            ...signupContentState,
+            portfolioLinks: mock
+        })
+    }
+    const handleAddPortfolioLink = () => {
+        const mockLinks: {
+            id: string,
+            label: string, link: string
+        }[] = [ ...signupContentState.portfolioLinks ];
+        const newUuid: string = uuid();
+        mockLinks.push({
+            label: "", link: "", id: newUuid
+        })
+        setSignupContentState({
+            ...signupContentState,
+            portfolioLinks: mockLinks
+        })
+    }
     return (<>
         <div className="space-y-8 w-full">
             <button className="filledButton" 
@@ -103,12 +130,50 @@ export default function InfosPage() {
                         </div>
                     </div>
                 </div>
+                <div className="space-y-1">
+                    <p>Give us links to your personnals on the internet. I mean Social media, Github account or personnal portfolio website if you want to.</p>
+                    <div className="space-y-1">
+                        {(signupContentState.portfolioLinks.map((link) => {
+                            return <div className="flex gap-2" key={link.id}>
+                                <input type="text" placeholder='Link label' defaultValue={link.label} className='not-focus:text-black/80 border-black/50 px-3 py-2 border-1 rounded-md'/>
+                                <p className='m-auto'>:</p> 
+                                <input type='text' placeholder='Link address' defaultValue={link.link}
+                                className='not-focus:text-black/80 border-black/50 px-3 py-2 border-1 rounded-md w-full'
+                                />
+                                <button className='bg-red-100 flex gap-2 hover:bg-red-200 text-red-700 p-2 rounded-md items-center cursor-pointer'
+                                onClick={() => {
+                                    handleDeletePortfolioLink(link.id)
+                                }}
+                                ><Trash size={18}/>Delete</button>
+                            </div>
+                        }))}
+                        {(signupContentState.portfolioLinks.length < 5) && <>
+                            <div 
+                                onClick={() => {
+                                    handleAddPortfolioLink()
+                                }}
+                                className='cursor-pointer w-full px-5 py-3 flex bg-blueDianne/10 hover:bg-blueDianne/25 hover:text-blueDianne gap-2 border rounded-md  text-blueDianne/70 justify-center'>
+                                <Plus />
+                                <p>Add a new link</p>
+                            </div>
+                        </>}
+                    </div>
+                </div>
             </div>
             <button type="button" className="filledButton !w-full"
             onClick={() => {
-                if (age > 10) {
+                if (age >= 10) {
                     if (description.trim().length > 0) {
-                        setWhereIsLoginRegisterPage('skills');
+                        let error: boolean = false
+                        signupContentState.portfolioLinks.map((link)=>{
+                            if (link.label.trim().length <= 0 || link.label.trim().length <= 0) {
+                                error = true;
+                                setNewToast("error", "Fill links fields first.")
+                            }
+                        })
+                        if (!error) {
+                            setWhereIsLoginRegisterPage('skills');
+                        }
                     } else {
                         setNewToast("error", "Fill the description field.");
                     }

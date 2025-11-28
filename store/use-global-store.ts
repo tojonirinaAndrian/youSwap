@@ -23,7 +23,8 @@ interface useStoreProps {
 	signupContentState: userType,
 	confirmedPasswordOnSignup: string,
 	setConfirmedPasswordOnSignup: (arg0: string) => void,
-	setSignupContentState: (arg0: userType) => void
+	setSignupContentState: (arg0: userType) => void,
+	setSignupToZero: () => void
 }
 
 export const useGlobalStore = create<useStoreProps>() (
@@ -257,6 +258,51 @@ export const useGlobalStore = create<useStoreProps>() (
 					return { confirmedPasswordOnSignup : arg0 }
 				})
 			},
+			setSignupToZero : () => {
+				set(() => {
+					return {
+						signupContentState: {
+							id: '',
+							email: "",
+									
+							fullName: "",
+							pseudo: "",
+							age: 10,
+							gender: "male",
+									
+							currentPoints: 0,
+							accumulatedPoints: 0,
+							level: 0,
+							evolutionStatus: "Noob",
+							titleColor: "blue",
+							profilePicture: "",
+							profileDescription: "",
+									
+							availablility: "Both",
+							generalRate: 0,
+							doneAppointmentsNumber: 0,
+									
+							choosedLearningSkills :[],
+							choosedTeachingSkills: [],
+							createdAt: new Date(),
+							updateAt: new Date(),
+									
+							asInvitedAppointmentsIds: [],
+							asInvitorAppointmentsIds: [],
+									
+							asInvitedConversationIds: [],
+							asInvitorConversationIds: [],
+							blockedUsersIds: [],
+							blockedByIds: [],
+									
+							notificationsIds: [],
+							pictures: [],
+							portfolioVideo: "",
+							portfolioLinks : []
+						}
+					}
+				})
+			}
 		}), {
 			name : 'global'
 		}
