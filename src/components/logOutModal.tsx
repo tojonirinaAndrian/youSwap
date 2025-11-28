@@ -10,10 +10,11 @@ interface logOutModalProps {
 
 export default function LogOutModal (props: logOutModalProps) {
     const router = useRouter();
-    const {setNewToast} = useGlobalStore()
+    const {setNewToast, setUserProfile} = useGlobalStore()
     const onLogoutClick = async () => {
         const answer = await logoutFunction ();
         if (answer === "logoutSuccessful") {
+            setUserProfile
             router.push("/");
         } else {
             setNewToast("error", "An error occured when logging out.");

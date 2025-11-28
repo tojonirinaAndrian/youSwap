@@ -11,11 +11,12 @@ import SearchSomeone from "@/src/components/userHomeComponents/searchSomeone";
 
 export default function HomePage() {
     const [whereAreMatches, setWhereAreMatches] = useState<'learn' | 'teach'| "searchSomeone" | 'matches' | 'talkedTo'> ('matches');
-    // useEffect(()=>{
-        // if (!isLoggedIn) {
-        //     router.push('/registerLogin');
-        // }
-    // }, [])
+    const { userProfile, setNewToast } = useGlobalStore();
+    if (userProfile.id === "") {
+        setNewToast("error", "Log in first.");
+        const router = useRouter();
+        router.push("/registerLogin");
+    }
     return (<>
     <div className="h-full flex flex-col gap-5">
         <div className="flex gap-2">

@@ -24,7 +24,8 @@ interface useStoreProps {
 	confirmedPasswordOnSignup: string,
 	setConfirmedPasswordOnSignup: (arg0: string) => void,
 	setSignupContentState: (arg0: userType) => void,
-	setSignupToZero: () => void
+	setSignupToZero: () => void,
+	setProfileToZero: () => void,
 }
 
 export const useGlobalStore = create<useStoreProps>() (
@@ -105,103 +106,43 @@ export const useGlobalStore = create<useStoreProps>() (
 				})
 			},
 			userProfile: {
-				id: '1',
-				email: "andrianjafiniaina21@gmail.com",
-				
-				fullName: "Tojonirina Andrianjafiniaina",
-				pseudo: "Tj-san",
+				id: '',
+				email: "",
+						
+				fullName: "",
+				pseudo: "",
+				age: 10,
 				gender: "male",
-				age: 20,
-
+						
 				currentPoints: 0,
 				accumulatedPoints: 0,
 				level: 0,
 				evolutionStatus: "Noob",
 				titleColor: "blue",
 				profilePicture: "",
-				profileDescription: "Someone puts his favorite quote here.",
-
+				profileDescription: "",
+						
 				availablility: "Both",
 				generalRate: 0,
 				doneAppointmentsNumber: 0,
-				
-				choosedLearningSkills :[
-					{ 	
-						id: "1", 
-						proficiency: "Beginner",
-						userId: "1",
-						state: "UserIsLearning",
-						skillItself: {
-							id: "1",
-							name: "Pastry",
-							categoryName: "Art"
-						}
-					},
-					{ 	
-						userId: "1",
-						id: "2", 
-						proficiency: "Beginner",
-						state: "UserIsLearning",
-						skillItself: {
-							id: "2",
-							name: "Piano",
-							categoryName: "Art"
-						}
-					}
-				],
-				choosedTeachingSkills: [
-					{ 	
-						id: "3",
-						userId: "1",
-						proficiency: "Advanced",
-						state: "UserIsTeaching",
-						skillItself: {
-							id: "655a5589-25b2-45ff-b626-31d3c7e5463c",
-							name: "React Framework",
-							categoryName: "Coding"
-						}
-					},
-					{ 	
-						id: "4", 
-						userId: "1",
-						proficiency: "Advanced",
-						state: "UserIsTeaching",
-						skillItself: {
-							id: "22330bc9-13a5-4516-8a7f-58c1d7f94728",
-							name: "Basketball",
-							categoryName: "Sport"
-						}
-					},
-					{ 	
-						id: "5", 
-						userId: "1",
-						proficiency: "Intermediate",
-						state: "UserIsTeaching",
-						skillItself: {
-							id: "7da2b317-3788-4aad-bc83-42df8ab5da89",
-							name: "Drawing",
-							categoryName: "Art"
-						}
-					}
-				],
+						
+				choosedLearningSkills :[],
+				choosedTeachingSkills: [],
 				createdAt: new Date(),
 				updateAt: new Date(),
-
+						
 				asInvitedAppointmentsIds: [],
 				asInvitorAppointmentsIds: [],
-
+						
 				asInvitedConversationIds: [],
 				asInvitorConversationIds: [],
 				blockedUsersIds: [],
 				blockedByIds: [],
-
+						
 				notificationsIds: [],
-				pictures: [""],
+				pictures: [],
 				portfolioVideo: "",
-				portfolioLinks : [
-					{ label: "Facebook", link: "www.facebook.com", id: "1" },
-					{ label: "Portfolio Website", link: "www.thisisthelink.com", id: "2" }
-				]
+				portfolioLinks : []
 			},
 			setUserProfile : (arg0: userType) => {
 				set(() => {
@@ -262,6 +203,51 @@ export const useGlobalStore = create<useStoreProps>() (
 				set(() => {
 					return {
 						signupContentState: {
+							id: '',
+							email: "",
+									
+							fullName: "",
+							pseudo: "",
+							age: 10,
+							gender: "male",
+									
+							currentPoints: 0,
+							accumulatedPoints: 0,
+							level: 0,
+							evolutionStatus: "Noob",
+							titleColor: "blue",
+							profilePicture: "",
+							profileDescription: "",
+									
+							availablility: "Both",
+							generalRate: 0,
+							doneAppointmentsNumber: 0,
+									
+							choosedLearningSkills :[],
+							choosedTeachingSkills: [],
+							createdAt: new Date(),
+							updateAt: new Date(),
+									
+							asInvitedAppointmentsIds: [],
+							asInvitorAppointmentsIds: [],
+									
+							asInvitedConversationIds: [],
+							asInvitorConversationIds: [],
+							blockedUsersIds: [],
+							blockedByIds: [],
+									
+							notificationsIds: [],
+							pictures: [],
+							portfolioVideo: "",
+							portfolioLinks : []
+						}
+					}
+				})
+			},
+			setProfileToZero: () => {
+				set(() => {
+					return {
+						userProfile: {
 							id: '',
 							email: "",
 									
