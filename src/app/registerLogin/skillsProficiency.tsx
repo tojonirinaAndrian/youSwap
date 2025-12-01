@@ -44,7 +44,10 @@ export default function SkillsProficiency () {
                 ...mockSkills[activeSkillIndex],
                 proficiency: newProficiency
             };
-            mockCheckSkillsProficiency = { learn : mockSkills, teach : teachSkills};
+            mockCheckSkillsProficiency = { 
+                learn : mockSkills, 
+                teach : teachSkills
+            };
             setProfileState({...profileState, choosedLearningSkills : mockSkills})
         }
         else {
@@ -92,7 +95,11 @@ export default function SkillsProficiency () {
         })
         if (!error) {
             // redirection
-            setSignupContentState({ ...profileState });
+            setSignupContentState({ 
+                ...profileState, 
+                choosedLearningSkills: [...learnSkills],
+                choosedTeachingSkills: [...teachSkills] 
+            });
             setWhereIsLoginRegisterPage("profilePicture");
         }
     }

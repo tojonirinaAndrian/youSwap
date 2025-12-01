@@ -31,7 +31,7 @@ export default function InfosPage() {
     const [activeGender, setActiveGender] = useState<"male" | "female" | "other">(signupContentState.gender);
     const [description, setDescription] = useState<string>(signupContentState.profileDescription)
     const [age, setAge] = useState<number>(signupContentState.age);
-
+    const [availability, setAvailability] = useState<"InPerson" | "Online" | "Both">(signupContentState.availablility);
     const handleDeletePortfolioLink = (linkId: string) => {
         const mock: {link: string,label: string, id: string}[] = [];
         signupContentState.portfolioLinks.map (mockLink => {
@@ -72,7 +72,7 @@ export default function InfosPage() {
             </div>       
             <div className="space-y-8 w-full">
                 <div className="space-y-1">
-                    <p>Are you a man or a woman ?</p>
+                    <p className="text-black/70">Are you a man or a woman ?</p>
                     <div className="flex gap-2">
                         <button className={`flex gap-1 ${activeGender==='male' ? `filledButton hover:!bg-blueDianne hover:!text-lightCream` : `borderedButton hover:!bg-lightCream hover:!text-blueDianne`}`}
                         onClick={()=>{
@@ -95,7 +95,7 @@ export default function InfosPage() {
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <p>How old are you ?</p>
+                    <p  className="text-black/70">How old are you ?</p>
                     <p className="text-sm">You have to be <span className="font-medium">10 years old at least</span>.</p>
                     <div>
                         <input type="number" min={10} max={100} placeholder="Your age"
@@ -111,7 +111,7 @@ export default function InfosPage() {
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <p>Describe yourself. Let people know who you are and how working with you is.</p>
+                    <p  className="text-black/70">Describe yourself. Let people know who you are and how working with you is.</p>
                     <div>
                         <textarea placeholder='"Wait a minute, Who Are You ???"'
                         className="border focus:border-black w-full rounded-md p-3"
@@ -131,7 +131,30 @@ export default function InfosPage() {
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <p>Give us links to your personnals on the internet. I mean Social media, Github account or personnal portfolio website if you want to.</p>
+                    <p className="text-black/70">What's your appointments'type preference ?</p>
+                    <div className="flex gap-2">
+                        <button className={`flex gap-1 ${availability==='InPerson' ? `filledButton hover:!bg-blueDianne hover:!text-lightCream` : `borderedButton hover:!bg-lightCream hover:!text-blueDianne`}`}
+                        onClick={()=>{
+                            setAvailability('InPerson');
+                            setSignupContentState({ ...signupContentState, availablility: "InPerson" })
+                        }}
+                        >In person</button>
+                        <button className={`flex gap-1 ${availability==='Online' ? `filledButton hover:!bg-blueDianne hover:!text-lightCream` : `borderedButton hover:!bg-lightCream hover:!text-blueDianne`}`}
+                        onClick={()=>{
+                            setAvailability('Online');
+                            setSignupContentState({ ...signupContentState, availablility: "Online" })
+                        }}
+                        >Online</button>
+                        <button className={`flex gap-1 ${availability==='Both' ? `filledButton hover:!bg-blueDianne hover:!text-lightCream` : `borderedButton hover:!bg-lightCream hover:!text-blueDianne`}`}
+                        onClick={()=>{
+                            setAvailability('Both');
+                            setSignupContentState({ ...signupContentState, availablility: "Both" })
+                        }}
+                        >Both</button>
+                    </div>
+                </div>
+                <div className="space-y-1">
+                    <p  className="text-black/70">Give us links to your personnals on the internet. I mean Social media, Github account or personnal portfolio website if you want to.</p>
                     <div className="space-y-1">
                         {(signupContentState.portfolioLinks.map((link) => {
                             return <div className="flex gap-2" key={link.id}>
@@ -180,6 +203,7 @@ export default function InfosPage() {
                 } else {
                     setNewToast("error", "You should be at least 10 years old.");
                 }
+                // console.log(signupContentState);
             }}
             >Continue signing up</button>
         </div>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Trash } from "lucide-react";
 import { getCurrentlyLoggedInUser, signupFunction } from "@/src/requests/authentification";
 import { useRouter } from "next/navigation";
+import { userType } from "@/src/types/userProfilesType";
 
 export default function ShowOffPictures () {
     const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile, setSignupContentState, setSignupToZero, signupContentState, confirmedPasswordOnSignup } = useGlobalStore();
@@ -48,7 +49,7 @@ export default function ShowOffPictures () {
     }
     const handleSave = async () => {
         setSignupContentState({ ...signupContentState, pictures: previews });
-        setUserProfile({ ...signupContentState, pictures: previews });
+        // setUserProfile({ ...signupContentState, pictures: previews });
 
         const response = await signupFunction({
             password: confirmedPasswordOnSignup, 
@@ -59,11 +60,9 @@ export default function ShowOffPictures () {
             }
         })        
         // router
-        const currentUser = await getCurrentlyLoggedInUser();
-        
-        // console.log();
-        // setUserProfile()
-        // if (currentUser )
+        const currentUser: userType = await getCurrentlyLoggedInUser();
+        setUserProfile(currentUser);
+        router.push("/user");
     }
 
     return <>
@@ -110,7 +109,7 @@ export default function ShowOffPictures () {
             >
                 {previews.map((preview, i) => {
                 if (preview !== "") {
-                    return <>
+                    return <div  key={i}>
                     <div className="w-full relative">
                         <Image 
                             width={500}
@@ -131,7 +130,7 @@ export default function ShowOffPictures () {
                         }}
                         ><Trash size={20}/></div>
                     </div>
-                    </>    
+                    </div>    
                 }
             })}
             </div> : <></>}

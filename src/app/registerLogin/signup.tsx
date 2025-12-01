@@ -12,6 +12,11 @@ export default function SignupPage() {
     const [fullnameState, setFullnameState] = useState<string>(signupContentState.fullName);
     const [pseudo, setPseudo] = useState<string>(signupContentState.pseudo);
     const [seenConfirmedPassword, setSeenConfirmedPassword] = useState<boolean>(false);
+    const [passwordCharNumbers, setPasswordCharNumbers] = useState<number>(0);
+    const [samePasswords, setSamePasswords] = useState<boolean>(false);
+    const [startedTyping,setStartedTyping] = useState<boolean>(false);
+    const [startedTypingConfirmation,setStartedTypingConfirmation] = useState<boolean>(false);
+
     const onLoginClick = () => {
         setWhereIsLoginRegisterPage('login');
     }
@@ -64,7 +69,7 @@ export default function SignupPage() {
                         setFullnameState(e.target.value);
                         setSignupContentState({ ...signupContentState, fullName: e.target.value })
                     }}
-                    placeholder="First name" required
+                    placeholder="Full name" required
                     className="border focus:border-black w-full rounded-md p-3"/>
                 </div>
                 <div className="space-y-1">
@@ -75,7 +80,7 @@ export default function SignupPage() {
                         setPseudo(e.target.value);
                         setSignupContentState({ ...signupContentState, pseudo: e.target.value })
                     }}
-                    placeholder="First name" required
+                    placeholder="Pseudo" required
                     className="border focus:border-black w-full rounded-md p-3"/>
                 </div>
                 <div className="space-y-1">
@@ -91,29 +96,47 @@ export default function SignupPage() {
                 </div>
                 <div className="space-y-1">
                     <label htmlFor="password" className="block">Password: *</label>
-                    <div className="flex gap-3">
+                    <div className={`flex gap-3 `}>
                         <input name="password" id="password" 
                         type={seenPassword ? "text" : "password"}
-                        onChange={(e) => setFirstPassword(e.target.value)}
+                        onChange={(e) =>{ 
+                            setFirstPassword(e.target.value);
+                            setPasswordCharNumbers(e.target.value.length);
+                            setStartedTyping(true);
+                        }}
                         placeholder="Password" required
-                        className="border focus:border-black w-full rounded-md p-3"/>
+                        className={`border focus:outline-black w-full rounded-md p-3
+                            ${(passwordCharNumbers < 8 && startedTyping) ? " !outline-red-500 " : " "}
+                        `}/>
                         <p className="text-sm my-auto cursor-pointer"
                         onClick={() => setSeenPassword(!seenPassword)}
                         >{seenPassword ? "Hide" : "See"}</p>
                     </div>
+                    {(passwordCharNumbers < 8 && startedTyping) ? <>
+                        <p className={`text-sm text-red-500`}>
+                            Put at least 8 characters
+                        </p>
+                    </> : <></>}
                 </div>
                 <div className="space-y-1">
                     <label htmlFor="confirmPassword" className="block">Confirm your password : *</label>
                     <div className="flex gap-3">
                         <input name="confirmPassword" id="confirmPassword"
                         type={seenConfirmedPassword ? "text" : "password"}
-                        onChange={(e) => setConfirmedPassword(e.target.value)}
+                        onChange={(e) => {setConfirmedPassword(e.target.value); setStartedTypingConfirmation(true)}}
                         placeholder="Repeat your password" required
-                        className="border focus:border-black w-full rounded-md p-3"/>
+                        className={`border focus:outline-black w-full rounded-md p-3 ${(startedTypingConfirmation && (firstPassword !== confirmedPassword)) ? " !outline-red-500 "
+                            : ""}
+                        `}/>
                         <p className="text-sm my-auto cursor-pointer"
                         onClick={() => setSeenConfirmedPassword(!seenConfirmedPassword)}
                         >{seenConfirmedPassword ? "Hide" : "See"}</p>
                     </div>
+                    {(startedTypingConfirmation && (firstPassword !== confirmedPassword)) ? <>
+                        <p className={`text-sm text-red-500`}>
+                            Different from the main password you typed.
+                        </p>
+                    </> : <></>}
                 </div>
                 <div className="flex justify-between">
                     <div className="flex gap-1 text-sm text-black/70">

@@ -57,8 +57,8 @@ export default function ProfilePicture () {
                     </> : <></>}
                     {preview !== "" ? <>
                     <Image 
-                        width={500}
-                        height={500}
+                        width={1200}
+                        height={1200}
                         src={preview} 
                         alt="Your profile picture" 
                         className="w-full h-full object-cover rounded-sm"

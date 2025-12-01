@@ -84,7 +84,9 @@ export default function MatchCard (props: matchCardProps) {
             </div>
         </div>
         <div className="flex gap-2">
-            <button className="borderedButton w-full">See profile</button>
+            <button className="borderedButton w-full"
+            onClick={() => console.log(props.user)}
+            >See profile</button>
             <button className="filledButton w-full">Say Hello</button>
         </div>
     </div>

@@ -28,8 +28,8 @@ export const getCurrentlyLoggedInUser = async () => {
         const loggedInUser = await axios.get(`${backendUrl}/getCurrentlyLoggedInUser`, {
             withCredentials: true
         })
-        // return { ...loggedInUser.data }
-        console.log (loggedInUser.data);
+        return { ...loggedInUser.data }
+        // console.log (loggedInUser.data);
     } catch (e) {
         console.error("error : ", e)
     }
