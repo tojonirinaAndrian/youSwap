@@ -32,6 +32,10 @@ export default function SkillChoosingMainContent (props: addNewSkillModalProps) 
         }
     }, [selectedCategories])
 
+    useEffect(() => {
+        setSelectedCategories([]);
+    }, [props.whereIsSkills])
+
     const handleDeleteChoosedSkill = (currentlyChoosedSkillToDeleteInRawForm: SkillType) => {
         const mockSkills: ChoosedSkillType[] = [];
         props.currentSkillsListState.map((currentListItem) => {
@@ -48,9 +52,10 @@ export default function SkillChoosingMainContent (props: addNewSkillModalProps) 
         mockSkills.push({
             id: uuid(),
             skillItself: skillToAdd,
-            state: props.whereIsSkills === "learn" ? "UserIsLearning" : "UserIsTeaching",
+            state: (props.whereIsSkills === "learn") ? "UserIsLearning" : "UserIsTeaching",
             proficiency: "Unset",
-            userId: props.profileState.id
+            userId: props.profileState.id,
+            skillId: skillToAdd.id
         })
         props.setSkillsListState(mockSkills);
     }

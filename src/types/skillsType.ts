@@ -4,7 +4,8 @@ export type ChoosedSkillType = {
     skillItself: SkillType,
     proficiency: 'Advanced' | "Intermediate" | "Beginner" | "Unset"
     state: "UserIsTeaching" | "UserIsLearning",
-    userId: string
+    userId: string,
+    skillId: string
 };
 
 export type SkillType = {

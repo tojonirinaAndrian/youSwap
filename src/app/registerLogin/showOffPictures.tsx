@@ -49,8 +49,7 @@ export default function ShowOffPictures () {
     }
     const handleSave = async () => {
         setSignupContentState({ ...signupContentState, pictures: previews });
-        // setUserProfile({ ...signupContentState, pictures: previews });
-
+        console.log("final User before Saving " + { ...signupContentState, pictures: previews });
         const response = await signupFunction({
             password: confirmedPasswordOnSignup, 
             userInfos: { ...signupContentState, pictures: previews },
@@ -58,13 +57,13 @@ export default function ShowOffPictures () {
                 setSignupToZero();
                 setWhereIsLoginRegisterPage("signup");
             }
-        })
+        });
         // router
         const currentUser: userType = await getCurrentlyLoggedInUser();
         setUserProfile(currentUser);
         setIsLoggedIn(true);
         router.push("/user");
-        // console.log(currentUser);
+        console.log("final User after saving " + currentUser);
     }
 
     return <>
