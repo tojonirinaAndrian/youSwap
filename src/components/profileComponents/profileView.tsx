@@ -3,6 +3,7 @@ import { useState } from "react";
 import UserState from "../userState";
 import { useGlobalStore } from "@/store/use-global-store";
 import { PencilLine, User } from "lucide-react";
+import Image from "next/image";
 
 export default function ProfileView (props: {setWhereIsProfile: (arg0: "view" | "modify") => void}) {
     const { userProfile } = useGlobalStore ();
@@ -25,7 +26,14 @@ export default function ProfileView (props: {setWhereIsProfile: (arg0: "view" | 
         </div>
         <div className="gap-2 flex flex-col h-full overflow-auto space-y-5">
             <div className="flex gap-3 bg-blueDianne/10 p-3 w-fit rounded-2xl mx-auto">
-                <div className="relative rounded-full bg-red-500 h-28 w-28 flex">
+                <div className="relative h-28 w-28 flex">
+                    <Image 
+                        width={500}
+                        height={500}
+                        src={userProfile.profilePicture}
+                        alt="Profile Picture"
+                        className="w-full h-full object-cover rounded-full bg-red-500"
+                    />
                 </div>
                 <div className="flex flex-col justify-center ">
                     <UserState

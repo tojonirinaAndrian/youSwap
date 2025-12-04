@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { userType } from "@/src/types/userProfilesType";
 
 export default function ShowOffPictures () {
-    const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile, setSignupContentState, setSignupToZero, signupContentState, confirmedPasswordOnSignup } = useGlobalStore();
+    const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile, setIsLoggedIn, setSignupContentState, setSignupToZero, signupContentState, confirmedPasswordOnSignup } = useGlobalStore();
     const [previews, setPreviews] = useState<string[]>(signupContentState.pictures);
     const [isDraging, setIsDraging] = useState<boolean>(false);
     const router = useRouter();
@@ -58,11 +58,13 @@ export default function ShowOffPictures () {
                 setSignupToZero();
                 setWhereIsLoginRegisterPage("signup");
             }
-        })        
+        })
         // router
         const currentUser: userType = await getCurrentlyLoggedInUser();
         setUserProfile(currentUser);
+        setIsLoggedIn(true);
         router.push("/user");
+        // console.log(currentUser);
     }
 
     return <>

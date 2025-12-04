@@ -1,14 +1,15 @@
 'use client';
 import { getCurrentlyLoggedInUser, loginFunction } from "@/src/requests/authentification";
 import { useGlobalStore } from "@/store/use-global-store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { userType } from "@/src/types/userProfilesType";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-    const router = useRouter()
-    const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile } = useGlobalStore()
+    const router = useRouter();
+    const [firstEntry, setFirstEntry] = useState<boolean>(true);
+    const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile, setIsLoggedIn } = useGlobalStore()
     const [seenPassword, setSeenPassword] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -16,6 +17,10 @@ export default function LoginPage() {
     const onSignupClick = (): void => {
         setWhereIsLoginRegisterPage('signup');
     }
+    
+    useEffect (() => {
+        setIsLoggedIn(false);
+    }, [firstEntry]);
     
     const onLoggingIn = async () => {
         if (email.trim().length > 0 && password.trim().length > 0) {
@@ -30,6 +35,7 @@ export default function LoginPage() {
                 const user: userType = await getCurrentlyLoggedInUser();
                 if (user) {
                     setUserProfile (user);
+                    setIsLoggedIn (true);
                     router.push("/user");
                 }
             }

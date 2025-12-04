@@ -7,7 +7,6 @@ import uuid from 'react-uuid';
 
 interface useStoreProps {
 	whereIsLoginRegisterPage: string,
-	isLoggedIn: boolean,
 	setWhereIsLoginRegisterPage : (arg0: string) => void,
 	toogleLoggedIn: () => void,
 	userProfile: userType,
@@ -26,6 +25,7 @@ interface useStoreProps {
 	setSignupContentState: (arg0: userType) => void,
 	setSignupToZero: () => void,
 	setProfileToZero: () => void,
+	isLoggedIn: boolean, setIsLoggedIn: (status: boolean) => void
 }
 
 export const useGlobalStore = create<useStoreProps>() (
@@ -34,6 +34,13 @@ export const useGlobalStore = create<useStoreProps>() (
 			openToasts: [],
 			whereIsLoginRegisterPage : 'signup',
 			isLoggedIn: false,
+			setIsLoggedIn: (status: boolean) => {
+				set(() => {
+					return {
+						isLoggedIn : status
+					}
+				})
+			},
 			setNewToast: (type: "simple" | "error", content: string) => {
 				const newId = uuid();
 				const pushedOpenToasts = [...get().openToasts, {

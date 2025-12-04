@@ -12,6 +12,8 @@ interface signupProps {
 
 export const loginFunction = async (email: string, password: string) => {
     try {
+        const logoutResponse = await logoutFunction();
+        console.log(logoutResponse);
         const loggedInUserState = await axios.post(`${backendUrl}/login`, {
             email, password
         }, {
@@ -38,12 +40,15 @@ export const getCurrentlyLoggedInUser = async () => {
 export const signupFunction = async (props: signupProps) => {
     try {
         // flow : 
+        // Log out first.
         // => getImagesPreviewUrl -> getImagesFromPreviews -> send images allong side with data.
         // WHAT THE BACKEND SHOUD DO :
         // Get the request -> store files somewhere, change the picture strings data given to the actual new image URLS
         // -> Make the stored images accessible through URL
         // -> store the changed user state to the db
         // send success to the front if done correctly
+        const logoutResponse = await logoutFunction();
+        console.log(logoutResponse);
         const formData = new FormData();
         let profilePicFile: File;
         const profilePic: string = props.userInfos.profilePicture;

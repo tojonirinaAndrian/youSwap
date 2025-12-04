@@ -11,13 +11,14 @@ import SearchSomeone from "@/src/components/userHomeComponents/searchSomeone";
 
 export default function HomePage() {
     const [whereAreMatches, setWhereAreMatches] = useState<'learn' | 'teach'| "searchSomeone" | 'matches' | 'talkedTo'> ('matches');
-    const { userProfile, setNewToast } = useGlobalStore();
-    if (userProfile.id === "") {
+    const { setNewToast, isLoggedIn } = useGlobalStore();
+    if (!isLoggedIn) {
         setNewToast("error", "Log in first.");
         const router = useRouter();
         router.push("/registerLogin");
+        return <></>
     }
-    return (<>
+    else return (<>
     <div className="h-full flex flex-col gap-5">
         <div className="flex gap-2">
             <Home />
