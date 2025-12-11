@@ -1,26 +1,22 @@
 'use client';
-import { getCurrentlyLoggedInUser, loginFunction } from "@/src/requests/authentification";
+import { getCurrentlyLoggedInUser, loginFunction, logoutFunction } from "@/src/requests/authentification";
 import { useGlobalStore } from "@/store/use-global-store";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { userType } from "@/src/types/userProfilesType";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function LoginPage() {
     const router = useRouter();
-    const [firstEntry, setFirstEntry] = useState<boolean>(true);
-    const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile, setIsLoggedIn } = useGlobalStore()
+    const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile } = useGlobalStore()
     const [seenPassword, setSeenPassword] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
+    const [loggingLoading, setLoggingLoading] = useState<boolean>(false);
     const onSignupClick = (): void => {
         setWhereIsLoginRegisterPage('signup');
     }
-    
-    useEffect (() => {
-        setIsLoggedIn(false);
-    }, [firstEntry]);
     
     const onLoggingIn = async () => {
         if (email.trim().length > 0 && password.trim().length > 0) {
@@ -31,11 +27,10 @@ export default function LoginPage() {
             } else if (answer === "incorrectPassword") {
                 setNewToast("error", "Incorrect password.");
             } else if (answer === "loggedIn" || answer === "alreadyLoggedIn") {
-                console.log("loggedIn");
+                setLoggingLoading(true);
                 const user: userType = await getCurrentlyLoggedInUser();
                 if (user) {
                     setUserProfile (user);
-                    setIsLoggedIn (true);
                     router.push("/user");
                 }
             }
@@ -43,7 +38,6 @@ export default function LoginPage() {
             setNewToast("error", "Please, fill the fields.");
         }
     }
-
     return (
         <>
             <div className="space-y-8 w-full">
@@ -109,9 +103,10 @@ export default function LoginPage() {
                 >
                     Here
                 </span></p>
-                <button type="button" className="filledButton !w-full"
+                {loggingLoading ? <button type="button" className="filledButton !w-full opacity-50"
+                >Logging you in...</button> : <button type="button" className="filledButton !w-full"
                 onClick={() => onLoggingIn()}
-                >Log in</button>                
+                >Log in</button> }         
             </div>
         </>
     )

@@ -9,16 +9,19 @@ export default function Matches () {
     const [ page, setPage ] = useState<number>(0);
     const { userProfile } = useGlobalStore();
     const [ matchingProfiles, setMatchingProfiles ] = useState<userType[]>([]);
+    const [loaded, setIsLoaded] = useState<boolean>(false);
+
     useEffect(() => {
         const dataFetching = async () => {
             const profiles = await getMatchingProfiles(page, userProfile);
             // console.log(profiles.length);
             // console.log(profiles);
             setMatchingProfiles(profiles);
+            setIsLoaded(true);
         }
         dataFetching();
     }, [page])
-    return <div className="space-y-2">
+    return (loaded) ? <div className="space-y-2">
         <div className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
                 {(matchingProfiles && matchingProfiles.length > 0) ? matchingProfiles.map((match) => {
@@ -34,5 +37,9 @@ export default function Matches () {
                 See more
             </button>
         </div>
+    </div> : <>
+    <div className="flex *:m-auto w-full h-full">
+        <h3 className="font-semibold uppercase opacity-50">Loading...</h3>
     </div>
+    </>
 }

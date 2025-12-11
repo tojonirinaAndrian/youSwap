@@ -34,6 +34,7 @@ export const getCurrentlyLoggedInUser = async () => {
         // console.log (loggedInUser.data);
     } catch (e) {
         console.error("error : ", e)
+        return null
     }
 }
 

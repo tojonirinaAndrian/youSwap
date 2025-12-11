@@ -1,20 +1,31 @@
 "use client";
 import { useGlobalStore } from "@/store/use-global-store";
 import { userType } from "../types/userProfilesType";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface matchCardProps {
     user: userType
 };
 
 export default function MatchCard (props: matchCardProps) {
-    const { userProfile } = useGlobalStore()
+    const { userProfile, setSeeingProfile } = useGlobalStore();
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    
+    function handleSeeProfile () {
+        setIsLoading(true);
+        setSeeingProfile(props.user);
+        router.push("/userProfile");
+    };
     return <>
     <div className="p-5 bg-blueDianne/5 rounded-md flex flex-col gap-5 w-full">
         <div className="rounded-md flex gap-5 w-full">
-            <div className="relative rounded-full bg-red-500 h-32 w-32 flex">
-                <h2 className="m-auto text-white">
-                    98%
-                </h2>
+            <div className="relative rounded-full h-32 w-32 flex">
+                <Image src={props.user.profilePicture} width={500} height={500} alt="ProfilePicture"
+                className="w-full h-full object-cover rounded-full bg-red-500"
+                />
             </div>
             <div className="my-auto">
                 <p className="font-medium">{props.user.pseudo}</p>
@@ -83,9 +94,11 @@ export default function MatchCard (props: matchCardProps) {
                 </div>
             </div>
         </div>
-        <div className="flex gap-2">
+        <div className={`flex gap-2 ${isLoading ? " *:opacity-50 " : ""}`}>
             <button className="borderedButton w-full"
-            onClick={() => console.log(props.user)}
+            onClick={() => {
+                handleSeeProfile();
+            }}
             >See profile</button>
             <button className="filledButton w-full">Say Hello</button>
         </div>

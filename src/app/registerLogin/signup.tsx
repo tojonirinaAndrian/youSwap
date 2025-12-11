@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function SignupPage() {
-    const { setWhereIsLoginRegisterPage, setIsLoggedIn, setNewToast, signupContentState, setSignupContentState, setConfirmedPasswordOnSignup } = useGlobalStore();
+    const { setWhereIsLoginRegisterPage, setNewToast, signupContentState, setSignupContentState, setConfirmedPasswordOnSignup } = useGlobalStore();
     const [seenPassword, setSeenPassword] = useState<boolean>(false);
     const [firstPassword, setFirstPassword] = useState<string>("");
     const [confirmedPassword, setConfirmedPassword] = useState<string>("");
@@ -16,15 +16,10 @@ export default function SignupPage() {
     const [samePasswords, setSamePasswords] = useState<boolean>(false);
     const [startedTyping,setStartedTyping] = useState<boolean>(false);
     const [startedTypingConfirmation,setStartedTypingConfirmation] = useState<boolean>(false);
-    const [firstEntry, setFirstEntry] = useState<boolean>(true);
+    
     const onLoginClick = () => {
         setWhereIsLoginRegisterPage('login');
     }
-
-    useEffect (() => {
-        setIsLoggedIn(false);
-    }, [firstEntry]);
-
     const onSignupClick = () => {
         if (
             emailState.trim().length > 0 && 

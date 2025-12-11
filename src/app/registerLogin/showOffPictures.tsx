@@ -7,9 +7,11 @@ import { useRouter } from "next/navigation";
 import { userType } from "@/src/types/userProfilesType";
 
 export default function ShowOffPictures () {
-    const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile, setIsLoggedIn, setSignupContentState, setSignupToZero, signupContentState, confirmedPasswordOnSignup } = useGlobalStore();
+    const { setWhereIsLoginRegisterPage, setNewToast, setUserProfile, setSignupContentState, setSignupToZero, signupContentState, confirmedPasswordOnSignup } = useGlobalStore();
     const [previews, setPreviews] = useState<string[]>(signupContentState.pictures);
     const [isDraging, setIsDraging] = useState<boolean>(false);
+    const [loggingLoading, setLoggingLoading] = useState<boolean>(false);
+
     const router = useRouter();
     const maximum = 6;
     window.ondragover = (e) => {
@@ -48,6 +50,7 @@ export default function ShowOffPictures () {
         }
     }
     const handleSave = async () => {
+        setLoggingLoading(true);
         setSignupContentState({ ...signupContentState, pictures: previews });
         console.log("final User before Saving " + { ...signupContentState, pictures: previews });
         const response = await signupFunction({
@@ -61,7 +64,6 @@ export default function ShowOffPictures () {
         // router
         const currentUser: userType = await getCurrentlyLoggedInUser();
         setUserProfile(currentUser);
-        setIsLoggedIn(true);
         router.push("/user");
         console.log("final User after saving " + currentUser);
     }
@@ -136,6 +138,12 @@ export default function ShowOffPictures () {
             })}
             </div> : <></>}
         </div>
+        { loggingLoading ?
+        <div className="">
+            <button className="w-full filledButton opacity-50"
+                onClick={() => { setNewToast("error", "Upload at least a picture.") }}
+            >Signing you up...</button>
+        </div> : 
         <div className="">
             { previews.length > 0 ? <>
                 <button className="w-full filledButton"
@@ -150,6 +158,8 @@ export default function ShowOffPictures () {
                 >Save profiles</button>
             </> }
         </div>
+        }
+        
     </div>
     </>
 } 

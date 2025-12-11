@@ -8,17 +8,29 @@ import Teach from "@/src/components/userHomeComponents/teach";
 import TalkedTo from "@/src/components/userHomeComponents/talkedTo";
 import Learn from "@/src/components/userHomeComponents/learn";
 import SearchSomeone from "@/src/components/userHomeComponents/searchSomeone";
+import { userType } from "@/src/types/userProfilesType";
+import { getCurrentlyLoggedInUser } from "@/src/requests/authentification";
 
 export default function HomePage() {
     const [whereAreMatches, setWhereAreMatches] = useState<'learn' | 'teach'| "searchSomeone" | 'matches' | 'talkedTo'> ('matches');
-    const { setNewToast, isLoggedIn } = useGlobalStore();
-    if (!isLoggedIn) {
-        setNewToast("error", "Log in first.");
-        const router = useRouter();
-        router.push("/registerLogin");
-        return <></>
-    }
-    else return (<>
+    const { setNewToast } = useGlobalStore();
+    const [firstEntry, setFirstEntry] = useState<boolean>(true);
+    const router = useRouter();
+    const [loaded, setLoaded] = useState<boolean>(false);
+
+    useEffect (() => {
+        async function checkSession () {
+            const user: userType = await getCurrentlyLoggedInUser();
+            if (!user) {
+                setNewToast("error", "Log in first.");
+                router.push("/loginRegister");
+            } else {
+                setLoaded(true);
+            }
+        };
+        checkSession();
+    }, [firstEntry])
+    return (loaded ? <>
     <div className="h-full flex flex-col gap-5">
         <div className="flex gap-2">
             <Home />
@@ -65,6 +77,10 @@ export default function HomePage() {
                 {(whereAreMatches === 'talkedTo' && <TalkedTo />)}
             </div>
         </div>
+    </div>
+    </> : <>
+    <div className="w-full h-full flex *:m-auto">
+        <h3 className="opacity-50 font-semibold uppercase">Loading...</h3>
     </div>
     </>
     )

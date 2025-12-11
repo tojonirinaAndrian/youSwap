@@ -8,7 +8,6 @@ import uuid from 'react-uuid';
 interface useStoreProps {
 	whereIsLoginRegisterPage: string,
 	setWhereIsLoginRegisterPage : (arg0: string) => void,
-	toogleLoggedIn: () => void,
 	userProfile: userType,
 	setUserProfile: (arg0: userType) => void,
 	setNewToast: (type: "simple" | "error", content: string) => void,
@@ -25,7 +24,8 @@ interface useStoreProps {
 	setSignupContentState: (arg0: userType) => void,
 	setSignupToZero: () => void,
 	setProfileToZero: () => void,
-	isLoggedIn: boolean, setIsLoggedIn: (status: boolean) => void
+	seeingProfile: userType,
+	setSeeingProfile: (arg0: userType) => void
 }
 
 export const useGlobalStore = create<useStoreProps>() (
@@ -33,14 +33,6 @@ export const useGlobalStore = create<useStoreProps>() (
 		(set, get) => ({
 			openToasts: [],
 			whereIsLoginRegisterPage : 'signup',
-			isLoggedIn: false,
-			setIsLoggedIn: (status: boolean) => {
-				set(() => {
-					return {
-						isLoggedIn : status
-					}
-				})
-			},
 			setNewToast: (type: "simple" | "error", content: string) => {
 				const newId = uuid();
 				const pushedOpenToasts = [...get().openToasts, {
@@ -96,13 +88,6 @@ export const useGlobalStore = create<useStoreProps>() (
 			setWhereIsLoginRegisterPage : (text: string) => {
 				set(() => {
 					return { whereIsLoginRegisterPage: text };
-				})
-			},
-			toogleLoggedIn: () => {
-				set((state) => {
-					return {
-						isLoggedIn: !state.isLoggedIn
-					};
 				})
 			},
 			goBackLoginRegister: (text: string) => {
@@ -198,6 +183,50 @@ export const useGlobalStore = create<useStoreProps>() (
 			setSignupContentState : (arg0: userType) => {
 				set(() => {
 					return { signupContentState : arg0 };
+				})
+			},
+			seeingProfile: {
+				id: '',
+				email: "",
+				
+				fullName: "",
+				pseudo: "",
+				age: 10,
+				gender: "male",
+
+				currentPoints: 0,
+				accumulatedPoints: 0,
+				level: 0,
+				evolutionStatus: "Noob",
+				titleColor: "blue",
+				profilePicture: "",
+				profileDescription: "",
+
+				availablility: "Both",
+				generalRate: 0,
+				doneAppointmentsNumber: 0,
+				
+				choosedLearningSkills :[],
+				choosedTeachingSkills: [],
+				createdAt: new Date(),
+				updateAt: new Date(),
+
+				asInvitedAppointmentsIds: [],
+				asInvitorAppointmentsIds: [],
+
+				asInvitedConversationIds: [],
+				asInvitorConversationIds: [],
+				blockedUsersIds: [],
+				blockedByIds: [],
+
+				notificationsIds: [],
+				pictures: [],
+				portfolioVideo: "",
+				portfolioLinks : []
+			},
+			setSeeingProfile : (arg0: userType) => {
+				set(() => {
+					return { seeingProfile : arg0 };
 				})
 			},
 			confirmedPasswordOnSignup: "",
