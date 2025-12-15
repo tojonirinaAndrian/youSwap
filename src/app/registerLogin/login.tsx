@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { userType } from "@/src/types/userProfilesType";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 export default function LoginPage() {
     const router = useRouter();

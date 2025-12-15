@@ -1,13 +1,24 @@
 import axios from "axios";
 import { userType } from "../types/userProfilesType";
+import { ChoosedSkillType } from "../types/skillsType";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-export const getMatchingProfiles = async (page: number, userProfile: userType) => {
+export const getMatchingProfiles = async (
+    page: number, 
+    userProfile: userType, 
+    choosedAvailability: "InPerson"|"Both"|"Online",
+    choosedSkills: {
+        choosedLearningSkills: ChoosedSkillType[],
+        choosedTeachingSkills: ChoosedSkillType[]
+    }
+) => {
     try {
         const response = await axios.post(`${backendUrl}/fetchMatchingProfiles`, {
             page,
-            userProfile
+            userProfile,
+            choosedAvailability,
+            choosedSkills
         }, {
             withCredentials: true
         });

@@ -7,12 +7,30 @@ import { getCurrentlyLoggedInUser } from "@/src/requests/authentification";
 import { User, ArrowLeft } from "lucide-react";
 import UserState from "@/src/components/userState";
 import Image from "next/image";
+import { SkillType } from "@/src/types/skillsType";
 
 export default function UserProfile () {
     const { seeingProfile, userProfile } = useGlobalStore();
     const router = useRouter();
     const [whereIsSkills, setWhereIsSkills] = useState<'learn' | 'teach'> ('teach');
-    
+    const skillsCurrentUserWoutldTeach: string[] = [];
+    const skillsCurrentUserWoutldLearn: string[]= [];
+    seeingProfile.choosedLearningSkills.map((skill) => {
+        userProfile.choosedTeachingSkills.map((currentUserSkill) => {
+            if (currentUserSkill.skillId === skill.skillId) {
+                skillsCurrentUserWoutldLearn.push(currentUserSkill.skillId);
+            }
+        })
+    })
+    seeingProfile.choosedTeachingSkills.map((skill) => {
+        userProfile.choosedLearningSkills.map((currentUserSkill) => {
+            if (currentUserSkill.skillId === skill.skillId) {
+                skillsCurrentUserWoutldLearn.push(currentUserSkill.skillId)
+            }
+        })
+    })
+    console.log(skillsCurrentUserWoutldLearn);
+    console.log(skillsCurrentUserWoutldTeach);
     return <>
     <div className="h-full flex flex-col gap-5">
         <div className="flex justify-between">
@@ -84,12 +102,12 @@ export default function UserProfile () {
                 <div className="flex gap-2">
                     <button className={(whereIsSkills==='teach' ? "filledStyle" : "unfilledStyle")}
                     onClick={() => setWhereIsSkills('teach')}                    
-                    >{`I can teach`}</button>
+                    >{`Wants to teach`}</button>
                     <div className="w-[5px] out h-[5px] bg-blueDianne/50 my-auto rounded-full"></div>
 
                     <button className={(whereIsSkills==='learn' ? "filledStyle" : "unfilledStyle")}
                     onClick={() => setWhereIsSkills('learn')}
-                    >I want to learn</button>
+                    >Wants to learn</button>
                 </div>
                 <div className="flex gap-2 *:p-5">
                     <div className="rounded-md border w-[70%] border-blueDianne/50 space-x-2 space-y-2 *:p-2 *:border-1 *:h-fit *:inline-block *:rounded-md">
@@ -104,10 +122,7 @@ export default function UserProfile () {
                                     color = "yellow"
                                 }
                                 return <div key={i} className={`text-${color}-700 bg-${color}-200 border-${color}-300 outline-3 
-                                ${(userProfile.choosedTeachingSkills.map((mappedSkill) => { 
-                                        if (skill.skillId === mappedSkill.skillId) return true
-                                    })
-                                ) ? ` outline-${color}-500 ` : " outline-transparent "}
+                                ${skillsCurrentUserWoutldTeach.includes(skill.skillId) ? ` outline-${color}-500 ` : " outline-transparent "}
                                 `}>
                                     {skill.skillItself.name}
                                 </div>
@@ -123,11 +138,8 @@ export default function UserProfile () {
                                 } else { 
                                     color = "yellow" 
                                 }
-                                return <div key={i} className={`text-${color}-700 bg-${color}-200 border-${color}-300 outline-3 ${
-                                    (userProfile.choosedLearningSkills.map((mappedSkill) => { 
-                                        if (skill.skillId === mappedSkill.skillId) return true
-                                    })
-                                ) ? ` outline-${color}-500 ` : " outline-transparent "}
+                                return <div key={i} className={`text-${color}-700 bg-${color}-200 border-${color}-300 outline-3 
+                                ${skillsCurrentUserWoutldLearn.includes(skill.skillId) ? ` outline-${color}-500 ` : " outline-transparent "}
                                 `}>
                                     {skill.skillItself.name}
                                 </div>
@@ -149,7 +161,22 @@ export default function UserProfile () {
                         </div>
                     </div>
                 </div>
-
+            </div>
+            <div className="w-full space-y-2">
+                <h3 className="text-blueDianne">Pictures</h3>
+                <div className="space-x-1 *:inline-block">
+                    {seeingProfile.pictures.map((link, i) => {
+                        return <div className="h-[200px] bg-blue-200 rounded-md" key={i}>
+                            <Image 
+                                width={500}
+                                height={500}
+                                src={link}
+                                alt={`pic${i}`}
+                                className="h-full object-cover rounded-md"
+                            />
+                        </div>
+                    })}
+                </div>
             </div>
         </div>
     </div>

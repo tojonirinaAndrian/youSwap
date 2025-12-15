@@ -38,6 +38,13 @@ export default function MatchCard (props: matchCardProps) {
                         <p>{props.user.evolutionStatus}</p>
                     </div>
                 </div>
+                <>
+                    {props.user.availablility === "Both" ? <div className="flex gap-2 *:text-blueDianne font-medium">
+                        <p>In person</p>
+                        <p>-</p>
+                        <p>Online</p>
+                    </div> : <p className="text-blueDianne font-medium">{props.user.availablility}</p>}
+                </>
             </div>
         </div>
         <div className="text-sm space-y-1">
