@@ -4,22 +4,43 @@ import { userType } from "../types/userProfilesType";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import SayHelloModal from "./sayHelloComponent";
 
 interface matchCardProps {
-    user: userType
+    user: userType,
 };
 
 export default function MatchCard (props: matchCardProps) {
     const { userProfile, setSeeingProfile } = useGlobalStore();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    
+    const [sayHelloOpen, setSayHelloOpen] = useState<boolean>(false);
+    const commonSkillIds: string[] = [];
+    userProfile.choosedLearningSkills.map((choosedSkill) => {
+        for (let i = 0; i < props.user.choosedTeachingSkills.length; i++) {
+            if (props.user.choosedTeachingSkills[i].skillId === choosedSkill.skillId) {
+                commonSkillIds.push(props.user.choosedTeachingSkills[i].skillId)
+            }
+        }
+    })
+    userProfile.choosedTeachingSkills.map((choosedSkill) => {
+        for (let i = 0; i < props.user.choosedLearningSkills.length; i++) {
+            if (props.user.choosedLearningSkills[i].skillId === choosedSkill.skillId) {
+                commonSkillIds.push(props.user.choosedLearningSkills[i].skillId)
+            }
+        }
+    })
     function handleSeeProfile () {
         setIsLoading(true);
         setSeeingProfile(props.user);
         router.push("/userProfile");
     };
+
+    function handleSayHello () {
+        setSayHelloOpen(true);
+    }
     return <>
+    { sayHelloOpen && <SayHelloModal commonSkillIds={commonSkillIds} setIsSayHelloOpen={setSayHelloOpen} userToSendTo={props.user}/> }
     <div className="p-5 bg-blueDianne/5 rounded-md flex flex-col gap-5 w-full">
         <div className="rounded-md flex gap-5 w-full">
             <div className="relative rounded-full h-32 w-32 flex">
@@ -107,7 +128,9 @@ export default function MatchCard (props: matchCardProps) {
                 handleSeeProfile();
             }}
             >See profile</button>
-            <button className="filledButton w-full">Say Hello</button>
+            <button 
+            onClick={handleSayHello}
+            className="filledButton w-full">Say Hello</button>
         </div>
     </div>
         

@@ -1,6 +1,6 @@
 export type ConversationType = {
     id: string,
-    commonSkillId: string,
+    commonSkillIds: string[],
     invitorUserId: string,
     invitedUserId: string,
     status: "Pending" | "Accepted" | "Refused",
@@ -14,12 +14,13 @@ export type MessageType = {
     targetId: string,
     createdAt: Date,
     content: string,
-    reactions: ReactionType[],
+    reactionsIds: string[],
     readByIds: string[]
 }
 
 export type ReactionType = {
     id: string,
+    reactorPseudo: string,
     reactorId: string,
     targetMessageId: string,
     createdAt: Date,

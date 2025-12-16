@@ -20,13 +20,14 @@ export default function LoginPage() {
     const onLoggingIn = async () => {
         if (email.trim().length > 0 && password.trim().length > 0) {
             const answer: "loggedIn" | "alreadyLoggedIn" |"incorrectPassword" | "emailDoesNotExist" = await loginFunction (email.trim(), password.trim());
-            console.log("answer : " + answer);
+            // console.log("answer : " + answer);
             if (answer === "emailDoesNotExist") {
+                setLoggingLoading(false);
                 setNewToast("error", "Check your email, maybe it's wrong or create an account with it.")
             } else if (answer === "incorrectPassword") {
+                setLoggingLoading(false);
                 setNewToast("error", "Incorrect password.");
             } else if (answer === "loggedIn" || answer === "alreadyLoggedIn") {
-                setLoggingLoading(true);
                 const user: userType = await getCurrentlyLoggedInUser();
                 if (user) {
                     setUserProfile (user);
@@ -104,7 +105,10 @@ export default function LoginPage() {
                 </span></p>
                 {loggingLoading ? <button type="button" className="filledButton !w-full opacity-50"
                 >Logging you in...</button> : <button type="button" className="filledButton !w-full"
-                onClick={() => onLoggingIn()}
+                onClick={() => {
+                    setLoggingLoading(true);
+                    onLoggingIn()
+                }}
                 >Log in</button> }         
             </div>
         </>
