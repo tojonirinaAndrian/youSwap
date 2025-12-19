@@ -66,7 +66,7 @@ export default function AddNewSkillModal (props: addNewSkillModalProps) {
                     >Cancel</button>
                 </div>
             </div>
-            <div className="w-full h-screen fixed top-0 left-0 bg-black/50"
+            <div className="w-full h-screen fixed top-0 left-0 bg-black/70"
                 onClick={() => handleCancel()}
             ></div>
         </div>

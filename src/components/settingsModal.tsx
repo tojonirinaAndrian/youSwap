@@ -34,7 +34,7 @@ export default function SettingsModal (props: settingsModalProps) {
                 <button>Download this week !</button>
             </div>
         </div>
-        <div className="w-full h-screen fixed top-0 left-0 bg-black/50"
+        <div className="w-full h-screen fixed top-0 left-0 bg-black/70"
             onClick={() => props.setIsSettingsModalOpen(false)}
         ></div>
     </div>

@@ -26,7 +26,7 @@ export default function LogOutModal (props: logOutModalProps) {
     
     return (
         <>
-        <div className="w-full h-screen z-1 fixed flex top-0 left-0 py-10 px-5">
+        <div className="w-full h-screen z-11 fixed flex top-0 left-0 py-10 px-5">
             {!loggingOut ? <div className="m-auto bg-white p-5 rounded-xl space-y-3 min-w-[20rem] z-2 max-h-full overflow-auto">
                 <div className="w-full flex justify-end">
                     <div className="cursor-pointer"
@@ -47,9 +47,9 @@ export default function LogOutModal (props: logOutModalProps) {
                     >Cancel</button>
                 </div>
             </div> : <div className="m-auto bg-white p-5 rounded-xl flex min-w-[20rem] z-2 max-h-full overflow-auto">
-                <h3 className="uppercase opacity-70 text-red-700 mx-auto">Logging out...</h3>
+                <h3 className="uppercase opacity-70 text-red-700 mx-auto">Logging you out...</h3>
             </div>}
-            <div className="w-full h-screen fixed top-0 left-0 bg-black/50"
+            <div className="w-full h-screen fixed top-0 left-0 bg-black/70"
                 onClick={() => props.setIsLoggingOut(false)}
             ></div>
         </div>

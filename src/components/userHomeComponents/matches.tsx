@@ -73,8 +73,8 @@ export default function Matches () {
                     </div>
                     <div className="flex gap-2">
                         <p className="text-black/70 my-auto">Your teaching skills :</p>
-                        {(userProfile.choosedTeachingSkills.map((choosedSkill) => {
-                            return <div className="space-x-2 space-y-1" key={choosedSkill.id}>
+                        {(userProfile.choosedTeachingSkills.map((choosedSkill, i) => {
+                            return <div className="space-y-1 flex gap-2" key={choosedSkill.id}>
                                 <button className={`${choosedTeachingSkills.includes(choosedSkill) ? ` filledStyle ` : ` unfilledStyle `} !inline-block`}
                                 onClick={()=>{
                                     if(!choosedTeachingSkills.includes(choosedSkill)) {
@@ -94,14 +94,14 @@ export default function Matches () {
                                     }
                                 }}
                                 >{choosedSkill.skillItself.name}</button>
-                                { userProfile.choosedTeachingSkills.length > 1 && <div className="w-[5px] h-[5px] bg-blueDianne/50 my-auto rounded-full"></div> }   
+                                {(userProfile.choosedTeachingSkills.length > 1 && i !== userProfile.choosedTeachingSkills.length - 1) && <div className="w-[5px] h-[5px] bg-blueDianne/50 my-auto rounded-full"></div>}   
                             </div>
                         }))}
                     </div>
                     <div className="flex gap-2">
                         <p className="text-black/70 my-auto">Your learning skills :</p>
-                        {(userProfile.choosedLearningSkills.map((choosedSkill) => {
-                            return <div className="space-x-2 space-y-1" key={choosedSkill.id}>
+                        {(userProfile.choosedLearningSkills.map((choosedSkill, i) => {
+                            return <div className="space-y-1 flex gap-2" key={choosedSkill.id}>
                                 <button className={`!inline-block ${choosedLearningSkills.includes(choosedSkill) ? ` filledStyle ` : ` unfilledStyle `}`}
                                 onClick={()=>{
                                     if(!choosedLearningSkills.includes(choosedSkill)) {
@@ -120,7 +120,7 @@ export default function Matches () {
                                     }
                                 }}
                                 >{choosedSkill.skillItself.name}</button>
-                                { userProfile.choosedLearningSkills.length > 1 && <div className="w-[5px] h-[5px] bg-blueDianne/50 my-auto rounded-full"></div> }   
+                                { (userProfile.choosedLearningSkills.length > 1 && i !== userProfile.choosedLearningSkills.length - 1) && <div className="w-[5px] h-[5px] bg-blueDianne/50 my-auto rounded-full"></div> }   
                             </div>
                         }))}
                     </div>

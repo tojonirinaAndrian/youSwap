@@ -28,7 +28,7 @@ export default function ColorSchemeModalChoice (props: colorSchemeChoiceProps) {
                 <div className="bg-amber-600"></div>
             </div>
         </div>
-        <div className="w-full h-screen fixed top-0 left-0 bg-black/50"
+        <div className="w-full h-screen fixed top-0 left-0 bg-black/70"
             onClick={() => props.setIsColorSchemeModalOpen(false)}
         ></div>
     </div>

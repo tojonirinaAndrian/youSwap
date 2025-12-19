@@ -1,6 +1,6 @@
 'use client';
 import { getSkillsByCategory } from "@/src/requests/skills";
-import {ChoosedSkillType} from "@/src/types/skillsType";
+import {categoryNames, ChoosedSkillType} from "@/src/types/skillsType";
 import { SkillType } from "@/src/types/skillsType";
 import {userType} from "@/src/types/userProfilesType";
 import { X, Search} from "lucide-react";
@@ -16,17 +16,28 @@ interface addNewSkillModalProps {
 
 export default function SkillChoosingMainContent (props: addNewSkillModalProps) {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-    
-    const categoriesToChooseFrom: string[] = [
-        "Art", "Coding", "Sport", "SelfDevelopment"
-    ];
+    const categoriesToChooseFrom: string[] = [];
+
+    categoryNames.map((category) => {
+        const cleaningUpString = (category: string) => {
+            let newString: string;
+            newString = category.toLowerCase();
+            newString = newString.replaceAll("_", " ");
+            newString
+            return newString;
+        };
+        categoriesToChooseFrom.push(cleaningUpString(category));
+    })
 
     const [skillsPropositions, setSkillsPropositions] = useState<SkillType[]> ([]);
 
     useEffect(() => {
-        console.log(selectedCategories);
         if (selectedCategories.length > 0) {
-            handleOnCategoryClick (selectedCategories);
+            const newTable: string[] = [];
+            selectedCategories.map((category) => {
+                newTable.push(category.toUpperCase().replaceAll(" ", "_"));
+            });
+            handleOnCategoryClick (newTable);
         } else {
             setSkillsPropositions([])
         }
@@ -63,7 +74,8 @@ export default function SkillChoosingMainContent (props: addNewSkillModalProps) 
     async function handleOnCategoryClick (categoryNames: string[]) {
         //looking for skills with the specific category
         // const result = skillType[].where{categoryName ~= categoryName}
-        // setSkillsPropositions(result)
+        // setSkillsPropositions(result);
+        console.log(categoryNames);
         const relatedSkills: SkillType[] = await getSkillsByCategory(categoryNames);
         if (relatedSkills) console.log(relatedSkills);
         setSkillsPropositions(relatedSkills);
@@ -104,18 +116,18 @@ export default function SkillChoosingMainContent (props: addNewSkillModalProps) 
                         let isCategorySelected: boolean = false;
                         selectedCategories.map((selected) => {
                             if (category === selected) isCategorySelected = true
-                        })
+                        });
                         return <div key={i} className="">
                             <button className={`capitalize ${isCategorySelected ? `filledButton hover:!bg-blueDianne hover:!text-lightCream` : `borderedButton hover:!bg-lightCream hover:!text-blueDianne`}`}
                             onClick={()=>{
                                 let referencedTable: string[] = [...selectedCategories];
+                                console.log(referencedTable);
+                                console.log(category);
                                 if (!isCategorySelected) {
                                     referencedTable.push(category);
                                     setSelectedCategories([...referencedTable]);
                                 } else {
                                     const newTable: string[] = [];
-                                    console.log("referenced Table : " + referencedTable);
-                                    console.log("category ASorina : " + category);
                                     referencedTable.map((referenced) => {
                                         if (referenced !== category) newTable.push(referenced)
                                     })

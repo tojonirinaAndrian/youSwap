@@ -1,9 +1,8 @@
 "use client";
-import { Settings, X } from "lucide-react"
+import { X } from "lucide-react";
 import { useState } from "react";
 import { userType } from "../types/userProfilesType";
 import { useGlobalStore } from "@/store/use-global-store";
-import { MessageType, ConversationType } from "../types/converstationsType";
 import Image from "next/image";
 import { sayHelloFunction } from "../requests/conversations";
 
@@ -18,7 +17,12 @@ export default function SayHelloModal (props: sayHelloModalProps) {
     const {setNewToast} = useGlobalStore();
     const [isSending, setIsSending] = useState<boolean>(false);
     const handleOnSend = async () => {
-        await sayHelloFunction(props.userToSendTo, messageContent, props.commonSkillIds)
+        const answer: string = await sayHelloFunction(props.userToSendTo, messageContent, props.commonSkillIds)
+        if (answer === "error") {
+            setNewToast("error", "An error happened.");
+        } else {
+            setNewToast("simple", "Request sent successfuly.")
+        }
         setIsSending(false);
         props.setIsSayHelloOpen(false);
     }
@@ -71,7 +75,7 @@ export default function SayHelloModal (props: sayHelloModalProps) {
                 </button>
             </div>
         </div>
-        <div className="w-full backdrop-blur-xs h-screen fixed top-0 left-0 bg-black/50"
+        <div className="w-full h-screen fixed top-0 left-0 bg-black/70"
             onClick={() => props.setIsSayHelloOpen(false)}
         ></div>
     </div>
